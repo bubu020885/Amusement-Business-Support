@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Business-Rechner – Jahr 1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --border: #e1e4e8;
+    --text: #1a1d23;
+    --muted: #6b7280;
+    --shadow: 0 1px 4px rgba(0,0,0,.08);
+
+    --guests-h:  #1e3a5f;
+    --guests-bg: #eaf1fb;
+    --guests-ac: #2563eb;
+
+    --rev-h:  #14532d;
+    --rev-bg: #f0fdf4;
+    --rev-ac: #16a34a;
+
+    --cog-h:  #7c2d12;
+    --cog-bg: #fff7ed;
+    --cog-ac: #ea580c;
+
+    --gp-h:  #0f172a;
+    --gp-bg: #e0f2fe;
+    --gp-ac: #0284c7;
+
+    --opex-h:  #4c1d95;
+    --opex-bg: #faf5ff;
+    --opex-ac: #7c3aed;
+
+    --ebitda-h:  #0f172a;
+    --ebitda-bg: #f0fdf4;
+    --ebitda-ac: #059669;
+    --ebitda-neg: #dc2626;
+  }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 24px 16px 60px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: var(--text);
+    letter-spacing: -.3px;
+  }
+
+  .section {
+    background: var(--card);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 18px;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .4px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-body { padding: 16px 18px; }
+
+  /* ── Guests ────────────────────────────────── */
+  .section--guests .section-header { background: var(--guests-bg); color: var(--guests-h); }
+  .section--guests .section-body   { background: var(--guests-bg); }
+
+  /* ── Revenue ───────────────────────────────── */
+  .section--rev .section-header { background: var(--rev-bg); color: var(--rev-h); }
+  .section--rev .section-body   { background: var(--rev-bg); }
+
+  /* ── COGS ──────────────────────────────────── */
+  .section--cog .section-header { background: var(--cog-bg); color: var(--cog-h); }
+  .section--cog .section-body   { background: var(--cog-bg); }
+
+  /* ── Gross profit ──────────────────────────── */
+  .section--gp .section-header { background: var(--gp-bg); color: var(--gp-h); }
+  .section--gp .section-body   { background: var(--gp-bg); }
+
+  /* ── OpEx ──────────────────────────────────── */
+  .section--opex .section-header { background: var(--opex-bg); color: var(--opex-h); }
+  .section--opex .section-body   { background: var(--opex-bg); }
+
+  /* ── EBITDA ────────────────────────────────── */
+  .section--ebitda .section-header { background: var(--ebitda-bg); color: var(--ebitda-h); }
+  .section--ebitda .section-body   { background: var(--ebitda-bg); }
+
+  /* ── Field rows ────────────────────────────── */
+  .field-row {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .field-row--2 { grid-template-columns: 1fr 120px; }
+  .field-row--3 { grid-template-columns: 1fr 120px 120px; }
+
+  label { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  input[type="number"], input[type="text"], select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 13px;
+    background: #fff;
+    color: var(--text);
+    transition: border-color .15s;
+    -moz-appearance: textfield;
+  }
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+  input:focus, select:focus { outline: none; border-color: #6b7280; }
+
+  .result {
+    font-weight: 600;
+    text-align: right;
+    font-size: 13px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,.5);
+    border: 1px solid rgba(0,0,0,.06);
+    white-space: nowrap;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  /* ── Dynamic rows ──────────────────────────── */
+  .dynamic-rows { margin-bottom: 8px; }
+
+  .drow {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 6px;
+    align-items: center;
+  }
+
+  /* description | type | value | result | delete */
+  .drow--standard { grid-template-columns: 1fr 110px 90px 120px 30px; }
+  /* description | lohn | SV% | puffer% | result | delete */
+  .drow--wage     { grid-template-columns: 1fr 100px 70px 70px 120px 30px; }
+
+  .btn-delete {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #9ca3af;
+    font-size: 16px;
+    line-height: 1;
+    padding: 4px;
+    border-radius: 4px;
+    transition: color .15s, background .15s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .btn-delete:hover { color: #dc2626; background: #fee2e2; }
+
+  .btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border: 1.5px dashed;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+    transition: background .15s;
+    margin-top: 6px;
+  }
+  .btn-add:hover { background: rgba(0,0,0,.04); }
+
+  .section--cog  .btn-add { border-color: var(--cog-ac);  color: var(--cog-ac); }
+  .section--opex .btn-add { border-color: var(--opex-ac); color: var(--opex-ac); }
+
+  /* ── Totals ────────────────────────────────── */
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0 0;
+    margin-top: 8px;
+    border-top: 1.5px solid var(--border);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  /* ── KPI box ───────────────────────────────── */
+  .kpi-box {
+    text-align: center;
+    padding: 12px;
+  }
+  .kpi-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .kpi-value { font-size: 28px; font-weight: 700; }
+  .kpi-value--pos { color: var(--ebitda-ac); }
+  .kpi-value--neg { color: var(--ebitda-neg); }
+  .kpi-margin { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* ── Revenue sub-totals ────────────────────── */
+  .rev-total-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0 0; margin-top: 8px;
+    border-top: 1.5px solid #bbf7d0;
+    font-weight: 700; font-size: 14px;
+  }
+
+  .section-total-label { color: var(--muted); font-size: 12px; }
+
+  /* ── Responsive ────────────────────────────── */
+  @media (max-width: 640px) {
+    .drow--standard { grid-template-columns: 1fr 90px 70px 100px 26px; }
+    .drow--wage     { grid-template-columns: 1fr 80px 56px 56px 100px 26px; }
+    .field-row--3   { grid-template-columns: 1fr 100px 100px; }
+  }
+
+  /* ── Column headers ─────────────────────────── */
+  .col-header {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+  }
+  .col-header--standard { grid-template-columns: 1fr 110px 90px 120px 30px; }
+  .col-header--wage     { grid-template-columns: 1fr 100px 70px 70px 120px 30px; }
+</style>
+</head>
+<body>
+
+<h1>Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</h1>
+
+<!-- ════════════════════════════════════════════
+     GÄSTE
+════════════════════════════════════════════ -->
+<div class="section section--guests">
+  <div class="section-header">
+    <span>Gäste-Forecast</span>
+  </div>
+  <div class="section-body">
+    <div class="field-row field-row--2">
+      <label>Erwartete Gäste / Monat</label>
+      <input type="number" id="guests" value="5000" min="0" step="100">
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     UMSÄTZE
+════════════════════════════════════════════ -->
+<div class="section section--rev">
+  <div class="section-header">
+    <span>Umsatz-Forecast</span>
+  </div>
+  <div class="section-body">
+
+    <div class="field-row field-row--3">
+      <label>Ø Ticketpreis</label>
+      <input type="number" id="ticketPrice" value="15.00" min="0" step="0.50">
+      <div class="result" id="ticketRev">–</div>
+    </div>
+
+    <div class="field-row field-row--3">
+      <label>Retail Spend / Gast</label>
+      <input type="number" id="retailPrice" value="3.00" min="0" step="0.50">
+      <div class="result" id="retailRev">–</div>
+    </div>
+
+    <div class="field-row field-row--3">
+      <label>Games Spend / Gast</label>
+      <input type="number" id="gamesPrice" value="5.00" min="0" step="0.50">
+      <div class="result" id="gamesRev">–</div>
+    </div>
+
+    <div class="field-row field-row--3">
+      <label>F&amp;B Spend / Gast</label>
+      <input type="number" id="fbPrice" value="4.00" min="0" step="0.50">
+      <div class="result" id="fbRev">–</div>
+    </div>
+
+    <div class="rev-total-row">
+      <span>Gesamt-Umsatz</span>
+      <span id="totalRev" style="font-size:16px;">–</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     WARENEINSATZ
+════════════════════════════════════════════ -->
+<div class="section section--cog">
+  <div class="section-header">
+    <span>Wareneinsatz</span>
+  </div>
+  <div class="section-body">
+    <div class="col-header col-header--standard">
+      <span>Beschreibung</span>
+      <span>Art</span>
+      <span>Wert</span>
+      <span style="text-align:right">Betrag / Monat</span>
+      <span></span>
+    </div>
+    <div class="dynamic-rows" id="cogRows"></div>
+    <button class="btn-add" onclick="addCogRow()">+ Zeile hinzufügen</button>
+    <div class="total-row">
+      <span>Gesamt Wareneinsatz</span>
+      <span id="totalCog">–</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     ROHERTRAG
+════════════════════════════════════════════ -->
+<div class="section section--gp">
+  <div class="section-header"><span>Rohertrag</span></div>
+  <div class="section-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:6px;">
+      <span>Gesamt-Umsatz &minus; Wareneinsatz</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <span style="font-weight:700;font-size:16px;">Rohertrag</span>
+      <span id="grossProfit" style="font-weight:700;font-size:18px;">–</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     BETRIEBLICHER AUFWAND
+════════════════════════════════════════════ -->
+<div class="section section--opex">
+  <div class="section-header">
+    <span>Betrieblicher Aufwand</span>
+  </div>
+  <div class="section-body">
+
+    <!-- Lohnkosten -->
+    <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--opex-h);margin-bottom:6px;">Lohnkosten</div>
+    <div class="col-header col-header--wage">
+      <span>Beschreibung</span>
+      <span>Lohn (€)</span>
+      <span>SV %</span>
+      <span>Puffer %</span>
+      <span style="text-align:right">Betrag / Monat</span>
+      <span></span>
+    </div>
+    <div class="dynamic-rows" id="wageRows"></div>
+    <button class="btn-add" onclick="addWageRow()">+ Lohnzeile hinzufügen</button>
+
+    <div style="margin-top:16px;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--opex-h);margin-bottom:6px;">Sonstige Kosten</div>
+    <div class="col-header col-header--standard">
+      <span>Beschreibung</span>
+      <span>Art</span>
+      <span>Wert</span>
+      <span style="text-align:right">Betrag / Monat</span>
+      <span></span>
+    </div>
+    <div class="dynamic-rows" id="opexRows"></div>
+    <button class="btn-add" onclick="addOpexRow()">+ Zeile hinzufügen</button>
+
+    <div class="total-row">
+      <span>Gesamt Betrieblicher Aufwand</span>
+      <span id="totalOpex">–</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     EBITDA
+════════════════════════════════════════════ -->
+<div class="section section--ebitda">
+  <div class="section-header"><span>EBITDA</span></div>
+  <div class="section-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--muted);margin-bottom:10px;">
+      <span>Rohertrag &minus; Betrieblicher Aufwand</span>
+    </div>
+    <div class="kpi-box">
+      <div class="kpi-label">EBITDA / Monat</div>
+      <div class="kpi-value" id="ebitdaValue">–</div>
+      <div class="kpi-margin" id="ebitdaMargin"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Utilities ──────────────────────────────────────────────────────────────
+const fmt = v => v.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 });
+const n   = id => parseFloat(document.getElementById(id)?.value) || 0;
+const el  = id => document.getElementById(id);
+
+function setResult(id, val, negative = false) {
+  const e = el(id);
+  if (!e) return;
+  e.textContent = fmt(val);
+  if (negative) e.style.color = val < 0 ? 'var(--ebitda-neg)' : '';
+}
+
+// ── Type options ─────────────────────────────────────────────────────────
+const TYPE_OPTIONS = `
+  <option value="pct">% vom Umsatz</option>
+  <option value="perGuest">€ / Gast</option>
+  <option value="fixed">€ fix</option>
+`;
+
+function calcDynRow(type, val, totalRev, guests) {
+  if (type === 'pct')      return (totalRev * val) / 100;
+  if (type === 'perGuest') return val * guests;
+  if (type === 'fixed')    return val;
+  return 0;
+}
+
+// ── COGS rows ─────────────────────────────────────────────────────────────
+let cogId = 0;
+function addCogRow(desc = '', type = 'fixed', val = 0) {
+  const id = ++cogId;
+  const div = document.createElement('div');
+  div.className = 'drow drow--standard';
+  div.dataset.id = id;
+  div.innerHTML = `
+    <input type="text"   class="cog-desc"  placeholder="Beschreibung"  value="${desc}">
+    <select class="cog-type" onchange="recalc()">${TYPE_OPTIONS}</select>
+    <input type="number" class="cog-val"   value="${val}" min="0" step="0.01" onchange="recalc()" oninput="recalc()">
+    <div class="result cog-res">–</div>
+    <button class="btn-delete" onclick="this.closest('.drow').remove();recalc();" title="Zeile löschen">&#x2715;</button>
+  `;
+  div.querySelector('.cog-type').value = type;
+  div.querySelector('.cog-type').addEventListener('change', recalc);
+  div.querySelector('.cog-desc').addEventListener('input', recalc);
+  el('cogRows').appendChild(div);
+  recalc();
+}
+
+// ── Wage rows ─────────────────────────────────────────────────────────────
+let wageId = 0;
+function addWageRow(desc = '', wage = 0, sv = 20, puffer = 5) {
+  const id = ++wageId;
+  const div = document.createElement('div');
+  div.className = 'drow drow--wage';
+  div.dataset.id = id;
+  div.innerHTML = `
+    <input type="text"   class="wage-desc"   placeholder="z. B. Vollzeit MA"  value="${desc}">
+    <input type="number" class="wage-base"   value="${wage}"   min="0" step="100" placeholder="0,00">
+    <input type="number" class="wage-sv"     value="${sv}"     min="0" step="0.5" placeholder="20">
+    <input type="number" class="wage-puffer" value="${puffer}" min="0" step="0.5" placeholder="5">
+    <div class="result wage-res">–</div>
+    <button class="btn-delete" onclick="this.closest('.drow').remove();recalc();" title="Zeile löschen">&#x2715;</button>
+  `;
+  ['wage-base','wage-sv','wage-puffer','wage-desc'].forEach(cls => {
+    div.querySelector(`.${cls}`).addEventListener('input', recalc);
+  });
+  el('wageRows').appendChild(div);
+  recalc();
+}
+
+// ── OpEx rows ─────────────────────────────────────────────────────────────
+let opexId = 0;
+function addOpexRow(desc = '', type = 'fixed', val = 0) {
+  const id = ++opexId;
+  const div = document.createElement('div');
+  div.className = 'drow drow--standard';
+  div.dataset.id = id;
+  div.innerHTML = `
+    <input type="text"   class="opex-desc"  placeholder="Beschreibung"  value="${desc}">
+    <select class="opex-type" onchange="recalc()">${TYPE_OPTIONS}</select>
+    <input type="number" class="opex-val"   value="${val}" min="0" step="0.01" onchange="recalc()" oninput="recalc()">
+    <div class="result opex-res">–</div>
+    <button class="btn-delete" onclick="this.closest('.drow').remove();recalc();" title="Zeile löschen">&#x2715;</button>
+  `;
+  div.querySelector('.opex-type').value = type;
+  div.querySelector('.opex-type').addEventListener('change', recalc);
+  div.querySelector('.opex-desc').addEventListener('input', recalc);
+  el('opexRows').appendChild(div);
+  recalc();
+}
+
+// ── Main recalc ────────────────────────────────────────────────────────────
+function recalc() {
+  const guests = n('guests');
+
+  // Revenue
+  const ticketRev = n('ticketPrice') * guests;
+  const retailRev = n('retailPrice') * guests;
+  const gamesRev  = n('gamesPrice')  * guests;
+  const fbRev     = n('fbPrice')     * guests;
+  const totalRev  = ticketRev + retailRev + gamesRev + fbRev;
+
+  setResult('ticketRev', ticketRev);
+  setResult('retailRev', retailRev);
+  setResult('gamesRev',  gamesRev);
+  setResult('fbRev',     fbRev);
+  el('totalRev').textContent = fmt(totalRev);
+
+  // COGS
+  let totalCog = 0;
+  document.querySelectorAll('#cogRows .drow').forEach(row => {
+    const type = row.querySelector('.cog-type').value;
+    const val  = parseFloat(row.querySelector('.cog-val').value) || 0;
+    const amt  = calcDynRow(type, val, totalRev, guests);
+    totalCog  += amt;
+    row.querySelector('.cog-res').textContent = fmt(amt);
+  });
+  el('totalCog').textContent = fmt(totalCog);
+
+  // Gross profit
+  const grossProfit = totalRev - totalCog;
+  el('grossProfit').textContent = fmt(grossProfit);
+  el('grossProfit').style.color = grossProfit < 0 ? 'var(--ebitda-neg)' : 'var(--gp-ac)';
+
+  // Wage costs
+  let totalWage = 0;
+  document.querySelectorAll('#wageRows .drow').forEach(row => {
+    const base   = parseFloat(row.querySelector('.wage-base').value)   || 0;
+    const sv     = parseFloat(row.querySelector('.wage-sv').value)     || 0;
+    const puffer = parseFloat(row.querySelector('.wage-puffer').value) || 0;
+    const total  = base * (1 + (sv + puffer) / 100);
+    totalWage   += total;
+    row.querySelector('.wage-res').textContent = fmt(total);
+  });
+
+  // OpEx
+  let totalOpexOther = 0;
+  document.querySelectorAll('#opexRows .drow').forEach(row => {
+    const type = row.querySelector('.opex-type').value;
+    const val  = parseFloat(row.querySelector('.opex-val').value) || 0;
+    const amt  = calcDynRow(type, val, totalRev, guests);
+    totalOpexOther += amt;
+    row.querySelector('.opex-res').textContent = fmt(amt);
+  });
+
+  const totalOpex = totalWage + totalOpexOther;
+  el('totalOpex').textContent = fmt(totalOpex);
+
+  // EBITDA
+  const ebitda = grossProfit - totalOpex;
+  const ebitdaEl = el('ebitdaValue');
+  ebitdaEl.textContent = fmt(ebitda);
+  ebitdaEl.className = 'kpi-value ' + (ebitda >= 0 ? 'kpi-value--pos' : 'kpi-value--neg');
+
+  const margin = totalRev > 0 ? (ebitda / totalRev * 100).toFixed(1) : '–';
+  el('ebitdaMargin').textContent = totalRev > 0 ? `EBITDA-Marge: ${margin} %` : '';
+}
+
+// ── Wire up static inputs ──────────────────────────────────────────────────
+['guests','ticketPrice','retailPrice','gamesPrice','fbPrice'].forEach(id => {
+  el(id)?.addEventListener('input', recalc);
+});
+
+// ── Default rows ──────────────────────────────────────────────────────────
+addCogRow('Wareneinsatz Tickets',  'pct',      30);
+addCogRow('Wareneinsatz F&B',      'pct',      25);
+addCogRow('Wareneinsatz Retail',   'perGuest',  1);
+
+addWageRow('Vollzeit Mitarbeiter', 3200, 20, 5);
+addWageRow('Teilzeit Mitarbeiter', 1200, 20, 5);
+
+addOpexRow('Miete',          'fixed',    5000);
+addOpexRow('Marketing',      'pct',         3);
+addOpexRow('Energie',        'fixed',    1500);
+addOpexRow('Versicherungen', 'fixed',     800);
+</script>
+</body>
+</html>
