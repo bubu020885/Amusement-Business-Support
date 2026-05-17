@@ -275,13 +275,53 @@ tr.tr-roi    td.td-tot { background: #fde68a !important; }
 .btn-act:hover  { filter: brightness(.92); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
 .btn-act:active { transform: scale(.96); }
 
-.btn-act--save   { background: #2563eb; color: #fff; }
-.btn-act--load   { background: #059669; color: #fff; }
-.btn-act--export { background: #f8fafc; color: #475569; border: 1.5px solid #cbd5e1; box-shadow: none; }
-.btn-act--import { background: #f8fafc; color: #475569; border: 1.5px solid #cbd5e1; box-shadow: none; }
-.btn-act--import:hover, .btn-act--export:hover { background: #f1f5f9; }
+.btn-act--save { background: #2563eb; color: #fff; }
+.btn-act--load { background: #059669; color: #fff; }
+.btn-act--pdf  { background: #7c3aed; color: #fff; }
 
 .btn-act .ico { font-size: 15px; line-height: 1; }
+
+/* ── Label hint in table cells ──────────────────── */
+.lbl-hint {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+/* ── Print / PDF ────────────────────────────────── */
+@media print {
+  @page { size: A4 landscape; margin: 8mm 10mm; }
+
+  body { background: #fff; padding: 0; font-size: 11px; }
+  h1   { font-size: 14px; margin-bottom: 6px; }
+
+  .action-bar, .card--cfg, .ov-hint { display: none !important; }
+
+  .card--table { box-shadow: none; border-radius: 0; }
+  .card--table .card-header { padding: 6px 10px; font-size: 10px; }
+
+  .tbl-wrap { overflow: visible; }
+
+  table { min-width: unset; width: 100%; font-size: 10px; }
+
+  /* Remove sticky so table prints correctly */
+  thead th, tbody td:first-child { position: static; }
+
+  /* Force background colors to print */
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Tighter cells */
+  thead th, tbody td { padding: 3px 4px; }
+
+  /* Hide override pencil marker */
+  td.ov-cell.overridden::after { display: none; }
+
+  /* Guest inputs: show value as text */
+  td.td-g input { border: none; background: transparent; width: auto; }
+}
 
 /* ── Toast ──────────────────────────────────────── */
 .toast {
@@ -304,20 +344,17 @@ tr.tr-roi    td.td-tot { background: #fde68a !important; }
 
 <!-- ════════════════ ACTION BAR ════════════════ -->
 <div class="action-bar">
-  <button class="btn-act btn-act--save"   onclick="saveData()">
+  <button class="btn-act btn-act--save" onclick="saveData()">
     <span class="ico">💾</span> Speichern
   </button>
-  <button class="btn-act btn-act--load"   onclick="loadData()">
+  <button class="btn-act btn-act--load" onclick="el('fileInput').click()">
     <span class="ico">📂</span> Laden
   </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadData(event)">
   <div class="spacer"></div>
-  <button class="btn-act btn-act--export" onclick="exportJSON()">
-    <span class="ico">⬇</span> Exportieren
+  <button class="btn-act btn-act--pdf" onclick="exportPDF()">
+    <span class="ico">🖨</span> PDF-Export
   </button>
-  <button class="btn-act btn-act--import" onclick="el('fileInput').click()">
-    <span class="ico">⬆</span> Importieren
-  </button>
-  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="importJSON(event)">
 </div>
 
 <!-- ════════════════ CONFIG ════════════════ -->
@@ -549,54 +586,41 @@ function applyState(s) {
   recalc();
 }
 
-// ── localStorage save / load ───────────────────────────────────────────
-const LS_KEY = 'business-calc-v1';
-
+// ── Save = JSON download ───────────────────────────────────────────────
 function saveData() {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(collectState()));
-    toast('✓ Gespeichert');
+    const blob = new Blob([JSON.stringify(collectState(), null, 2)], { type: 'application/json' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `businessplan-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(a.href);
+    toast('✓ Datei wird heruntergeladen');
   } catch (e) {
     toast('Speichern fehlgeschlagen', 'err');
   }
 }
 
-function loadData() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (!raw) { toast('Kein gespeicherter Stand gefunden', 'err'); return; }
-    applyState(JSON.parse(raw));
-    toast('✓ Stand geladen');
-  } catch (e) {
-    toast('Laden fehlgeschlagen: ' + e.message, 'err');
-  }
-}
-
-// ── JSON file export / import ──────────────────────────────────────────
-function exportJSON() {
-  const blob = new Blob([JSON.stringify(collectState(), null, 2)], { type: 'application/json' });
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = `businessplan-${new Date().toISOString().slice(0,10)}.json`;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  toast('✓ Datei wird heruntergeladen');
-}
-
-function importJSON(event) {
+// ── Load = JSON file import ────────────────────────────────────────────
+function loadData(event) {
   const file = event.target.files[0];
   if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
     try {
       applyState(JSON.parse(e.target.result));
-      toast('✓ Datei importiert');
+      toast('✓ Datei geladen');
     } catch (err) {
-      toast('Import fehlgeschlagen: ' + err.message, 'err');
+      toast('Laden fehlgeschlagen: ' + err.message, 'err');
     }
     event.target.value = '';
   };
   reader.readAsText(file);
+}
+
+// ── PDF export = browser print dialog (landscape via CSS) ──────────────
+function exportPDF() {
+  window.print();
 }
 
 // ── Config toggle ──────────────────────────────────────────────────────
@@ -708,6 +732,19 @@ function recalc() {
     ? cumulArr.findIndex(c => c >= investTotal)
     : -1;
 
+  // ── Label helpers ───────────────────────────────────────────────────
+  const fmtV = v => v.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  function typeHint(type, val) {
+    if (type === 'pct')      return `${fmtV(val)} % vom Umsatz`;
+    if (type === 'perGuest') return `${fmtV(val)} € / Gast`;
+    return `${fmtE(val)} € fix`;
+  }
+  function lbl(text, hint = '') {
+    return hint
+      ? `${esc(text)}<span class="lbl-hint">${hint}</span>`
+      : esc(text);
+  }
+
   // ── Build table body ────────────────────────────────────────────────
   let rows = '';
 
@@ -721,8 +758,10 @@ function recalc() {
   const revLabels = ['Ticket-Umsatz','Retail-Umsatz','Games-Umsatz','F&B-Umsatz'];
   const revKeys   = ['rev-0','rev-1','rev-2','rev-3'];
   const revProp   = ['ticketRev','retailRev','gamesRev','fbRev'];
+  const revPrices = [tp, rp, gp, fb];
   revKeys.forEach((rk, li) => {
-    rows += `<tr class="tr-rev"><td>${revLabels[li]}</td>`;
+    const hint = `${fmtV(revPrices[li])} € / Gast`;
+    rows += `<tr class="tr-rev"><td>${lbl(revLabels[li], hint)}</td>`;
     months.forEach((m, mi) => rows += tdO(rk, mi, m[revProp[li]]));
     rows += td(S(revProp[li]), 'td-tot') + '</tr>';
   });
@@ -734,7 +773,7 @@ function recalc() {
 
   // COG (overridable)
   cogCfg.forEach(c => {
-    rows += `<tr class="tr-cog"><td>${esc(c.label)}</td>`;
+    rows += `<tr class="tr-cog"><td>${lbl(c.label, typeHint(c.type, c.val))}</td>`;
     months.forEach((m, mi) => rows += tdO(`cog-${c.i}`, mi, m.cogAmts[c.i]));
     rows += td(SA('cogAmts', c.i), 'td-tot') + '</tr>';
   });
@@ -752,15 +791,15 @@ function recalc() {
 
   // Wages (overridable per month)
   wageCfg.forEach(w => {
-    const calcFixed = w.wage * (1 + (w.sv + w.puffer) / 100);
-    rows += `<tr class="tr-wage"><td>${esc(w.label)}</td>`;
+    const wHint = `${fmtE(w.wage)} € Brutto · SV ${w.sv} % · Puffer ${w.puffer} %`;
+    rows += `<tr class="tr-wage"><td>${lbl(w.label, wHint)}</td>`;
     months.forEach((m, mi) => rows += tdO(`wage-${w.i}`, mi, m.wageAmts[w.i]));
     rows += td(SA('wageAmts', w.i), 'td-tot') + '</tr>';
   });
 
   // OpEx (overridable)
   opexCfg.forEach(o => {
-    rows += `<tr class="tr-opex"><td>${esc(o.label)}</td>`;
+    rows += `<tr class="tr-opex"><td>${lbl(o.label, typeHint(o.type, o.val))}</td>`;
     months.forEach((m, mi) => rows += tdO(`opex-${o.i}`, mi, m.opexAmts[o.i]));
     rows += td(SA('opexAmts', o.i), 'td-tot') + '</tr>';
   });
