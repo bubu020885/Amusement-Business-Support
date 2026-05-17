@@ -252,11 +252,73 @@ tr.tr-otot   td.td-tot { background: #c4b5fd !important; }
 tr.tr-ebitda td.td-tot { background: #6ee7b7 !important; }
 tr.tr-cumul  td.td-tot { background: #7dd3fc !important; }
 tr.tr-roi    td.td-tot { background: #fde68a !important; }
+
+/* ── Action bar ─────────────────────────────────── */
+.action-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.action-bar .spacer { flex: 1; }
+
+.btn-act {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px;
+  border: none; border-radius: 8px;
+  font-size: 13px; font-weight: 600; font-family: inherit;
+  cursor: pointer; white-space: nowrap;
+  transition: filter .15s, transform .08s, box-shadow .15s;
+  box-shadow: 0 1px 3px rgba(0,0,0,.15);
+}
+.btn-act:hover  { filter: brightness(.92); box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+.btn-act:active { transform: scale(.96); }
+
+.btn-act--save   { background: #2563eb; color: #fff; }
+.btn-act--load   { background: #059669; color: #fff; }
+.btn-act--export { background: #f8fafc; color: #475569; border: 1.5px solid #cbd5e1; box-shadow: none; }
+.btn-act--import { background: #f8fafc; color: #475569; border: 1.5px solid #cbd5e1; box-shadow: none; }
+.btn-act--import:hover, .btn-act--export:hover { background: #f1f5f9; }
+
+.btn-act .ico { font-size: 15px; line-height: 1; }
+
+/* ── Toast ──────────────────────────────────────── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  padding: 9px 22px; border-radius: 10px;
+  font-size: 13px; font-weight: 500; color: #fff;
+  z-index: 9999; pointer-events: none;
+  animation: toastIn .2s ease, toastOut .3s ease 1.8s forwards;
+  white-space: nowrap;
+}
+.toast--ok  { background: #1e293b; }
+.toast--err { background: #dc2626; }
+@keyframes toastIn  { from { opacity:0; transform: translateX(-50%) translateY(8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
+@keyframes toastOut { from { opacity:1; } to { opacity:0; } }
 </style>
 </head>
 <body>
 
 <h1>Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</h1>
+
+<!-- ════════════════ ACTION BAR ════════════════ -->
+<div class="action-bar">
+  <button class="btn-act btn-act--save"   onclick="saveData()">
+    <span class="ico">💾</span> Speichern
+  </button>
+  <button class="btn-act btn-act--load"   onclick="loadData()">
+    <span class="ico">📂</span> Laden
+  </button>
+  <div class="spacer"></div>
+  <button class="btn-act btn-act--export" onclick="exportJSON()">
+    <span class="ico">⬇</span> Exportieren
+  </button>
+  <button class="btn-act btn-act--import" onclick="el('fileInput').click()">
+    <span class="ico">⬆</span> Importieren
+  </button>
+  <input type="file" id="fileInput" accept=".json" style="display:none" onchange="importJSON(event)">
+</div>
 
 <!-- ════════════════ CONFIG ════════════════ -->
 <div class="card card--cfg">
@@ -331,6 +393,7 @@ const TYPE_OPTS = `<option value="pct">% Umsatz</option><option value="perGuest"
 // ── State ──────────────────────────────────────────────────────────────
 let guestValues = Array(12).fill(5000);
 const overrides = {};   // key: "rowKey-monthIdx" → number
+let _noRecalc = false;  // suppresses recalc during bulk state restore
 
 // ── Formatters ─────────────────────────────────────────────────────────
 const fmtE = v => v.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
@@ -406,6 +469,136 @@ function rmRow(btn, type) {
   row.remove(); recalc();
 }
 
+// ── Toast ──────────────────────────────────────────────────────────────
+function toast(msg, type = 'ok') {
+  document.querySelectorAll('.toast').forEach(t => t.remove());
+  const t = document.createElement('div');
+  t.className = `toast toast--${type}`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2200);
+}
+
+// ── Collect current state ──────────────────────────────────────────────
+function collectState() {
+  // Sync guest inputs before collecting
+  document.querySelectorAll('.g-inp').forEach((inp, i) => {
+    guestValues[i] = parseFloat(inp.value) || 0;
+  });
+  return {
+    v: 1,
+    guests: [...guestValues],
+    prices: {
+      ticket:  n('ticketPrice'),
+      retail:  n('retailPrice'),
+      games:   n('gamesPrice'),
+      fb:      n('fbPrice'),
+      invest:  n('investTotal'),
+    },
+    cog: [...document.querySelectorAll('#cogRows .drow')].map(r => ({
+      desc: r.querySelector('.cd').value,
+      type: r.querySelector('.ct').value,
+      val:  parseFloat(r.querySelector('.cv').value) || 0,
+    })),
+    wages: [...document.querySelectorAll('#wageRows .drow')].map(r => ({
+      desc:   r.querySelector('.wd').value,
+      wage:   parseFloat(r.querySelector('.wb').value) || 0,
+      sv:     parseFloat(r.querySelector('.ws').value) || 0,
+      puffer: parseFloat(r.querySelector('.wp').value) || 0,
+    })),
+    opex: [...document.querySelectorAll('#opexRows .drow')].map(r => ({
+      desc: r.querySelector('.od').value,
+      type: r.querySelector('.ot').value,
+      val:  parseFloat(r.querySelector('.ov').value) || 0,
+    })),
+    overrides: { ...overrides },
+  };
+}
+
+// ── Apply state ────────────────────────────────────────────────────────
+function applyState(s) {
+  if (!s || s.v !== 1) throw new Error('Ungültiges Dateiformat');
+
+  // Prices
+  el('ticketPrice').value = s.prices.ticket ?? 15;
+  el('retailPrice').value = s.prices.retail  ?? 3;
+  el('gamesPrice').value  = s.prices.games   ?? 5;
+  el('fbPrice').value     = s.prices.fb      ?? 4;
+  el('investTotal').value = s.prices.invest  ?? 0;
+
+  // Guests
+  guestValues = (s.guests || Array(12).fill(5000)).slice(0, 12);
+  while (guestValues.length < 12) guestValues.push(0);
+
+  // Clear dynamic rows
+  el('cogRows').innerHTML  = '';
+  el('wageRows').innerHTML = '';
+  el('opexRows').innerHTML = '';
+  cogId = wageId = opexId = 0;
+
+  // Restore overrides
+  Object.keys(overrides).forEach(k => delete overrides[k]);
+  Object.assign(overrides, s.overrides || {});
+
+  // Rebuild rows without triggering recalc on each addition
+  _noRecalc = true;
+  (s.cog   || []).forEach(r => addCogRow(r.desc,  r.type, r.val));
+  (s.wages || []).forEach(r => addWageRow(r.desc, r.wage, r.sv, r.puffer));
+  (s.opex  || []).forEach(r => addOpexRow(r.desc,  r.type, r.val));
+  _noRecalc = false;
+  recalc();
+}
+
+// ── localStorage save / load ───────────────────────────────────────────
+const LS_KEY = 'business-calc-v1';
+
+function saveData() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(collectState()));
+    toast('✓ Gespeichert');
+  } catch (e) {
+    toast('Speichern fehlgeschlagen', 'err');
+  }
+}
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) { toast('Kein gespeicherter Stand gefunden', 'err'); return; }
+    applyState(JSON.parse(raw));
+    toast('✓ Stand geladen');
+  } catch (e) {
+    toast('Laden fehlgeschlagen: ' + e.message, 'err');
+  }
+}
+
+// ── JSON file export / import ──────────────────────────────────────────
+function exportJSON() {
+  const blob = new Blob([JSON.stringify(collectState(), null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `businessplan-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('✓ Datei wird heruntergeladen');
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      applyState(JSON.parse(e.target.result));
+      toast('✓ Datei importiert');
+    } catch (err) {
+      toast('Import fehlgeschlagen: ' + err.message, 'err');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
 // ── Config toggle ──────────────────────────────────────────────────────
 function toggleCfg() {
   const b = el('cfgBody'), t = el('cfgTog');
@@ -446,6 +639,7 @@ function tdDash(cls='') { return `<td class="${cls}" style="color:#cbd5e1;text-a
 
 // ── Main recalculation ─────────────────────────────────────────────────
 function recalc() {
+  if (_noRecalc) return;
   // Sync guest values from editable inputs in table (if table exists)
   document.querySelectorAll('.g-inp').forEach((inp, i) => {
     guestValues[i] = parseFloat(inp.value) || 0;
