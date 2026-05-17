@@ -15,16 +15,20 @@
   --muted: #6b7280;
   --shadow: 0 1px 4px rgba(0,0,0,.08);
 
-  --c-guests:   #dbeafe; --c-guests-h: #1e3a5f; --c-guests-ac: #2563eb;
-  --c-rev:      #dcfce7; --c-rev-h:    #14532d; --c-rev-ac:    #16a34a;
-  --c-rev-tot:  #bbf7d0;
-  --c-cog:      #ffedd5; --c-cog-h:    #7c2d12; --c-cog-ac:    #ea580c;
-  --c-cog-tot:  #fed7aa;
-  --c-gp:       #bae6fd; --c-gp-h:     #0c4a6e; --c-gp-ac:     #0284c7;
-  --c-opex:     #ede9fe; --c-opex-h:   #4c1d95; --c-opex-ac:   #7c3aed;
-  --c-opex-tot: #ddd6fe;
-  --c-ebitda:   #d1fae5; --c-ebitda-ac:#059669; --c-ebitda-neg:#dc2626;
-  --c-total-col:#f1f5f9;
+  --c-guests-bg: #dbeafe; --c-guests-h: #1e3a5f;
+  --c-rev-bg:    #f0fdf4;
+  --c-rtot-bg:   #bbf7d0; --c-rev-h: #14532d;
+  --c-cog-bg:    #fffbf5;
+  --c-ctot-bg:   #fed7aa; --c-cog-h: #7c2d12; --c-cog-ac: #ea580c;
+  --c-gp-bg:     #bae6fd; --c-gp-h:  #0c4a6e; --c-gp-ac: #0284c7;
+  --c-wage-bg:   #fdf4ff;
+  --c-opex-bg:   #ede9fe;
+  --c-otot-bg:   #ddd6fe; --c-opex-h: #4c1d95; --c-opex-ac: #7c3aed;
+  --c-ebitda-bg: #d1fae5; --c-ebitda-ac: #059669; --c-neg: #dc2626;
+  --c-invest-bg: #f1f5f9;
+  --c-cumul-bg:  #e0f2fe;
+  --c-roi-bg:    #fef9c3;
+  --c-total-col: #e2e8f0;
 }
 
 body {
@@ -33,92 +37,80 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  padding: 20px 12px 60px;
+  padding: 18px 12px 60px;
 }
 
 h1 {
   text-align: center;
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   letter-spacing: -.3px;
 }
 
-/* ── Card / Section ──────────────────────────── */
+/* ── Card ───────────────────────────────────────── */
 .card {
   background: var(--card);
   border-radius: 10px;
   box-shadow: var(--shadow);
-  margin-bottom: 14px;
+  margin-bottom: 12px;
   overflow: hidden;
 }
-
 .card-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   padding: 9px 14px;
-  font-weight: 600;
-  font-size: 11px;
-  letter-spacing: .5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  user-select: none;
+  font-weight: 600; font-size: 11px;
+  letter-spacing: .5px; text-transform: uppercase;
+  cursor: pointer; user-select: none;
   border-bottom: 1px solid var(--border);
 }
-.card-header .toggle { font-size: 10px; opacity: .6; }
-
+.card-header .tog { font-size: 10px; opacity: .5; }
 .card-body { padding: 12px 14px; }
 
-/* ── Config layout ───────────────────────────── */
+/* ── Config grid ────────────────────────────────── */
 .cfg-prices {
   display: grid;
-  grid-template-columns: 1fr 88px 1fr 88px;
-  gap: 6px 10px;
+  grid-template-columns: 1fr 92px 1fr 92px;
+  gap: 5px 10px;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
-.cfg-prices label { font-size: 12px; color: var(--muted); }
+.cfg-prices label {
+  font-size: 12px;
+  color: var(--muted);
+  text-align: right;   /* ← right-align so label sits flush to input */
+  padding-right: 2px;
+}
+.cfg-2 {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 5px 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.cfg-2 label { font-size: 12px; color: var(--muted); text-align: right; padding-right: 2px; }
 
 .cfg-sub {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .4px;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .4px;
   color: var(--muted);
   margin: 8px 0 4px;
 }
 
-/* ── Dynamic rows ────────────────────────────── */
-.drow {
-  display: grid;
-  gap: 5px;
-  margin-bottom: 5px;
-  align-items: center;
-}
-.drow--std  { grid-template-columns: 1fr 100px 76px 28px; }
-.drow--wage { grid-template-columns: 1fr 88px 58px 58px 28px; }
+/* ── Dynamic rows ───────────────────────────────── */
+.drow { display: grid; gap: 5px; margin-bottom: 4px; align-items: center; }
+.drow--std  { grid-template-columns: 1fr 100px 76px 26px; }
+.drow--wage { grid-template-columns: 1fr 88px 54px 54px 26px; }
 
-.col-hd {
-  display: grid;
-  gap: 5px;
-  font-size: 10px;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: .3px;
-  margin-bottom: 3px;
-}
-.col-hd--std  { grid-template-columns: 1fr 100px 76px 28px; }
-.col-hd--wage { grid-template-columns: 1fr 88px 58px 58px 28px; }
+.col-hd { display: grid; gap: 5px; font-size: 10px; color: var(--muted);
+          text-transform: uppercase; letter-spacing: .3px; margin-bottom: 3px; }
+.col-hd--std  { grid-template-columns: 1fr 100px 76px 26px; }
+.col-hd--wage { grid-template-columns: 1fr 88px 54px 54px 26px; }
 
 input[type="number"], input[type="text"], select {
-  width: 100%;
-  padding: 5px 8px;
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  font-size: 12px;
-  background: #fff;
-  color: var(--text);
+  width: 100%; padding: 5px 8px;
+  border: 1px solid var(--border); border-radius: 5px;
+  font-size: 12px; background: #fff; color: var(--text);
   -moz-appearance: textfield;
 }
 input[type="number"]::-webkit-inner-spin-button,
@@ -127,151 +119,153 @@ input:focus, select:focus { outline: none; border-color: #9ca3af; }
 
 .btn-del {
   border: none; background: none; cursor: pointer;
-  color: #d1d5db; font-size: 14px; padding: 3px;
+  color: #d1d5db; font-size: 14px; padding: 2px;
   border-radius: 4px; line-height: 1;
   display: flex; align-items: center; justify-content: center;
   transition: color .12s, background .12s;
 }
-.btn-del:hover { color: #dc2626; background: #fee2e2; }
+.btn-del:hover { color: var(--c-neg); background: #fee2e2; }
 
 .btn-add {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 5px 12px; border: 1.5px dashed var(--border);
+  padding: 4px 11px; border: 1.5px dashed var(--border);
   border-radius: 5px; font-size: 11px; font-weight: 500;
   cursor: pointer; background: transparent; color: var(--muted);
-  transition: background .12s;
-  margin-top: 4px;
+  transition: background .12s; margin-top: 3px;
 }
 .btn-add:hover { background: rgba(0,0,0,.04); }
 .btn-add--cog  { border-color: var(--c-cog-ac);  color: var(--c-cog-ac); }
 .btn-add--opex { border-color: var(--c-opex-ac); color: var(--c-opex-ac); }
 
-/* ── Config header colors ─────────────────────── */
+/* ── Config card header ─────────────────────────── */
 .card--cfg .card-header { background: #f8fafc; color: #374151; }
 
-/* ── Table section ───────────────────────────── */
+/* ── Table card ─────────────────────────────────── */
 .card--table .card-header { background: #1e293b; color: #f1f5f9; cursor: default; }
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
-.tbl-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
+table { border-collapse: collapse; width: 100%; min-width: 920px; font-size: 12px; }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 860px;
-  font-size: 12px;
-}
-
-/* Header row */
 thead th {
-  position: sticky;
-  top: 0;
-  background: #1e293b;
-  color: #cbd5e1;
-  font-weight: 600;
-  font-size: 11px;
-  padding: 7px 6px;
-  text-align: right;
-  white-space: nowrap;
+  position: sticky; top: 0; z-index: 3;
+  background: #1e293b; color: #94a3b8;
+  font-weight: 600; font-size: 10px;
+  padding: 6px 5px;
+  text-align: right; white-space: nowrap;
   border-right: 1px solid #334155;
 }
 thead th:first-child {
-  text-align: left;
-  position: sticky;
-  left: 0;
-  z-index: 2;
-  min-width: 150px;
-  background: #1e293b;
+  text-align: left; position: sticky; left: 0; z-index: 4;
+  min-width: 160px; background: #1e293b;
 }
-thead th.th-total {
-  background: #0f172a;
-  color: #e2e8f0;
-}
+thead th.th-tot { background: #0f172a; color: #e2e8f0; }
 
-/* Body rows */
 tbody td {
-  padding: 5px 6px;
-  text-align: right;
+  padding: 4px 5px; text-align: right;
   white-space: nowrap;
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
 }
 tbody td:first-child {
-  text-align: left;
-  position: sticky;
-  left: 0;
-  font-weight: 500;
-  z-index: 1;
+  text-align: left; position: sticky; left: 0;
+  font-weight: 500; z-index: 1;
   border-right: 2px solid var(--border);
   padding-left: 10px;
 }
-tbody td.td-total {
+tbody td.td-tot {
   background: var(--c-total-col) !important;
   font-weight: 700;
 }
-tbody td.neg { color: var(--c-ebitda-neg); }
+tbody td.neg { color: var(--c-neg); }
 tbody td.pos { color: var(--c-ebitda-ac); }
 
-/* Guest input cells */
-td.td-guest input {
-  width: 68px;
-  padding: 3px 5px;
-  font-size: 11px;
-  text-align: right;
-  border: 1px solid #93c5fd;
+/* guest inputs */
+td.td-g input {
+  width: 70px; padding: 2px 4px;
+  font-size: 11px; text-align: right;
+  border: 1px solid #93c5fd; border-radius: 4px;
   background: #eff6ff;
 }
 
-/* Row group colors */
-tr.tr-guests td { background: var(--c-guests); color: var(--c-guests-h); }
-tr.tr-rev    td { background: #f0fdf4; }
-tr.tr-rtot   td { background: var(--c-rev-tot); font-weight: 700; }
-tr.tr-cog    td { background: #fffbf5; }
-tr.tr-ctot   td { background: var(--c-cog-tot); font-weight: 700; }
-tr.tr-gp     td { background: var(--c-gp); font-weight: 700; font-size: 12.5px; }
+/* ── Overridable cells ──────────────────────────── */
+td.ov-cell { cursor: pointer; }
+td.ov-cell:hover { filter: brightness(.94); }
+td.ov-cell.overridden { background: #fefce8 !important; }
+td.ov-cell.overridden::after {
+  content: '✎'; font-size: 8px; opacity: .4;
+  margin-left: 2px; vertical-align: super;
+}
+td.ov-cell.editing { background: #fff9c4 !important; padding: 0 !important; }
+td.ov-cell.editing input {
+  width: 100%; height: 100%; padding: 4px 5px;
+  text-align: right; border: 2px solid #f59e0b;
+  border-radius: 0; background: #fff9c4;
+  font: inherit; -moz-appearance: textfield;
+}
+td.ov-cell.editing input::-webkit-inner-spin-button,
+td.ov-cell.editing input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.ov-hint {
+  font-size: 10px; color: var(--muted); text-align: right;
+  padding: 3px 14px 0; font-style: italic;
+}
+
+/* ── Row group colors ───────────────────────────── */
+tr.tr-guests td { background: var(--c-guests-bg); color: var(--c-guests-h); }
+tr.tr-rev    td { background: var(--c-rev-bg); }
+tr.tr-rtot   td { background: var(--c-rtot-bg); font-weight: 700; }
+tr.tr-cog    td { background: var(--c-cog-bg); }
+tr.tr-ctot   td { background: var(--c-ctot-bg); font-weight: 700; }
+tr.tr-gp     td { background: var(--c-gp-bg);  font-weight: 700; font-size: 12.5px; }
 tr.tr-margin td { background: #f8fafc; color: var(--muted); font-style: italic; font-size: 11px; }
-tr.tr-wage   td { background: #fdf4ff; }
-tr.tr-opex   td { background: var(--c-opex); }
-tr.tr-otot   td { background: var(--c-opex-tot); font-weight: 700; }
-tr.tr-ebitda td { background: var(--c-ebitda); font-weight: 700; font-size: 13px; }
+tr.tr-wage   td { background: var(--c-wage-bg); }
+tr.tr-opex   td { background: var(--c-opex-bg); }
+tr.tr-otot   td { background: var(--c-otot-bg); font-weight: 700; }
+tr.tr-ebitda td { background: var(--c-ebitda-bg); font-weight: 700; font-size: 13px; }
+tr.tr-sep    td { background: #1e293b; height: 4px; padding: 0; }
+tr.tr-invest td { background: var(--c-invest-bg); color: var(--muted); }
+tr.tr-cumul  td { background: var(--c-cumul-bg); font-weight: 600; }
+tr.tr-roi    td { background: var(--c-roi-bg); font-weight: 600; }
+tr.tr-roi td.payback { background: #fbbf24 !important; color: #78350f; font-weight: 700; }
 
-/* Sticky column inherits row color */
-tr.tr-guests td:first-child { background: var(--c-guests); }
-tr.tr-rev    td:first-child { background: #f0fdf4; }
-tr.tr-rtot   td:first-child { background: var(--c-rev-tot); }
-tr.tr-cog    td:first-child { background: #fffbf5; }
-tr.tr-ctot   td:first-child { background: var(--c-cog-tot); }
-tr.tr-gp     td:first-child { background: var(--c-gp); }
+/* sticky col inherits row bg */
+tr.tr-guests td:first-child { background: var(--c-guests-bg); }
+tr.tr-rev    td:first-child { background: var(--c-rev-bg); }
+tr.tr-rtot   td:first-child { background: var(--c-rtot-bg); }
+tr.tr-cog    td:first-child { background: var(--c-cog-bg); }
+tr.tr-ctot   td:first-child { background: var(--c-ctot-bg); }
+tr.tr-gp     td:first-child { background: var(--c-gp-bg); }
 tr.tr-margin td:first-child { background: #f8fafc; }
-tr.tr-wage   td:first-child { background: #fdf4ff; }
-tr.tr-opex   td:first-child { background: var(--c-opex); }
-tr.tr-otot   td:first-child { background: var(--c-opex-tot); }
-tr.tr-ebitda td:first-child { background: var(--c-ebitda); }
+tr.tr-wage   td:first-child { background: var(--c-wage-bg); }
+tr.tr-opex   td:first-child { background: var(--c-opex-bg); }
+tr.tr-otot   td:first-child { background: var(--c-otot-bg); }
+tr.tr-ebitda td:first-child { background: var(--c-ebitda-bg); }
+tr.tr-invest td:first-child { background: var(--c-invest-bg); }
+tr.tr-cumul  td:first-child { background: var(--c-cumul-bg); }
+tr.tr-roi    td:first-child { background: var(--c-roi-bg); }
 
-/* Total column override on top of row color */
-tr.tr-guests td.td-total { background: #bfdbfe !important; }
-tr.tr-rtot   td.td-total { background: #86efac !important; }
-tr.tr-ctot   td.td-total { background: #fdba74 !important; }
-tr.tr-gp     td.td-total { background: #7dd3fc !important; }
-tr.tr-otot   td.td-total { background: #c4b5fd !important; }
-tr.tr-ebitda td.td-total { background: #6ee7b7 !important; }
+/* total column accent overrides */
+tr.tr-guests td.td-tot { background: #bfdbfe !important; }
+tr.tr-rtot   td.td-tot { background: #86efac !important; }
+tr.tr-ctot   td.td-tot { background: #fdba74 !important; }
+tr.tr-gp     td.td-tot { background: #7dd3fc !important; }
+tr.tr-otot   td.td-tot { background: #c4b5fd !important; }
+tr.tr-ebitda td.td-tot { background: #6ee7b7 !important; }
+tr.tr-cumul  td.td-tot { background: #7dd3fc !important; }
+tr.tr-roi    td.td-tot { background: #fde68a !important; }
 </style>
 </head>
 <body>
 
 <h1>Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</h1>
 
-<!-- ═══════════════════════ CONFIG ═══════════════════════ -->
+<!-- ════════════════ CONFIG ════════════════ -->
 <div class="card card--cfg">
   <div class="card-header" onclick="toggleCfg()">
     <span>Einstellungen &amp; Kostenstruktur</span>
-    <span class="toggle" id="cfgToggle">▲</span>
+    <span class="tog" id="cfgTog">▲</span>
   </div>
   <div class="card-body" id="cfgBody">
 
-    <!-- Prices -->
     <div class="cfg-sub">Spend per Cap (€)</div>
     <div class="cfg-prices">
       <label>Ø Ticketpreis</label>
@@ -284,45 +278,49 @@ tr.tr-ebitda td.td-total { background: #6ee7b7 !important; }
       <input type="number" id="fbPrice"     value="4.00"  min="0" step="0.5">
     </div>
 
-    <!-- COGS -->
-    <div class="cfg-sub" style="color:var(--c-cog-h);">Wareneinsatz</div>
+    <div class="cfg-sub" style="color:var(--c-cog-h)">Wareneinsatz</div>
     <div class="col-hd col-hd--std">
       <span>Beschreibung</span><span>Art</span><span>Wert</span><span></span>
     </div>
     <div id="cogRows"></div>
     <button class="btn-add btn-add--cog" onclick="addCogRow()">+ Zeile</button>
 
-    <!-- Wages -->
-    <div class="cfg-sub" style="color:var(--c-opex-h);margin-top:10px;">Lohnkosten</div>
+    <div class="cfg-sub" style="color:var(--c-opex-h);margin-top:10px">Lohnkosten</div>
     <div class="col-hd col-hd--wage">
       <span>Beschreibung</span><span>Lohn €</span><span>SV %</span><span>Puffer %</span><span></span>
     </div>
     <div id="wageRows"></div>
     <button class="btn-add btn-add--opex" onclick="addWageRow()">+ Lohnzeile</button>
 
-    <!-- OpEx -->
-    <div class="cfg-sub" style="color:var(--c-opex-h);margin-top:10px;">Sonstige Kosten</div>
+    <div class="cfg-sub" style="color:var(--c-opex-h);margin-top:10px">Sonstige Kosten</div>
     <div class="col-hd col-hd--std">
       <span>Beschreibung</span><span>Art</span><span>Wert</span><span></span>
     </div>
     <div id="opexRows"></div>
     <button class="btn-add btn-add--opex" onclick="addOpexRow()">+ Zeile</button>
 
+    <div class="cfg-sub" style="margin-top:12px">Investition</div>
+    <div class="cfg-2">
+      <label>Gesamtinvestition (€)</label>
+      <input type="number" id="investTotal" value="0" min="0" step="1000">
+    </div>
+
   </div>
 </div>
 
-<!-- ═══════════════════════ TABLE ═══════════════════════ -->
+<!-- ════════════════ TABLE ════════════════ -->
 <div class="card card--table">
-  <div class="card-header" style="cursor:default;">
+  <div class="card-header" style="cursor:default">
     <span>Jahresübersicht – alle 12 Monate</span>
-    <span style="font-size:10px;opacity:.6;">Gäste direkt in der Tabelle anpassen</span>
+    <span style="font-size:10px;opacity:.5">Zellen anklicken zum Überschreiben &middot; Esc = zurücksetzen</span>
   </div>
   <div class="tbl-wrap">
-    <table id="mainTable">
+    <table>
       <thead id="tblHead"></thead>
       <tbody id="tblBody"></tbody>
     </table>
   </div>
+  <div class="ov-hint" id="ovHint"></div>
 </div>
 
 <script>
@@ -330,256 +328,370 @@ tr.tr-ebitda td.td-total { background: #6ee7b7 !important; }
 const MONTHS = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 const TYPE_OPTS = `<option value="pct">% Umsatz</option><option value="perGuest">€/Gast</option><option value="fixed">€ fix</option>`;
 
+// ── State ──────────────────────────────────────────────────────────────
+let guestValues = Array(12).fill(5000);
+const overrides = {};   // key: "rowKey-monthIdx" → number
+
 // ── Formatters ─────────────────────────────────────────────────────────
 const fmtE = v => v.toLocaleString('de-DE', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-const fmtP = v => v.toFixed(1).replace('.', ',') + ' %';
-const n    = id => parseFloat(document.getElementById(id)?.value) || 0;
-const el   = id => document.getElementById(id);
+const fmtP = v => v.toFixed(1).replace('.', ',') + ' %';
+const fmtPsigned = v => (v >= 0 ? '+' : '') + v.toFixed(1).replace('.', ',') + ' %';
+const n   = id => parseFloat(document.getElementById(id)?.value) || 0;
+const el  = id => document.getElementById(id);
+const esc = s => String(s).replace(/[<>&"']/g, c =>
+  ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
 
-// ── Guest values (persisted across table rebuilds) ─────────────────────
-let guestValues = Array(12).fill(5000);
-
-function saveGuests() {
-  document.querySelectorAll('.g-inp').forEach((inp, i) => {
-    guestValues[i] = parseFloat(inp.value) || 0;
-  });
+// ── Override helpers ───────────────────────────────────────────────────
+function ovKey(rk, mi) { return `${rk}-${mi}`; }
+function ovGet(rk, mi, calc) {
+  const k = ovKey(rk, mi);
+  return k in overrides ? overrides[k] : calc;
 }
 
-// ── Dynamic row helpers ────────────────────────────────────────────────
+// ── DOM helpers ────────────────────────────────────────────────────────
 function calcDynAmt(type, val, rev, guests) {
-  if (type === 'pct')      return (rev * val) / 100;
+  if (type === 'pct')      return rev * val / 100;
   if (type === 'perGuest') return val * guests;
   return val;
 }
 
+// ── Dynamic config rows ────────────────────────────────────────────────
 let cogId = 0;
 function addCogRow(desc='', type='fixed', val=0) {
-  const id = ++cogId;
   const d = document.createElement('div');
-  d.className = 'drow drow--std'; d.dataset.id = id;
+  d.className = 'drow drow--std'; d.dataset.id = ++cogId;
   d.innerHTML = `
-    <input type="text" class="cd" placeholder="Beschreibung" value="${esc(desc)}">
+    <input type="text"   class="cd" placeholder="Beschreibung" value="${esc(desc)}">
     <select class="ct">${TYPE_OPTS}</select>
     <input type="number" class="cv" value="${val}" min="0" step="0.01">
-    <button class="btn-del" onclick="this.closest('.drow').remove();recalc();">&#x2715;</button>`;
+    <button class="btn-del" onclick="rmRow(this,'cog')">&#x2715;</button>`;
   d.querySelector('.ct').value = type;
   d.querySelectorAll('input,select').forEach(x => x.addEventListener('input', recalc));
-  el('cogRows').appendChild(d);
-  recalc();
+  el('cogRows').appendChild(d); recalc();
 }
 
 let wageId = 0;
 function addWageRow(desc='', wage=0, sv=20, puffer=5) {
-  const id = ++wageId;
   const d = document.createElement('div');
-  d.className = 'drow drow--wage'; d.dataset.id = id;
+  d.className = 'drow drow--wage'; d.dataset.id = ++wageId;
   d.innerHTML = `
-    <input type="text" class="wd" placeholder="z.B. Vollzeit MA" value="${esc(desc)}">
-    <input type="number" class="wb" value="${wage}" min="0" step="100">
-    <input type="number" class="ws" value="${sv}"   min="0" step="0.5">
+    <input type="text"   class="wd" placeholder="z.B. Vollzeit MA" value="${esc(desc)}">
+    <input type="number" class="wb" value="${wage}"   min="0" step="100">
+    <input type="number" class="ws" value="${sv}"     min="0" step="0.5">
     <input type="number" class="wp" value="${puffer}" min="0" step="0.5">
-    <button class="btn-del" onclick="this.closest('.drow').remove();recalc();">&#x2715;</button>`;
+    <button class="btn-del" onclick="rmRow(this,'wage')">&#x2715;</button>`;
   d.querySelectorAll('input').forEach(x => x.addEventListener('input', recalc));
-  el('wageRows').appendChild(d);
-  recalc();
+  el('wageRows').appendChild(d); recalc();
 }
 
 let opexId = 0;
 function addOpexRow(desc='', type='fixed', val=0) {
-  const id = ++opexId;
   const d = document.createElement('div');
-  d.className = 'drow drow--std'; d.dataset.id = id;
+  d.className = 'drow drow--std'; d.dataset.id = ++opexId;
   d.innerHTML = `
-    <input type="text" class="od" placeholder="Beschreibung" value="${esc(desc)}">
+    <input type="text"   class="od" placeholder="Beschreibung" value="${esc(desc)}">
     <select class="ot">${TYPE_OPTS}</select>
     <input type="number" class="ov" value="${val}" min="0" step="0.01">
-    <button class="btn-del" onclick="this.closest('.drow').remove();recalc();">&#x2715;</button>`;
+    <button class="btn-del" onclick="rmRow(this,'opex')">&#x2715;</button>`;
   d.querySelector('.ot').value = type;
   d.querySelectorAll('input,select').forEach(x => x.addEventListener('input', recalc));
-  el('opexRows').appendChild(d);
-  recalc();
+  el('opexRows').appendChild(d); recalc();
 }
 
-function esc(s) { return String(s).replace(/['"<>&]/g, c => ({'\'':'&#39;','"':'&quot;','<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
+function rmRow(btn, type) {
+  const row = btn.closest('.drow');
+  // clear overrides for this row type when structure changes
+  const prefix = type + '-';
+  Object.keys(overrides).forEach(k => { if (k.startsWith(prefix)) delete overrides[k]; });
+  row.remove(); recalc();
+}
 
 // ── Config toggle ──────────────────────────────────────────────────────
 function toggleCfg() {
-  const b = el('cfgBody'), t = el('cfgToggle');
+  const b = el('cfgBody'), t = el('cfgTog');
   const hidden = b.style.display === 'none';
   b.style.display = hidden ? '' : 'none';
   t.textContent = hidden ? '▲' : '▼';
 }
 
-// ── Build table header ─────────────────────────────────────────────────
+// ── Table header ───────────────────────────────────────────────────────
 function buildHead() {
   el('tblHead').innerHTML = `<tr>
     <th>Kennzahl</th>
     ${MONTHS.map(m => `<th>${m}</th>`).join('')}
-    <th class="th-total">Jahr</th>
+    <th class="th-tot">Jahr</th>
   </tr>`;
 }
 
-// ── Cell helpers ───────────────────────────────────────────────────────
-function td(val, cls='', colored=false) {
-  let color = '';
-  if (colored) color = val < 0 ? ' neg' : ' pos';
-  return `<td class="${cls}${color}">${fmtE(val)}</td>`;
+// ── Cell builders ──────────────────────────────────────────────────────
+// Plain cell
+function td(val, cls='', sign=false) {
+  const col = sign ? (val < 0 ? ' neg' : ' pos') : '';
+  return `<td class="${cls}${col}">${fmtE(val)}</td>`;
 }
+// Percentage cell
 function tdP(val, cls='') {
-  return `<td class="${cls}" style="color:var(--muted);font-style:italic;">${fmtP(val)}</td>`;
+  return `<td class="${cls}" style="color:var(--muted);font-style:italic">${fmtP(val)}</td>`;
 }
+// Overridable cell
+function tdO(rk, mi, calcVal, cls='') {
+  const k = ovKey(rk, mi);
+  const hasOv = k in overrides;
+  const val = hasOv ? overrides[k] : calcVal;
+  const ovCls = hasOv ? ' overridden' : '';
+  return `<td class="ov-cell${ovCls} ${cls}" data-rk="${rk}" data-mi="${mi}" data-calc="${calcVal}">${fmtE(val)}</td>`;
+}
+// Dash cell (non-applicable)
+function tdDash(cls='') { return `<td class="${cls}" style="color:#cbd5e1;text-align:center">—</td>`; }
 
-// ── Main recalc & table render ─────────────────────────────────────────
+// ── Main recalculation ─────────────────────────────────────────────────
 function recalc() {
-  saveGuests();
+  // Sync guest values from editable inputs in table (if table exists)
+  document.querySelectorAll('.g-inp').forEach((inp, i) => {
+    guestValues[i] = parseFloat(inp.value) || 0;
+  });
 
-  const tp = n('ticketPrice'), rp = n('retailPrice'), gp = n('gamesPrice'), fb = n('fbPrice');
+  const tp = n('ticketPrice'), rp = n('retailPrice'),
+        gp = n('gamesPrice'),  fb = n('fbPrice'),
+        investTotal = n('investTotal');
 
-  // Gather COG rows config
-  const cogCfg = [...document.querySelectorAll('#cogRows .drow')].map(r => ({
-    label: r.querySelector('.cd').value || 'Wareneinsatz',
-    type:  r.querySelector('.ct').value,
-    val:   parseFloat(r.querySelector('.cv').value) || 0,
+  // Config snapshots
+  const cogCfg  = [...document.querySelectorAll('#cogRows  .drow')].map((r,i) => ({
+    i, label: r.querySelector('.cd').value || 'Wareneinsatz',
+    type: r.querySelector('.ct').value,
+    val:  parseFloat(r.querySelector('.cv').value) || 0,
   }));
-
-  // Gather wage rows config
-  const wageCfg = [...document.querySelectorAll('#wageRows .drow')].map(r => ({
-    label:  r.querySelector('.wd').value || 'Lohn',
+  const wageCfg = [...document.querySelectorAll('#wageRows .drow')].map((r,i) => ({
+    i, label: r.querySelector('.wd').value || 'Lohn',
     wage:   parseFloat(r.querySelector('.wb').value) || 0,
     sv:     parseFloat(r.querySelector('.ws').value) || 0,
     puffer: parseFloat(r.querySelector('.wp').value) || 0,
   }));
-
-  // Gather opex rows config
-  const opexCfg = [...document.querySelectorAll('#opexRows .drow')].map(r => ({
-    label: r.querySelector('.od').value || 'Kosten',
-    type:  r.querySelector('.ot').value,
-    val:   parseFloat(r.querySelector('.ov').value) || 0,
+  const opexCfg = [...document.querySelectorAll('#opexRows .drow')].map((r,i) => ({
+    i, label: r.querySelector('.od').value || 'Kosten',
+    type: r.querySelector('.ot').value,
+    val:  parseFloat(r.querySelector('.ov').value) || 0,
   }));
 
-  // Per-month calculations
-  const months = guestValues.map(guests => {
-    const ticketRev = tp * guests;
-    const retailRev = rp * guests;
-    const gamesRev  = gp * guests;
-    const fbRev     = fb * guests;
+  // Per-month calculation (overrides applied to individual components)
+  const months = guestValues.map((guests, mi) => {
+    const ticketRev = ovGet(`rev-0`, mi, tp * guests);
+    const retailRev = ovGet(`rev-1`, mi, rp * guests);
+    const gamesRev  = ovGet(`rev-2`, mi, gp * guests);
+    const fbRev     = ovGet(`rev-3`, mi, fb * guests);
     const totalRev  = ticketRev + retailRev + gamesRev + fbRev;
 
-    const cogAmts = cogCfg.map(c => calcDynAmt(c.type, c.val, totalRev, guests));
+    const cogAmts = cogCfg.map(c =>
+      ovGet(`cog-${c.i}`, mi, calcDynAmt(c.type, c.val, totalRev, guests)));
     const totalCog = cogAmts.reduce((a, b) => a + b, 0);
     const grossProfit = totalRev - totalCog;
 
-    const wageAmts = wageCfg.map(w => w.wage * (1 + (w.sv + w.puffer) / 100));
+    const wageAmts = wageCfg.map(w =>
+      ovGet(`wage-${w.i}`, mi, w.wage * (1 + (w.sv + w.puffer) / 100)));
     const totalWage = wageAmts.reduce((a, b) => a + b, 0);
 
-    const opexAmts = opexCfg.map(o => calcDynAmt(o.type, o.val, totalRev, guests));
-    const totalOpex = totalWage + opexAmts.reduce((a, b) => a + b, 0);
-
+    const opexAmts = opexCfg.map(o =>
+      ovGet(`opex-${o.i}`, mi, calcDynAmt(o.type, o.val, totalRev, guests)));
+    const totalOpexOther = opexAmts.reduce((a, b) => a + b, 0);
+    const totalOpex = totalWage + totalOpexOther;
     const ebitda = grossProfit - totalOpex;
+
     return { guests, ticketRev, retailRev, gamesRev, fbRev, totalRev,
-             cogAmts, totalCog, grossProfit, wageAmts, opexAmts, totalWage, totalOpex, ebitda };
+             cogAmts, totalCog, grossProfit,
+             wageAmts, opexAmts, totalWage, totalOpexOther, totalOpex, ebitda };
   });
 
   // Annual totals
-  const sum = key => months.reduce((a, m) => a + m[key], 0);
-  const sumArr = (key, i) => months.reduce((a, m) => a + m[key][i], 0);
-  const annRev = sum('totalRev'), annGP = sum('grossProfit'), annEbitda = sum('ebitda');
-  const annOpex = sum('totalOpex');
+  const S = k  => months.reduce((a, m)    => a + m[k], 0);
+  const SA = (k, i) => months.reduce((a, m) => a + m[k][i], 0);
+  const annRev = S('totalRev'), annGP = S('grossProfit'),
+        annOpex = S('totalOpex'), annEbitda = S('ebitda');
 
-  // ── Build table body ──
+  // Cumulative EBITDA & ROI
+  let cumul = 0;
+  const cumulArr = months.map(m => { cumul += m.ebitda; return cumul; });
+  const paybackMonth = investTotal > 0
+    ? cumulArr.findIndex(c => c >= investTotal)
+    : -1;
+
+  // ── Build table body ────────────────────────────────────────────────
   let rows = '';
 
-  // Gäste row (with editable inputs)
-  rows += `<tr class="tr-guests"><td>Gäste</td>`;
-  months.forEach((m, i) => {
-    rows += `<td class="td-guest"><input class="g-inp" type="number" value="${m.guests}" min="0" step="100" data-idx="${i}"></td>`;
-  });
-  rows += `<td class="td-total">${fmtE(guestValues.reduce((a,b)=>a+b,0))}</td></tr>`;
+  // Guests (editable inputs)
+  rows += `<tr class="tr-guests"><td>Gäste / Monat</td>`;
+  months.forEach((m, i) =>
+    rows += `<td class="td-g"><input class="g-inp" type="number" value="${m.guests}" min="0" step="100" data-idx="${i}"></td>`);
+  rows += `<td class="td-tot">${fmtE(guestValues.reduce((a,b)=>a+b,0))}</td></tr>`;
 
-  // Revenue rows
-  const revKeys = ['ticketRev','retailRev','gamesRev','fbRev'];
+  // Revenue components (overridable)
   const revLabels = ['Ticket-Umsatz','Retail-Umsatz','Games-Umsatz','F&B-Umsatz'];
-  revKeys.forEach((k, li) => {
+  const revKeys   = ['rev-0','rev-1','rev-2','rev-3'];
+  const revProp   = ['ticketRev','retailRev','gamesRev','fbRev'];
+  revKeys.forEach((rk, li) => {
     rows += `<tr class="tr-rev"><td>${revLabels[li]}</td>`;
-    months.forEach(m => rows += td(m[k]));
-    rows += td(sum(k), 'td-total') + '</tr>';
+    months.forEach((m, mi) => rows += tdO(rk, mi, m[revProp[li]]));
+    rows += td(S(revProp[li]), 'td-tot') + '</tr>';
   });
 
   // Revenue total
   rows += `<tr class="tr-rtot"><td>Gesamt-Umsatz</td>`;
   months.forEach(m => rows += td(m.totalRev));
-  rows += td(annRev, 'td-total') + '</tr>';
+  rows += td(annRev, 'td-tot') + '</tr>';
 
-  // COG rows
-  cogCfg.forEach((c, ci) => {
+  // COG (overridable)
+  cogCfg.forEach(c => {
     rows += `<tr class="tr-cog"><td>${esc(c.label)}</td>`;
-    months.forEach(m => rows += td(m.cogAmts[ci]));
-    rows += td(sumArr('cogAmts', ci), 'td-total') + '</tr>';
+    months.forEach((m, mi) => rows += tdO(`cog-${c.i}`, mi, m.cogAmts[c.i]));
+    rows += td(SA('cogAmts', c.i), 'td-tot') + '</tr>';
   });
   rows += `<tr class="tr-ctot"><td>Gesamt Wareneinsatz</td>`;
   months.forEach(m => rows += td(m.totalCog));
-  rows += td(sum('totalCog'), 'td-total') + '</tr>';
+  rows += td(S('totalCog'), 'td-tot') + '</tr>';
 
   // Gross profit
   rows += `<tr class="tr-gp"><td>Rohertrag</td>`;
   months.forEach(m => rows += td(m.grossProfit, '', true));
-  rows += td(annGP, 'td-total ' + (annGP < 0 ? 'neg' : 'pos')) + '</tr>';
-
+  rows += td(annGP, 'td-tot ' + (annGP < 0 ? 'neg' : 'pos')) + '</tr>';
   rows += `<tr class="tr-margin"><td>Rohertrag-Marge</td>`;
   months.forEach(m => rows += tdP(m.totalRev > 0 ? m.grossProfit / m.totalRev * 100 : 0));
-  rows += tdP(annRev > 0 ? annGP / annRev * 100 : 0, 'td-total') + '</tr>';
+  rows += tdP(annRev > 0 ? annGP / annRev * 100 : 0, 'td-tot') + '</tr>';
 
-  // Wage rows
-  wageCfg.forEach((w, wi) => {
-    const total = w.wage * (1 + (w.sv + w.puffer) / 100);
+  // Wages (overridable per month)
+  wageCfg.forEach(w => {
+    const calcFixed = w.wage * (1 + (w.sv + w.puffer) / 100);
     rows += `<tr class="tr-wage"><td>${esc(w.label)}</td>`;
-    months.forEach(() => rows += td(total));
-    rows += td(total * 12, 'td-total') + '</tr>';
+    months.forEach((m, mi) => rows += tdO(`wage-${w.i}`, mi, m.wageAmts[w.i]));
+    rows += td(SA('wageAmts', w.i), 'td-tot') + '</tr>';
   });
 
-  // OpEx rows
-  opexCfg.forEach((o, oi) => {
+  // OpEx (overridable)
+  opexCfg.forEach(o => {
     rows += `<tr class="tr-opex"><td>${esc(o.label)}</td>`;
-    months.forEach(m => rows += td(m.opexAmts[oi]));
-    rows += td(sumArr('opexAmts', oi), 'td-total') + '</tr>';
+    months.forEach((m, mi) => rows += tdO(`opex-${o.i}`, mi, m.opexAmts[o.i]));
+    rows += td(SA('opexAmts', o.i), 'td-tot') + '</tr>';
   });
 
-  // OpEx total
   rows += `<tr class="tr-otot"><td>Betr. Aufwand gesamt</td>`;
   months.forEach(m => rows += td(m.totalOpex));
-  rows += td(annOpex, 'td-total') + '</tr>';
+  rows += td(annOpex, 'td-tot') + '</tr>';
 
   // EBITDA
   rows += `<tr class="tr-ebitda"><td>EBITDA</td>`;
   months.forEach(m => rows += td(m.ebitda, '', true));
-  rows += td(annEbitda, 'td-total ' + (annEbitda < 0 ? 'neg' : 'pos')) + '</tr>';
-
+  rows += td(annEbitda, 'td-tot ' + (annEbitda < 0 ? 'neg' : 'pos')) + '</tr>';
   rows += `<tr class="tr-margin"><td>EBITDA-Marge</td>`;
   months.forEach(m => rows += tdP(m.totalRev > 0 ? m.ebitda / m.totalRev * 100 : 0));
-  rows += tdP(annRev > 0 ? annEbitda / annRev * 100 : 0, 'td-total') + '</tr>';
+  rows += tdP(annRev > 0 ? annEbitda / annRev * 100 : 0, 'td-tot') + '</tr>';
+
+  // ── Investment / ROI section ─────────────────────────────────────────
+  rows += `<tr class="tr-sep"><td colspan="${14}"></td></tr>`;
+
+  // Investition row
+  rows += `<tr class="tr-invest"><td>Investition gesamt</td>`;
+  months.forEach(() => rows += tdDash());
+  rows += `<td class="td-tot neg" style="font-weight:700">`;
+  rows += investTotal > 0 ? `&minus; ${fmtE(investTotal)} €` : `—`;
+  rows += `</td></tr>`;
+
+  // Kumulierter EBITDA
+  rows += `<tr class="tr-cumul"><td>Kum. EBITDA</td>`;
+  months.forEach((m, mi) => {
+    const cls = cumulArr[mi] < 0 ? ' neg' : ' pos';
+    rows += `<td class="${cls}">${fmtE(cumulArr[mi])}</td>`;
+  });
+  rows += td(annEbitda, 'td-tot ' + (annEbitda < 0 ? 'neg' : 'pos')) + '</tr>';
+
+  // ROI row
+  if (investTotal > 0) {
+    rows += `<tr class="tr-roi"><td>ROI (kumuliert)</td>`;
+    months.forEach((m, mi) => {
+      const roi = cumulArr[mi] / investTotal * 100;
+      const isPB = mi === paybackMonth;
+      rows += `<td class="${isPB ? 'payback' : ''}">${fmtPsigned(roi)}</td>`;
+    });
+    const annRoi = annEbitda / investTotal * 100;
+    rows += `<td class="td-tot">${fmtPsigned(annRoi)}</td></tr>`;
+
+    // Payback hint
+    if (paybackMonth >= 0) {
+      el('ovHint').textContent =
+        `Amortisation erreicht im ${MONTHS[paybackMonth]} (Monat ${paybackMonth + 1}) · Jahres-ROI: ${fmtPsigned(annRoi)}`;
+    } else {
+      el('ovHint').textContent =
+        `Investition (${fmtE(investTotal)} €) wird im Jahr 1 nicht amortisiert · Jahres-ROI: ${fmtPsigned(annEbitda / investTotal * 100)}`;
+    }
+  } else {
+    el('ovHint').textContent = '';
+  }
 
   el('tblBody').innerHTML = rows;
 
-  // Re-attach guest input listeners
+  // Re-attach guest inputs
   document.querySelectorAll('.g-inp').forEach(inp => {
     inp.addEventListener('input', () => {
       guestValues[+inp.dataset.idx] = parseFloat(inp.value) || 0;
       recalc();
     });
   });
+
+  // Attach override click handlers
+  document.querySelectorAll('td.ov-cell').forEach(td => {
+    td.addEventListener('click', handleCellEdit);
+  });
+
+  // Hint for override count
+  const ovCount = Object.keys(overrides).length;
+  if (ovCount > 0 && !el('ovHint').textContent) {
+    el('ovHint').textContent = `${ovCount} Zelle${ovCount > 1 ? 'n' : ''} manuell überschrieben — Zelle anklicken + Esc zum Zurücksetzen`;
+  }
 }
 
-// ── Static input listeners ─────────────────────────────────────────────
-['ticketPrice','retailPrice','gamesPrice','fbPrice'].forEach(id => {
-  el(id)?.addEventListener('input', recalc);
-});
+// ── Cell override handler ──────────────────────────────────────────────
+function handleCellEdit(e) {
+  const cell = e.currentTarget;
+  if (cell.querySelector('input')) return;
+
+  const rk   = cell.dataset.rk;
+  const mi   = +cell.dataset.mi;
+  const calc = parseFloat(cell.dataset.calc) || 0;
+  const key  = ovKey(rk, mi);
+  const cur  = key in overrides ? overrides[key] : calc;
+
+  cell.classList.add('editing');
+  const inp = document.createElement('input');
+  inp.type = 'number'; inp.value = cur; inp.step = '1';
+  cell.textContent = '';
+  cell.appendChild(inp);
+  inp.focus(); inp.select();
+
+  const confirm = () => {
+    const v = inp.value.trim();
+    if (v === '' || isNaN(+v)) delete overrides[key];
+    else overrides[key] = +v;
+    recalc();
+  };
+
+  inp.addEventListener('blur', confirm);
+  inp.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter')  { ev.preventDefault(); inp.blur(); }
+    if (ev.key === 'Escape') {
+      inp.removeEventListener('blur', confirm);
+      delete overrides[key];
+      recalc();
+    }
+  });
+}
+
+// ── Config inputs ──────────────────────────────────────────────────────
+['ticketPrice','retailPrice','gamesPrice','fbPrice','investTotal']
+  .forEach(id => el(id)?.addEventListener('input', recalc));
 
 // ── Init ───────────────────────────────────────────────────────────────
 buildHead();
 
-addCogRow('Wareneinsatz Tickets', 'pct',      30);
-addCogRow('Wareneinsatz F&B',     'pct',      25);
-addCogRow('Wareneinsatz Retail',  'perGuest',  1);
+addCogRow('Wareneinsatz Tickets', 'pct',       30);
+addCogRow('Wareneinsatz F&B',     'pct',       25);
+addCogRow('Wareneinsatz Retail',  'perGuest',   1);
 
 addWageRow('Vollzeit MA',  3200, 20, 5);
 addWageRow('Teilzeit MA',  1200, 20, 5);
