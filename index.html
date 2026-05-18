@@ -293,34 +293,102 @@ tr.tr-roi    td.td-tot { background: #fde68a !important; }
 
 /* ── Print / PDF ────────────────────────────────── */
 @media print {
-  @page { size: A4 landscape; margin: 8mm 10mm; }
+  @page {
+    size: A4 landscape;
+    margin: 5mm 7mm;
+  }
 
-  body { background: #fff; padding: 0; font-size: 11px; }
-  h1   { font-size: 14px; margin-bottom: 6px; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+
+  html, body {
+    background: #fff !important;
+    margin: 0; padding: 0;
+    font-size: 9px;
+  }
+
+  h1 { font-size: 12px; margin-bottom: 4px; }
 
   .action-bar, .card--cfg, .ov-hint { display: none !important; }
 
-  .card--table { box-shadow: none; border-radius: 0; }
-  .card--table .card-header { padding: 6px 10px; font-size: 10px; }
+  .card--table {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+  }
+  .card--table .card-header {
+    padding: 4px 8px;
+    font-size: 8.5px;
+  }
 
-  .tbl-wrap { overflow: visible; }
+  .tbl-wrap { overflow: visible !important; }
 
-  table { min-width: unset; width: 100%; font-size: 10px; }
+  table {
+    min-width: unset !important;
+    width: 100% !important;
+    table-layout: auto !important;
+    font-size: 8.5px !important;
+    border-collapse: collapse;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
 
-  /* Remove sticky so table prints correctly */
-  thead th, tbody td:first-child { position: static; }
+  thead th {
+    position: static !important;
+    padding: 3px 3px !important;
+    font-size: 8px !important;
+    background: #1e293b !important;
+    color: #94a3b8 !important;
+  }
 
-  /* Force background colors to print */
-  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  tbody td {
+    position: static !important;
+    padding: 2px 3px !important;
+    font-size: 8.5px !important;
+    border-right: 1px solid #e1e4e8 !important;
+    border-bottom: 1px solid #e1e4e8 !important;
+  }
 
-  /* Tighter cells */
-  thead th, tbody td { padding: 3px 4px; }
+  tbody td:first-child {
+    position: static !important;
+    min-width: unset !important;
+    max-width: 140px;
+    font-size: 8px !important;
+  }
 
-  /* Hide override pencil marker */
-  td.ov-cell.overridden::after { display: none; }
+  /* Hide param hints — keeps rows single-line height */
+  .lbl-hint { display: none !important; }
 
-  /* Guest inputs: show value as text */
-  td.td-g input { border: none; background: transparent; width: auto; }
+  /* Guest input: render value inline */
+  td.td-g { padding: 2px 2px !important; }
+  td.td-g input {
+    border: none !important;
+    background: transparent !important;
+    width: 46px !important;
+    font-size: 8px !important;
+    text-align: right;
+    pointer-events: none;
+  }
+
+  td.ov-cell.overridden::after { display: none !important; }
+
+  /* Ensure row colours print */
+  tr.tr-guests td { background: #dbeafe !important; }
+  tr.tr-rev    td { background: #f0fdf4 !important; }
+  tr.tr-rtot   td { background: #bbf7d0 !important; }
+  tr.tr-cog    td { background: #fffbf5 !important; }
+  tr.tr-ctot   td { background: #fed7aa !important; }
+  tr.tr-gp     td { background: #bae6fd !important; }
+  tr.tr-margin td { background: #f8fafc !important; }
+  tr.tr-wage   td { background: #fdf4ff !important; }
+  tr.tr-opex   td { background: #ede9fe !important; }
+  tr.tr-otot   td { background: #ddd6fe !important; }
+  tr.tr-ebitda td { background: #d1fae5 !important; }
+  tr.tr-sep    td { background: #1e293b !important; }
+  tr.tr-invest td { background: #f1f5f9 !important; }
+  tr.tr-cumul  td { background: #e0f2fe !important; }
+  tr.tr-roi    td { background: #fef9c3 !important; }
+  tbody td.td-tot { background: #e2e8f0 !important; }
 }
 
 /* ── Toast ──────────────────────────────────────── */
