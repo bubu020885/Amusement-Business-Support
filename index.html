@@ -512,8 +512,9 @@ const TYPE_OPTS = `<option value="pct">% Umsatz</option><option value="perGuest"
 // ── State ──────────────────────────────────────────────────────────────
 let guestValues = Array(12).fill(5000);
 const overrides = {};
-let _noRecalc   = false;
-let collapsed   = false;
+let _noRecalc    = false;
+let collapsed    = false;
+let _guestTimer  = null;
 
 // ── Formatters ─────────────────────────────────────────────────────────
 const fmtE = v => v.toLocaleString('de-DE', { minimumFractionDigits:0, maximumFractionDigits:0 });
@@ -732,10 +733,6 @@ function lbl(text, hint='') {
 function recalc() {
   if (_noRecalc) return;
 
-  // Remember focused guest input so we can restore it after DOM rebuild
-  const focusedGuestIdx = document.activeElement?.classList.contains('g-inp')
-    ? +document.activeElement.dataset.idx : -1;
-
   document.querySelectorAll('.g-inp').forEach((inp,i) => { guestValues[i] = parseFloat(inp.value)||0; });
 
   const tp=n('ticketPrice'), rp=n('retailPrice'), gp2=n('gamesPrice'), fb=n('fbPrice'), investTotal=n('investTotal');
@@ -881,17 +878,12 @@ function recalc() {
   // Re-apply collapse state after DOM rebuild
   if (collapsed) el('tblBody').classList.add('collapsed');
 
-  // Restore guest input focus (fixes single-digit-only bug)
-  if (focusedGuestIdx >= 0) {
-    const inp = el('tblBody').querySelector(`.g-inp[data-idx="${focusedGuestIdx}"]`);
-    if (inp) inp.focus();
-  }
-
-  // Guest input listeners
+  // Guest input listeners — debounced so the DOM never rebuilds while typing
   document.querySelectorAll('.g-inp').forEach(inp=>{
     inp.addEventListener('input', () => {
       guestValues[+inp.dataset.idx] = parseFloat(inp.value)||0;
-      recalc();
+      clearTimeout(_guestTimer);
+      _guestTimer = setTimeout(recalc, 700);
     });
   });
 
