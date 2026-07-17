@@ -261,6 +261,14 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
 }
 .cfg-section:last-child { border-bottom: none; }
 
+/* Per-section background colours */
+.config-bar > .cfg-section:nth-child(1) { background: #eff6ff; } /* Spend per Cap – blau */
+.config-bar > .cfg-section:nth-child(2) { background: #fff7ed; } /* Wareneinsatz – orange */
+.config-bar > .cfg-section:nth-child(3) { background: #faf5ff; } /* Gehälter – violett */
+.config-bar > .cfg-section:nth-child(4) { background: #f0fdf4; } /* Variable Löhne – grün */
+.config-bar > .cfg-section:nth-child(5) { background: #eef2ff; } /* Sonstige Kosten – indigo */
+.config-bar > .cfg-section:nth-child(6) { background: #f8fafc; } /* Investition – grau */
+
 .cfg-title {
   font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .5px;
@@ -281,7 +289,7 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
   text-align: right; padding-right: 2px;
   white-space: nowrap;
 }
-.cfg-field input { width: 58px; flex-shrink: 0; }
+.cfg-field input { width: 50px; flex-shrink: 0; }
 
 /* dynamic rows in sidebar */
 .drow { display: grid; gap: 4px; margin-bottom: 4px; align-items: center; }
