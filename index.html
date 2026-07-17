@@ -74,10 +74,11 @@ body {
 }
 .btn-act:hover  { filter: brightness(.88); }
 .btn-act:active { transform: scale(.95); }
-.btn-act--save { background: #2563eb; color: #fff; }
-.btn-act--load { background: #059669; color: #fff; }
-.btn-act--pdf  { background: #7c3aed; color: #fff; }
-.btn-act .ico  { font-size: 14px; }
+.btn-act--save   { background: #2563eb; color: #fff; }
+.btn-act--load   { background: #059669; color: #fff; }
+.btn-act--pdf    { background: #7c3aed; color: #fff; }
+.btn-act--toggle { background: #475569; color: #fff; }
+.btn-act .ico    { font-size: 14px; }
 
 /* ── App body ───────────────────────────────────────── */
 .app-body {
@@ -237,9 +238,16 @@ tr.tr-ebitda td.td-tot { background:#6ee7b7 !important; }
 tr.tr-cumul  td.td-tot { background:#7dd3fc !important; }
 tr.tr-roi    td.td-tot { background:#fde68a !important; }
 
+/* ── Collapse detail rows ───────────────────────────── */
+#tblBody.collapsed tr.tr-rev,
+#tblBody.collapsed tr.tr-cog,
+#tblBody.collapsed tr.tr-wage,
+#tblBody.collapsed tr.tr-opex,
+#tblBody.collapsed tr.tr-margin { display: none; }
+
 /* ── Config sidebar (right) ─────────────────────── */
 .config-bar {
-  width: 292px;
+  width: 310px;
   flex-shrink: 0;
   overflow-y: auto;
   background: var(--card);
@@ -248,8 +256,8 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
 }
 
 .cfg-section {
-  padding: 12px 13px;
-  border-bottom: 1px solid var(--border);
+  padding: 11px 13px;
+  border-bottom: 2px solid #cbd5e1;
 }
 .cfg-section:last-child { border-bottom: none; }
 
@@ -257,39 +265,42 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
   font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .5px;
   color: var(--muted);
-  margin-bottom: 9px;
+  margin-bottom: 8px;
 }
 .cfg-title--cog  { color: var(--c-cog-h); }
 .cfg-title--opex { color: var(--c-opex-h); }
+.cfg-title--wage { color: #6d28d9; }
 
 /* label + input pairs */
 .cfg-field {
   display: flex; align-items: center; gap: 8px;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 .cfg-field label {
   flex: 1; font-size: 12px; color: var(--muted);
   text-align: right; padding-right: 2px;
   white-space: nowrap;
 }
-.cfg-field input { width: 92px; flex-shrink: 0; }
+.cfg-field input { width: 58px; flex-shrink: 0; }
 
 /* dynamic rows in sidebar */
 .drow { display: grid; gap: 4px; margin-bottom: 4px; align-items: center; }
-.drow--std  { grid-template-columns: 1fr 82px 56px 22px; }
-.drow--wage { grid-template-columns: 1fr 70px 40px 40px 22px; }
+.drow--std    { grid-template-columns: 1fr 82px 56px 22px; }
+.drow--salary { grid-template-columns: 1fr 72px 40px 40px 22px; }
+.drow--hourly { grid-template-columns: 1fr 54px 50px 36px 36px 22px; }
 
 .col-hd {
   display: grid; gap: 4px; margin-bottom: 3px;
   font-size: 9.5px; color: var(--muted);
   text-transform: uppercase; letter-spacing: .3px;
 }
-.col-hd--std  { grid-template-columns: 1fr 82px 56px 22px; }
-.col-hd--wage { grid-template-columns: 1fr 70px 40px 40px 22px; }
+.col-hd--std    { grid-template-columns: 1fr 82px 56px 22px; }
+.col-hd--salary { grid-template-columns: 1fr 72px 40px 40px 22px; }
+.col-hd--hourly { grid-template-columns: 1fr 54px 50px 36px 36px 22px; }
 
 /* inputs */
 input[type="number"], input[type="text"], select {
-  width: 100%; padding: 5px 7px;
+  width: 100%; padding: 4px 6px;
   border: 1px solid var(--border); border-radius: 5px;
   font-size: 12px; background: #fff; color: var(--text);
   -moz-appearance: textfield;
@@ -317,6 +328,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 .btn-add:hover { background: rgba(0,0,0,.04); }
 .btn-add--cog  { border-color: var(--c-cog-ac);  color: var(--c-cog-ac); }
 .btn-add--opex { border-color: var(--c-opex-ac); color: var(--c-opex-ac); }
+.btn-add--wage { border-color: #7c3aed; color: #7c3aed; }
 
 /* ── Toast ──────────────────────────────────────── */
 .toast {
@@ -368,6 +380,13 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   td.td-g input { border: none !important; background: transparent !important; width: 46px !important; font-size: 8px !important; pointer-events: none; }
   td.ov-cell.overridden::after { display: none !important; }
 
+  /* keep detail rows visible in print regardless of collapse state */
+  #tblBody.collapsed tr.tr-rev,
+  #tblBody.collapsed tr.tr-cog,
+  #tblBody.collapsed tr.tr-wage,
+  #tblBody.collapsed tr.tr-opex,
+  #tblBody.collapsed tr.tr-margin { display: table-row !important; }
+
   tr.tr-guests td { background: #dbeafe !important; }
   tr.tr-rev    td { background: #f0fdf4 !important; }
   tr.tr-rtot   td { background: #bbf7d0 !important; }
@@ -393,6 +412,9 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 <header class="topbar">
   <span class="topbar-title">Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</span>
   <div class="topbar-actions" style="display:flex;gap:8px;align-items:center;">
+    <button class="btn-act btn-act--toggle no-print" id="collapseBtn" onclick="toggleCollapse()">
+      <span class="ico">⊟</span> Einklappen
+    </button>
     <button class="btn-act btn-act--save" onclick="saveData()">
       <span class="ico">💾</span> Speichern
     </button>
@@ -424,14 +446,16 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   <!-- ── Config sidebar (right, scrollable) ── -->
   <aside class="config-bar">
 
+    <!-- Spend per Cap -->
     <div class="cfg-section">
       <div class="cfg-title">Spend per Cap</div>
       <div class="cfg-field"><label>Ø Ticketpreis</label><input type="number" id="ticketPrice" value="15.00" min="0" step="0.5"></div>
       <div class="cfg-field"><label>Retail / Gast</label><input type="number" id="retailPrice" value="3.00"  min="0" step="0.5"></div>
-      <div class="cfg-field"><label>Games / Gast</label><input type="number" id="gamesPrice"  value="5.00"  min="0" step="0.5"></div>
-      <div class="cfg-field"><label>F&amp;B / Gast</label><input type="number" id="fbPrice"   value="4.00"  min="0" step="0.5"></div>
+      <div class="cfg-field"><label>Games / Gast</label> <input type="number" id="gamesPrice"  value="5.00"  min="0" step="0.5"></div>
+      <div class="cfg-field"><label>F&amp;B / Gast</label>   <input type="number" id="fbPrice"   value="4.00"  min="0" step="0.5"></div>
     </div>
 
+    <!-- Wareneinsatz -->
     <div class="cfg-section">
       <div class="cfg-title cfg-title--cog">Wareneinsatz</div>
       <div class="col-hd col-hd--std"><span>Bezeichnung</span><span>Art</span><span>Wert</span><span></span></div>
@@ -439,13 +463,23 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
       <button class="btn-add btn-add--cog" onclick="addCogRow()">+ Zeile</button>
     </div>
 
+    <!-- Gehälter (Fixkosten) -->
     <div class="cfg-section">
-      <div class="cfg-title cfg-title--opex">Lohnkosten</div>
-      <div class="col-hd col-hd--wage"><span>Bezeichnung</span><span>Lohn €</span><span>SV %</span><span>Puffer</span><span></span></div>
-      <div id="wageRows"></div>
-      <button class="btn-add btn-add--opex" onclick="addWageRow()">+ Lohnzeile</button>
+      <div class="cfg-title cfg-title--wage">Gehälter (Fixkosten)</div>
+      <div class="col-hd col-hd--salary"><span>Bezeichnung</span><span>€/Monat</span><span>SV%</span><span>Puffer</span><span></span></div>
+      <div id="salaryRows"></div>
+      <button class="btn-add btn-add--wage" onclick="addSalaryRow()">+ Gehalt</button>
     </div>
 
+    <!-- Variable Löhne (Stundenlohn) -->
+    <div class="cfg-section">
+      <div class="cfg-title cfg-title--wage">Variable Löhne (Stundenlohn)</div>
+      <div class="col-hd col-hd--hourly"><span>Bezeichnung</span><span>€/Std</span><span>Std/Mon</span><span>SV%</span><span>Puf.</span><span></span></div>
+      <div id="hourlyRows"></div>
+      <button class="btn-add btn-add--wage" onclick="addHourlyRow()">+ Stundenlöhner</button>
+    </div>
+
+    <!-- Sonstige Kosten -->
     <div class="cfg-section">
       <div class="cfg-title cfg-title--opex">Sonstige Kosten</div>
       <div class="col-hd col-hd--std"><span>Bezeichnung</span><span>Art</span><span>Wert</span><span></span></div>
@@ -453,6 +487,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
       <button class="btn-add btn-add--opex" onclick="addOpexRow()">+ Zeile</button>
     </div>
 
+    <!-- Investition -->
     <div class="cfg-section">
       <div class="cfg-title">Investition</div>
       <div class="cfg-field"><label>Gesamtinvestition</label><input type="number" id="investTotal" value="0" min="0" step="1000"></div>
@@ -470,6 +505,7 @@ const TYPE_OPTS = `<option value="pct">% Umsatz</option><option value="perGuest"
 let guestValues = Array(12).fill(5000);
 const overrides = {};
 let _noRecalc   = false;
+let collapsed   = false;
 
 // ── Formatters ─────────────────────────────────────────────────────────
 const fmtE = v => v.toLocaleString('de-DE', { minimumFractionDigits:0, maximumFractionDigits:0 });
@@ -492,6 +528,15 @@ function calcDynAmt(type, val, rev, guests) {
   return val;
 }
 
+// ── Collapse / Expand ──────────────────────────────────────────────────
+function toggleCollapse() {
+  collapsed = !collapsed;
+  el('tblBody').classList.toggle('collapsed', collapsed);
+  el('collapseBtn').innerHTML = collapsed
+    ? '<span class="ico">⊞</span> Ausklappen'
+    : '<span class="ico">⊟</span> Einklappen';
+}
+
 // ── Dynamic config rows ────────────────────────────────────────────────
 let cogId = 0;
 function addCogRow(desc='', type='fixed', val=0) {
@@ -507,18 +552,33 @@ function addCogRow(desc='', type='fixed', val=0) {
   el('cogRows').appendChild(d); recalc();
 }
 
-let wageId = 0;
-function addWageRow(desc='', wage=0, sv=20, puffer=5) {
+let salaryId = 0;
+function addSalaryRow(desc='', wage=0, sv=20, puffer=5) {
   const d = document.createElement('div');
-  d.className = 'drow drow--wage'; d.dataset.id = ++wageId;
+  d.className = 'drow drow--salary'; d.dataset.id = ++salaryId;
   d.innerHTML = `
-    <input type="text"   class="wd" placeholder="z.B. Vollzeit" value="${esc(desc)}">
-    <input type="number" class="wb" value="${wage}"   min="0" step="100">
-    <input type="number" class="ws" value="${sv}"     min="0" step="0.5">
-    <input type="number" class="wp" value="${puffer}" min="0" step="0.5">
-    <button class="btn-del" onclick="rmRow(this,'wage')">&#x2715;</button>`;
+    <input type="text"   class="sd" placeholder="z.B. Managerin" value="${esc(desc)}">
+    <input type="number" class="sb" value="${wage}"   min="0" step="100" placeholder="€/Mon">
+    <input type="number" class="ss" value="${sv}"     min="0" step="0.5">
+    <input type="number" class="sp" value="${puffer}" min="0" step="0.5">
+    <button class="btn-del" onclick="rmRow(this,'salary')">&#x2715;</button>`;
   d.querySelectorAll('input').forEach(x => x.addEventListener('input', recalc));
-  el('wageRows').appendChild(d); recalc();
+  el('salaryRows').appendChild(d); recalc();
+}
+
+let hourlyId = 0;
+function addHourlyRow(desc='', rate=0, hours=160, sv=20, puffer=5) {
+  const d = document.createElement('div');
+  d.className = 'drow drow--hourly'; d.dataset.id = ++hourlyId;
+  d.innerHTML = `
+    <input type="text"   class="hd" placeholder="z.B. Aushilfe" value="${esc(desc)}">
+    <input type="number" class="hr" value="${rate}"   min="0" step="0.5"  placeholder="€/Std">
+    <input type="number" class="hh" value="${hours}"  min="0" step="1"    placeholder="Std">
+    <input type="number" class="hs" value="${sv}"     min="0" step="0.5">
+    <input type="number" class="hp" value="${puffer}" min="0" step="0.5">
+    <button class="btn-del" onclick="rmRow(this,'hourly')">&#x2715;</button>`;
+  d.querySelectorAll('input').forEach(x => x.addEventListener('input', recalc));
+  el('hourlyRows').appendChild(d); recalc();
 }
 
 let opexId = 0;
@@ -528,7 +588,7 @@ function addOpexRow(desc='', type='fixed', val=0) {
   d.innerHTML = `
     <input type="text"   class="od" placeholder="Bezeichnung" value="${esc(desc)}">
     <select class="ot">${TYPE_OPTS}</select>
-    <input type="number" class="ov" value="${val}" min="0" step="0.01">
+    <input type="number" class="ov2" value="${val}" min="0" step="0.01">
     <button class="btn-del" onclick="rmRow(this,'opex')">&#x2715;</button>`;
   d.querySelector('.ot').value = type;
   d.querySelectorAll('input,select').forEach(x => x.addEventListener('input', recalc));
@@ -554,18 +614,19 @@ function toast(msg, type='ok') {
 function collectState() {
   document.querySelectorAll('.g-inp').forEach((inp, i) => { guestValues[i] = parseFloat(inp.value)||0; });
   return {
-    v: 1,
+    v: 2,
     guests: [...guestValues],
     prices: { ticket:n('ticketPrice'), retail:n('retailPrice'), games:n('gamesPrice'), fb:n('fbPrice'), invest:n('investTotal') },
     cog:   [...document.querySelectorAll('#cogRows  .drow')].map(r=>({ desc:r.querySelector('.cd').value, type:r.querySelector('.ct').value, val:parseFloat(r.querySelector('.cv').value)||0 })),
-    wages: [...document.querySelectorAll('#wageRows .drow')].map(r=>({ desc:r.querySelector('.wd').value, wage:parseFloat(r.querySelector('.wb').value)||0, sv:parseFloat(r.querySelector('.ws').value)||0, puffer:parseFloat(r.querySelector('.wp').value)||0 })),
-    opex:  [...document.querySelectorAll('#opexRows .drow')].map(r=>({ desc:r.querySelector('.od').value, type:r.querySelector('.ot').value, val:parseFloat(r.querySelector('.ov').value)||0 })),
+    salaries:    [...document.querySelectorAll('#salaryRows .drow')].map(r=>({ desc:r.querySelector('.sd').value, wage:parseFloat(r.querySelector('.sb').value)||0, sv:parseFloat(r.querySelector('.ss').value)||0, puffer:parseFloat(r.querySelector('.sp').value)||0 })),
+    hourlyWages: [...document.querySelectorAll('#hourlyRows .drow')].map(r=>({ desc:r.querySelector('.hd').value, rate:parseFloat(r.querySelector('.hr').value)||0, hours:parseFloat(r.querySelector('.hh').value)||0, sv:parseFloat(r.querySelector('.hs').value)||0, puffer:parseFloat(r.querySelector('.hp').value)||0 })),
+    opex:  [...document.querySelectorAll('#opexRows .drow')].map(r=>({ desc:r.querySelector('.od').value, type:r.querySelector('.ot').value, val:parseFloat(r.querySelector('.ov2').value)||0 })),
     overrides: { ...overrides },
   };
 }
 
 function applyState(s) {
-  if (!s || s.v !== 1) throw new Error('Ungültiges Dateiformat');
+  if (!s || typeof s.v !== 'number' || s.v < 1) throw new Error('Ungültiges Dateiformat');
   el('ticketPrice').value = s.prices.ticket ?? 15;
   el('retailPrice').value = s.prices.retail  ?? 3;
   el('gamesPrice').value  = s.prices.games   ?? 5;
@@ -573,14 +634,28 @@ function applyState(s) {
   el('investTotal').value = s.prices.invest  ?? 0;
   guestValues = (s.guests || Array(12).fill(5000)).slice(0,12);
   while (guestValues.length < 12) guestValues.push(0);
-  el('cogRows').innerHTML = ''; el('wageRows').innerHTML = ''; el('opexRows').innerHTML = '';
-  cogId = wageId = opexId = 0;
+  el('cogRows').innerHTML = ''; el('salaryRows').innerHTML = ''; el('hourlyRows').innerHTML = ''; el('opexRows').innerHTML = '';
+  cogId = salaryId = hourlyId = opexId = 0;
   Object.keys(overrides).forEach(k => delete overrides[k]);
-  Object.assign(overrides, s.overrides || {});
+
+  // Migrate v1 wage override keys → salary keys
+  const ov = s.overrides || {};
+  if (s.wages && !s.salaries) {
+    Object.keys(ov).forEach(k => {
+      if (k.startsWith('wage-')) { ov[k.replace('wage-', 'salary-')] = ov[k]; delete ov[k]; }
+    });
+  }
+  Object.assign(overrides, ov);
+
   _noRecalc = true;
-  (s.cog   || []).forEach(r => addCogRow(r.desc,  r.type, r.val));
-  (s.wages || []).forEach(r => addWageRow(r.desc, r.wage, r.sv, r.puffer));
-  (s.opex  || []).forEach(r => addOpexRow(r.desc,  r.type, r.val));
+  (s.cog   || []).forEach(r => addCogRow(r.desc, r.type, r.val));
+  // v1 migration: old 'wages' → salaries
+  if (s.wages && !s.salaries) {
+    s.wages.forEach(r => addSalaryRow(r.desc, r.wage, r.sv, r.puffer));
+  }
+  (s.salaries    || []).forEach(r => addSalaryRow(r.desc, r.wage, r.sv, r.puffer));
+  (s.hourlyWages || []).forEach(r => addHourlyRow(r.desc, r.rate, r.hours, r.sv, r.puffer));
+  (s.opex  || []).forEach(r => addOpexRow(r.desc, r.type, r.val));
   _noRecalc = false;
   recalc();
 }
@@ -649,37 +724,47 @@ function lbl(text, hint='') {
 function recalc() {
   if (_noRecalc) return;
 
+  // Remember focused guest input so we can restore it after DOM rebuild
+  const focusedGuestIdx = document.activeElement?.classList.contains('g-inp')
+    ? +document.activeElement.dataset.idx : -1;
+
   document.querySelectorAll('.g-inp').forEach((inp,i) => { guestValues[i] = parseFloat(inp.value)||0; });
 
-  const tp=n('ticketPrice'), rp=n('retailPrice'), gp=n('gamesPrice'), fb=n('fbPrice'), investTotal=n('investTotal');
+  const tp=n('ticketPrice'), rp=n('retailPrice'), gp2=n('gamesPrice'), fb=n('fbPrice'), investTotal=n('investTotal');
 
-  const cogCfg  = [...document.querySelectorAll('#cogRows  .drow')].map((r,i)=>({ i, label:r.querySelector('.cd').value||'Wareneinsatz', type:r.querySelector('.ct').value, val:parseFloat(r.querySelector('.cv').value)||0 }));
-  const wageCfg = [...document.querySelectorAll('#wageRows .drow')].map((r,i)=>({ i, label:r.querySelector('.wd').value||'Lohn',         wage:parseFloat(r.querySelector('.wb').value)||0, sv:parseFloat(r.querySelector('.ws').value)||0, puffer:parseFloat(r.querySelector('.wp').value)||0 }));
-  const opexCfg = [...document.querySelectorAll('#opexRows .drow')].map((r,i)=>({ i, label:r.querySelector('.od').value||'Kosten',       type:r.querySelector('.ot').value, val:parseFloat(r.querySelector('.ov').value)||0 }));
+  const cogCfg    = [...document.querySelectorAll('#cogRows   .drow')].map((r,i)=>({ i, label:r.querySelector('.cd').value||'Wareneinsatz', type:r.querySelector('.ct').value, val:parseFloat(r.querySelector('.cv').value)||0 }));
+  const salaryCfg = [...document.querySelectorAll('#salaryRows .drow')].map((r,i)=>({ i, label:r.querySelector('.sd').value||'Gehalt', wage:parseFloat(r.querySelector('.sb').value)||0, sv:parseFloat(r.querySelector('.ss').value)||0, puffer:parseFloat(r.querySelector('.sp').value)||0 }));
+  const hourlyCfg = [...document.querySelectorAll('#hourlyRows .drow')].map((r,i)=>({ i, label:r.querySelector('.hd').value||'Stundenlohn', rate:parseFloat(r.querySelector('.hr').value)||0, hours:parseFloat(r.querySelector('.hh').value)||0, sv:parseFloat(r.querySelector('.hs').value)||0, puffer:parseFloat(r.querySelector('.hp').value)||0 }));
+  const opexCfg   = [...document.querySelectorAll('#opexRows  .drow')].map((r,i)=>({ i, label:r.querySelector('.od').value||'Kosten', type:r.querySelector('.ot').value, val:parseFloat(r.querySelector('.ov2').value)||0 }));
 
   const months = guestValues.map((guests, mi) => {
     const ticketRev = ovGet('rev-0',mi, tp*guests);
     const retailRev = ovGet('rev-1',mi, rp*guests);
-    const gamesRev  = ovGet('rev-2',mi, gp*guests);
+    const gamesRev  = ovGet('rev-2',mi, gp2*guests);
     const fbRev     = ovGet('rev-3',mi, fb*guests);
     const totalRev  = ticketRev+retailRev+gamesRev+fbRev;
-    const cogAmts   = cogCfg.map(c  => ovGet(`cog-${c.i}`,mi,  calcDynAmt(c.type,c.val,totalRev,guests)));
-    const totalCog  = cogAmts.reduce((a,b)=>a+b,0);
+
+    const cogAmts    = cogCfg.map(c  => ovGet(`cog-${c.i}`,mi, calcDynAmt(c.type,c.val,totalRev,guests)));
+    const totalCog   = cogAmts.reduce((a,b)=>a+b,0);
     const grossProfit = totalRev-totalCog;
-    const wageAmts  = wageCfg.map(w  => ovGet(`wage-${w.i}`,mi, w.wage*(1+(w.sv+w.puffer)/100)));
-    const totalWage = wageAmts.reduce((a,b)=>a+b,0);
-    const opexAmts  = opexCfg.map(o  => ovGet(`opex-${o.i}`,mi, calcDynAmt(o.type,o.val,totalRev,guests)));
-    const totalOpex = totalWage + opexAmts.reduce((a,b)=>a+b,0);
-    const ebitda    = grossProfit-totalOpex;
-    return { guests,ticketRev,retailRev,gamesRev,fbRev,totalRev, cogAmts,totalCog,grossProfit, wageAmts,opexAmts,totalWage,totalOpex,ebitda };
+
+    const salaryAmts = salaryCfg.map(s => ovGet(`salary-${s.i}`,mi, s.wage*(1+(s.sv+s.puffer)/100)));
+    const hourlyAmts = hourlyCfg.map(h => ovGet(`hourly-${h.i}`,mi, h.rate*h.hours*(1+(h.sv+h.puffer)/100)));
+    const totalWage  = [...salaryAmts,...hourlyAmts].reduce((a,b)=>a+b,0);
+
+    const opexAmts   = opexCfg.map(o  => ovGet(`opex-${o.i}`,mi, calcDynAmt(o.type,o.val,totalRev,guests)));
+    const totalOpex  = totalWage + opexAmts.reduce((a,b)=>a+b,0);
+    const ebitda     = grossProfit-totalOpex;
+
+    return { guests,ticketRev,retailRev,gamesRev,fbRev,totalRev, cogAmts,totalCog,grossProfit, salaryAmts,hourlyAmts,totalWage,opexAmts,totalOpex,ebitda };
   });
 
-  const S   = k    => months.reduce((a,m)    => a+m[k],   0);
-  const SA  = (k,i)=> months.reduce((a,m)    => a+m[k][i],0);
+  const S   = k    => months.reduce((a,m) => a+m[k], 0);
+  const SA  = (k,i)=> months.reduce((a,m) => a+m[k][i], 0);
   const annRev=S('totalRev'), annGP=S('grossProfit'), annOpex=S('totalOpex'), annEbitda=S('ebitda');
 
   let cumul=0;
-  const cumulArr   = months.map(m=>{ cumul+=m.ebitda; return cumul; });
+  const cumulArr    = months.map(m=>{ cumul+=m.ebitda; return cumul; });
   const paybackMonth = investTotal>0 ? cumulArr.findIndex(c=>c>=investTotal) : -1;
 
   // ── Build rows ──────────────────────────────────────────────────────
@@ -694,7 +779,7 @@ function recalc() {
   const revLabels=['Ticket-Umsatz','Retail-Umsatz','Games-Umsatz','F&B-Umsatz'];
   const revKeys  =['rev-0','rev-1','rev-2','rev-3'];
   const revProp  =['ticketRev','retailRev','gamesRev','fbRev'];
-  const revPrices=[tp,rp,gp,fb];
+  const revPrices=[tp,rp,gp2,fb];
   revKeys.forEach((rk,li)=>{
     rows+=`<tr class="tr-rev"><td>${lbl(revLabels[li],`${fmtV(revPrices[li])} € / Gast`)}</td>`;
     months.forEach((m,mi)=>rows+=tdO(rk,mi,m[revProp[li]]));
@@ -723,11 +808,18 @@ function recalc() {
   months.forEach(m=>rows+=tdP(m.totalRev>0?m.grossProfit/m.totalRev*100:0));
   rows+=tdP(annRev>0?annGP/annRev*100:0,'td-tot')+'</tr>';
 
-  // Wages
-  wageCfg.forEach(w=>{
-    rows+=`<tr class="tr-wage"><td>${lbl(w.label,`${fmtE(w.wage)} € Brutto · SV ${w.sv} % · Puffer ${w.puffer} %`)}</td>`;
-    months.forEach((m,mi)=>rows+=tdO(`wage-${w.i}`,mi,m.wageAmts[w.i]));
-    rows+=td(SA('wageAmts',w.i),'td-tot')+'</tr>';
+  // Fixed salaries
+  salaryCfg.forEach(s=>{
+    rows+=`<tr class="tr-wage"><td>${lbl(s.label,`${fmtE(s.wage)} € Brutto · SV ${s.sv}% · Puffer ${s.puffer}%`)}</td>`;
+    months.forEach((m,mi)=>rows+=tdO(`salary-${s.i}`,mi,m.salaryAmts[s.i]));
+    rows+=td(SA('salaryAmts',s.i),'td-tot')+'</tr>';
+  });
+
+  // Hourly wages
+  hourlyCfg.forEach(h=>{
+    rows+=`<tr class="tr-wage"><td>${lbl(h.label,`${fmtV(h.rate)} €/Std × ${h.hours} Std · SV ${h.sv}% · Puffer ${h.puffer}%`)}</td>`;
+    months.forEach((m,mi)=>rows+=tdO(`hourly-${h.i}`,mi,m.hourlyAmts[h.i]));
+    rows+=td(SA('hourlyAmts',h.i),'td-tot')+'</tr>';
   });
 
   // OpEx
@@ -778,9 +870,21 @@ function recalc() {
 
   el('tblBody').innerHTML = rows;
 
+  // Re-apply collapse state after DOM rebuild
+  if (collapsed) el('tblBody').classList.add('collapsed');
+
+  // Restore guest input focus (fixes single-digit-only bug)
+  if (focusedGuestIdx >= 0) {
+    const inp = el('tblBody').querySelector(`.g-inp[data-idx="${focusedGuestIdx}"]`);
+    if (inp) inp.focus();
+  }
+
   // Guest input listeners
   document.querySelectorAll('.g-inp').forEach(inp=>{
-    inp.addEventListener('input',()=>{ guestValues[+inp.dataset.idx]=parseFloat(inp.value)||0; recalc(); });
+    inp.addEventListener('input', () => {
+      guestValues[+inp.dataset.idx] = parseFloat(inp.value)||0;
+      recalc();
+    });
   });
 
   // Override click handlers
@@ -816,8 +920,10 @@ addCogRow('Wareneinsatz Tickets','pct',      30);
 addCogRow('Wareneinsatz F&B',    'pct',      25);
 addCogRow('Wareneinsatz Retail', 'perGuest',  1);
 
-addWageRow('Vollzeit MA', 3200, 20, 5);
-addWageRow('Teilzeit MA', 1200, 20, 5);
+addSalaryRow('Vollzeit MA', 3200, 20, 5);
+addSalaryRow('Teilzeit MA', 1200, 20, 5);
+
+addHourlyRow('Aushilfen', 13.50, 80, 20, 5);
 
 addOpexRow('Miete',         'fixed', 5000);
 addOpexRow('Marketing',     'pct',      3);
