@@ -22,7 +22,11 @@
   --c-ctot-bg:  #fed7aa; --c-cog-h:#7c2d12; --c-cog-ac:#ea580c;
   --c-gp-bg:    #bae6fd; --c-gp-h:#0c4a6e;  --c-gp-ac:#0284c7;
   --c-wage-bg:  #fdf4ff;
+  --c-stot-bg:  #e9d5ff;
+  --c-hourly-bg:#ecfdf5;
+  --c-htot-bg:  #a7f3d0;
   --c-opex-bg:  #ede9fe;
+  --c-sktot-bg: #c7d2fe;
   --c-otot-bg:  #ddd6fe; --c-opex-h:#4c1d95; --c-opex-ac:#7c3aed;
   --c-ebitda-bg:#d1fae5; --c-ebitda-ac:#059669; --c-neg:#dc2626;
   --c-invest-bg:#f1f5f9;
@@ -203,8 +207,12 @@ tr.tr-ctot   td { background: var(--c-ctot-bg); font-weight:700; }
 tr.tr-gp     td { background: var(--c-gp-bg);  font-weight:700; font-size:12.5px; }
 tr.tr-margin td { background: #f8fafc; color:var(--muted); font-style:italic; font-size:11px; }
 tr.tr-wage   td { background: var(--c-wage-bg); }
+tr.tr-stot   td { background: var(--c-stot-bg); font-weight:700; }
+tr.tr-hourly td { background: var(--c-hourly-bg); }
+tr.tr-htot   td { background: var(--c-htot-bg);  font-weight:700; }
 tr.tr-opex   td { background: var(--c-opex-bg); }
-tr.tr-otot   td { background: var(--c-otot-bg); font-weight:700; }
+tr.tr-sktot  td { background: var(--c-sktot-bg); font-weight:700; }
+tr.tr-otot   td { background: var(--c-otot-bg); font-weight:700; font-size:12.5px; }
 tr.tr-ebitda td { background: var(--c-ebitda-bg); font-weight:700; font-size:13px; }
 tr.tr-sep    td { background: #1e293b; height:4px; padding:0; }
 tr.tr-invest td { background: var(--c-invest-bg); color:var(--muted); }
@@ -221,7 +229,11 @@ tr.tr-ctot   td:first-child { background:var(--c-ctot-bg); }
 tr.tr-gp     td:first-child { background:var(--c-gp-bg); }
 tr.tr-margin td:first-child { background:#f8fafc; }
 tr.tr-wage   td:first-child { background:var(--c-wage-bg); }
+tr.tr-stot   td:first-child { background:var(--c-stot-bg); }
+tr.tr-hourly td:first-child { background:var(--c-hourly-bg); }
+tr.tr-htot   td:first-child { background:var(--c-htot-bg); }
 tr.tr-opex   td:first-child { background:var(--c-opex-bg); }
+tr.tr-sktot  td:first-child { background:var(--c-sktot-bg); }
 tr.tr-otot   td:first-child { background:var(--c-otot-bg); }
 tr.tr-ebitda td:first-child { background:var(--c-ebitda-bg); }
 tr.tr-invest td:first-child { background:var(--c-invest-bg); }
@@ -233,6 +245,9 @@ tr.tr-guests td.td-tot { background:#bfdbfe !important; }
 tr.tr-rtot   td.td-tot { background:#86efac !important; }
 tr.tr-ctot   td.td-tot { background:#fdba74 !important; }
 tr.tr-gp     td.td-tot { background:#7dd3fc !important; }
+tr.tr-stot   td.td-tot { background:#d8b4fe !important; }
+tr.tr-htot   td.td-tot { background:#6ee7b7 !important; }
+tr.tr-sktot  td.td-tot { background:#a5b4fc !important; }
 tr.tr-otot   td.td-tot { background:#c4b5fd !important; }
 tr.tr-ebitda td.td-tot { background:#6ee7b7 !important; }
 tr.tr-cumul  td.td-tot { background:#7dd3fc !important; }
@@ -242,7 +257,11 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
 #tblBody.collapsed tr.tr-rev,
 #tblBody.collapsed tr.tr-cog,
 #tblBody.collapsed tr.tr-wage,
+#tblBody.collapsed tr.tr-stot,
+#tblBody.collapsed tr.tr-hourly,
+#tblBody.collapsed tr.tr-htot,
 #tblBody.collapsed tr.tr-opex,
+#tblBody.collapsed tr.tr-sktot,
 #tblBody.collapsed tr.tr-margin { display: none; }
 
 /* ── Config sidebar (right) ─────────────────────── */
@@ -388,11 +407,15 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   td.td-g input { border: none !important; background: transparent !important; width: 46px !important; font-size: 8px !important; pointer-events: none; }
   td.ov-cell.overridden::after { display: none !important; }
 
-  /* keep detail rows visible in print regardless of collapse state */
+  /* keep all rows visible in print regardless of collapse state */
   #tblBody.collapsed tr.tr-rev,
   #tblBody.collapsed tr.tr-cog,
   #tblBody.collapsed tr.tr-wage,
+  #tblBody.collapsed tr.tr-stot,
+  #tblBody.collapsed tr.tr-hourly,
+  #tblBody.collapsed tr.tr-htot,
   #tblBody.collapsed tr.tr-opex,
+  #tblBody.collapsed tr.tr-sktot,
   #tblBody.collapsed tr.tr-margin { display: table-row !important; }
 
   tr.tr-guests td { background: #dbeafe !important; }
@@ -403,7 +426,11 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   tr.tr-gp     td { background: #bae6fd !important; }
   tr.tr-margin td { background: #f8fafc !important; }
   tr.tr-wage   td { background: #fdf4ff !important; }
+  tr.tr-stot   td { background: #e9d5ff !important; }
+  tr.tr-hourly td { background: #ecfdf5 !important; }
+  tr.tr-htot   td { background: #a7f3d0 !important; }
   tr.tr-opex   td { background: #ede9fe !important; }
+  tr.tr-sktot  td { background: #c7d2fe !important; }
   tr.tr-otot   td { background: #ddd6fe !important; }
   tr.tr-ebitda td { background: #d1fae5 !important; }
   tr.tr-sep    td { background: #1e293b !important; }
@@ -753,15 +780,18 @@ function recalc() {
     const totalCog   = cogAmts.reduce((a,b)=>a+b,0);
     const grossProfit = totalRev-totalCog;
 
-    const salaryAmts = salaryCfg.map(s => ovGet(`salary-${s.i}`,mi, s.wage*(1+(s.sv+s.puffer)/100)));
-    const hourlyAmts = hourlyCfg.map(h => ovGet(`hourly-${h.i}`,mi, h.rate*h.hours*(1+(h.sv+h.puffer)/100)));
-    const totalWage  = [...salaryAmts,...hourlyAmts].reduce((a,b)=>a+b,0);
+    const salaryAmts  = salaryCfg.map(s => ovGet(`salary-${s.i}`,mi, s.wage*(1+(s.sv+s.puffer)/100)));
+    const hourlyAmts  = hourlyCfg.map(h => ovGet(`hourly-${h.i}`,mi, h.rate*h.hours*(1+(h.sv+h.puffer)/100)));
+    const totalSalary = salaryAmts.reduce((a,b)=>a+b,0);
+    const totalHourly = hourlyAmts.reduce((a,b)=>a+b,0);
+    const totalWage   = totalSalary + totalHourly;
 
-    const opexAmts   = opexCfg.map(o  => ovGet(`opex-${o.i}`,mi, calcDynAmt(o.type,o.val,totalRev,guests)));
-    const totalOpex  = totalWage + opexAmts.reduce((a,b)=>a+b,0);
-    const ebitda     = grossProfit-totalOpex;
+    const opexAmts     = opexCfg.map(o  => ovGet(`opex-${o.i}`,mi, calcDynAmt(o.type,o.val,totalRev,guests)));
+    const totalOpexOnly= opexAmts.reduce((a,b)=>a+b,0);
+    const totalOpex    = totalWage + totalOpexOnly;
+    const ebitda       = grossProfit-totalOpex;
 
-    return { guests,ticketRev,retailRev,gamesRev,fbRev,totalRev, cogAmts,totalCog,grossProfit, salaryAmts,hourlyAmts,totalWage,opexAmts,totalOpex,ebitda };
+    return { guests,ticketRev,retailRev,gamesRev,fbRev,totalRev, cogAmts,totalCog,grossProfit, salaryAmts,hourlyAmts,totalSalary,totalHourly,totalWage,opexAmts,totalOpexOnly,totalOpex,ebitda };
   });
 
   const S   = k    => months.reduce((a,m) => a+m[k], 0);
@@ -819,13 +849,23 @@ function recalc() {
     months.forEach((m,mi)=>rows+=tdO(`salary-${s.i}`,mi,m.salaryAmts[s.i]));
     rows+=td(SA('salaryAmts',s.i),'td-tot')+'</tr>';
   });
+  if (salaryCfg.length > 0) {
+    rows+=`<tr class="tr-stot"><td>Gehälter gesamt</td>`;
+    months.forEach(m=>rows+=td(m.totalSalary));
+    rows+=td(S('totalSalary'),'td-tot')+'</tr>';
+  }
 
   // Hourly wages
   hourlyCfg.forEach(h=>{
-    rows+=`<tr class="tr-wage"><td>${lbl(h.label,`${fmtV(h.rate)} €/Std × ${h.hours} Std · SV ${h.sv}% · Puffer ${h.puffer}%`)}</td>`;
+    rows+=`<tr class="tr-hourly"><td>${lbl(h.label,`${fmtV(h.rate)} €/Std × ${h.hours} Std · SV ${h.sv}% · Puffer ${h.puffer}%`)}</td>`;
     months.forEach((m,mi)=>rows+=tdO(`hourly-${h.i}`,mi,m.hourlyAmts[h.i]));
     rows+=td(SA('hourlyAmts',h.i),'td-tot')+'</tr>';
   });
+  if (hourlyCfg.length > 0) {
+    rows+=`<tr class="tr-htot"><td>Variable Löhne gesamt</td>`;
+    months.forEach(m=>rows+=td(m.totalHourly));
+    rows+=td(S('totalHourly'),'td-tot')+'</tr>';
+  }
 
   // OpEx
   opexCfg.forEach(o=>{
@@ -833,6 +873,11 @@ function recalc() {
     months.forEach((m,mi)=>rows+=tdO(`opex-${o.i}`,mi,m.opexAmts[o.i]));
     rows+=td(SA('opexAmts',o.i),'td-tot')+'</tr>';
   });
+  if (opexCfg.length > 0) {
+    rows+=`<tr class="tr-sktot"><td>Sonstige Kosten gesamt</td>`;
+    months.forEach(m=>rows+=td(m.totalOpexOnly));
+    rows+=td(S('totalOpexOnly'),'td-tot')+'</tr>';
+  }
 
   rows+=`<tr class="tr-otot"><td>Betr. Aufwand gesamt</td>`;
   months.forEach(m=>rows+=td(m.totalOpex));
