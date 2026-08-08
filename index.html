@@ -4,6 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Business-Rechner – Jahr 1</title>
+
+<!-- ═══ Google Tag (Consent Mode v2) ═══════════════════════════════════
+     Ersetze G-XXXXXXXXXX durch deine echte GA4-Measurement-ID.
+     Das Skript setzt standardmäßig KEINE Cookies (analytics_storage=denied).
+     Cookies werden erst gesetzt, wenn der Nutzer im Banner zustimmt.
+ ════════════════════════════════════════════════════════════════════════ -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('consent','default',{
+    analytics_storage:    'denied',
+    ad_storage:           'denied',
+    ad_user_data:         'denied',
+    ad_personalization:   'denied',
+    wait_for_update:       500
+  });
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  gtag('js', new Date());
+  gtag('config','G-XXXXXXXXXX', { anonymize_ip: true });
+</script>
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -370,6 +393,94 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 .toast--err { background: var(--c-neg); }
 @keyframes tin  { from { opacity:0; transform:translateX(-50%) translateY(6px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
 @keyframes tout { from { opacity:1; } to { opacity:0; } }
+
+/* ── Cookie Banner ──────────────────────────────── */
+.cb-overlay {
+  position: fixed; inset: 0; z-index: 9000;
+  background: rgba(0,0,0,.4);
+  display: flex; align-items: flex-end;
+}
+.cb-banner {
+  width: 100%;
+  background: #1e293b; color: #f1f5f9;
+  border-top: 3px solid #2563eb;
+  box-shadow: 0 -4px 28px rgba(0,0,0,.4);
+  font-size: 13px;
+  animation: cb-up .2s ease;
+}
+@keyframes cb-up { from { transform:translateY(100%); } to { transform:translateY(0); } }
+
+.cb-inner {
+  max-width: 960px; margin: 0 auto;
+  padding: 16px 20px 12px;
+  display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
+}
+.cb-text { flex: 1; min-width: 220px; }
+.cb-title { font-size: 14px; font-weight: 700; margin-bottom: 5px; }
+.cb-desc  { font-size: 12px; color: #94a3b8; line-height: 1.55; }
+.cb-desc a { color: #60a5fa; }
+
+.cb-actions {
+  display: flex; gap: 7px; flex-wrap: wrap;
+  flex-shrink: 0; align-items: center;
+}
+.cb-btn {
+  padding: 8px 15px; border: none; border-radius: 6px;
+  font-size: 12px; font-weight: 600; font-family: inherit;
+  cursor: pointer; white-space: nowrap; transition: filter .12s;
+}
+.cb-btn:hover { filter: brightness(.88); }
+.cb-btn--accept   { background: #2563eb; color: #fff; }
+.cb-btn--reject   { background: #334155; color: #cbd5e1; }
+.cb-btn--settings { background: transparent; color: #64748b; border: 1px solid #334155; }
+.cb-btn--save     { background: #059669; color: #fff; }
+.cb-btn--lang     { background: transparent; color: #475569; border: 1px solid #334155;
+                    font-size: 11px; padding: 5px 10px; border-radius: 5px; }
+
+.cb-settings {
+  max-width: 960px; margin: 0 auto;
+  padding: 0 20px 14px;
+  border-top: 1px solid #334155;
+}
+.cb-cat {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 11px 0; border-bottom: 1px solid #243044;
+}
+.cb-cat:last-child { border-bottom: none; }
+.cb-cat-info { flex: 1; }
+.cb-cat-name { font-size: 12px; font-weight: 600; margin-bottom: 3px; }
+.cb-cat-desc { font-size: 11px; color: #64748b; line-height: 1.45; }
+.cb-cat-desc a { color: #60a5fa; }
+.cb-settings-footer {
+  padding-top: 10px; display: flex; justify-content: flex-end; gap: 8px;
+}
+
+/* Toggle switch */
+.cb-toggle { flex-shrink: 0; position: relative; width: 38px; height: 22px; margin-top: 1px; }
+.cb-toggle input { opacity:0; width:0; height:0; }
+.cb-slider {
+  position: absolute; inset: 0; cursor: pointer;
+  background: #334155; border-radius: 22px; transition: background .2s;
+}
+.cb-slider::before {
+  content:''; position:absolute;
+  left:3px; top:3px; width:16px; height:16px;
+  border-radius:50%; background:#fff; transition:transform .2s;
+}
+.cb-toggle input:checked  + .cb-slider               { background: #2563eb; }
+.cb-toggle input:checked  + .cb-slider::before        { transform: translateX(16px); }
+.cb-toggle input:disabled + .cb-slider                { opacity: .55; cursor: not-allowed; }
+
+/* Reopen pill */
+.cb-reopen {
+  position: fixed; bottom: 14px; left: 14px; z-index: 8999;
+  background: #1e293b; color: #94a3b8;
+  border: 1px solid #334155; border-radius: 8px;
+  padding: 6px 13px; font-size: 11px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3); transition: background .12s;
+}
+.cb-reopen:hover { background: #0f172a; }
 
 /* ── Print / PDF ────────────────────────────────── */
 @media print {
@@ -974,6 +1085,172 @@ addOpexRow('Miete',         'fixed', 5000);
 addOpexRow('Marketing',     'pct',      3);
 addOpexRow('Energie',       'fixed', 1500);
 addOpexRow('Versicherungen','fixed',  800);
+</script>
+
+<!-- ════════════ COOKIE BANNER ════════════ -->
+<div id="cbOverlay" class="cb-overlay" style="display:none" role="dialog" aria-modal="true" aria-labelledby="cbTitle">
+  <div class="cb-banner">
+    <div class="cb-inner">
+      <div class="cb-text">
+        <div class="cb-title" id="cbTitle"></div>
+        <div class="cb-desc"  id="cbDesc"></div>
+      </div>
+      <div class="cb-actions">
+        <button class="cb-btn cb-btn--lang"     id="cbLangBtn"     onclick="cbToggleLang()"></button>
+        <button class="cb-btn cb-btn--settings" id="cbSettingsBtn" onclick="cbToggleSettings()"></button>
+        <button class="cb-btn cb-btn--reject"   id="cbRejectBtn"   onclick="cbReject()"></button>
+        <button class="cb-btn cb-btn--accept"   id="cbAcceptBtn"   onclick="cbAccept()"></button>
+      </div>
+    </div>
+    <!-- Settings panel (hidden by default, shown on first click or reopen) -->
+    <div id="cbSettings" class="cb-settings" style="display:none">
+      <div class="cb-cat">
+        <div class="cb-cat-info">
+          <div class="cb-cat-name" id="cbNameNec"></div>
+          <div class="cb-cat-desc" id="cbDescNec"></div>
+        </div>
+        <label class="cb-toggle" aria-label="Notwendig">
+          <input type="checkbox" checked disabled>
+          <span class="cb-slider"></span>
+        </label>
+      </div>
+      <div class="cb-cat">
+        <div class="cb-cat-info">
+          <div class="cb-cat-name" id="cbNameAna"></div>
+          <div class="cb-cat-desc" id="cbDescAna"></div>
+        </div>
+        <label class="cb-toggle" aria-label="Analytics">
+          <input type="checkbox" id="cbToggleAna">
+          <span class="cb-slider"></span>
+        </label>
+      </div>
+      <div class="cb-settings-footer">
+        <button class="cb-btn cb-btn--save" id="cbSaveBtn" onclick="cbSave()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pill to re-open consent settings -->
+<button id="cbReopenBtn" class="cb-reopen no-print" style="display:none" onclick="cbReopen()">
+  🍪 <span id="cbReopenLabel"></span>
+</button>
+
+<script>
+// ── Cookie Consent (DSGVO / GDPR) ────────────────────────────────────
+const CB_KEY = 'bc_cookie_consent';
+const CB_VER = 1;
+
+let cbLang = navigator.language.toLowerCase().startsWith('de') ? 'de' : 'en';
+
+const CB = {
+  de: {
+    title:     'Datenschutz-Einstellungen',
+    desc:      'Wir verwenden Google Analytics (GA4), um die Seitennutzung anonymisiert auszuwerten. Cookies werden erst nach Ihrer Zustimmung gesetzt.',
+    accept:    'Alle akzeptieren',
+    reject:    'Nur notwendige',
+    settings:  'Einstellungen',
+    save:      'Auswahl speichern',
+    necName:   'Notwendig (immer aktiv)',
+    necDesc:   'Speichert Ihre Cookie-Einstellungen in diesem Browser. Keine Weitergabe an Dritte.',
+    anaName:   'Analyse – Google Analytics (GA4)',
+    anaDesc:   'Anonymisierte Auswertung der Seitennutzung. Daten werden an Google LLC (USA) übertragen. <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google&nbsp;Datenschutzerklärung</a>',
+    reopen:    'Cookie-Einstellungen',
+    otherLang: 'EN',
+  },
+  en: {
+    title:     'Privacy Settings',
+    desc:      'We use Google Analytics (GA4) to anonymously analyse site usage. Cookies are only set after your consent.',
+    accept:    'Accept all',
+    reject:    'Essential only',
+    settings:  'Settings',
+    save:      'Save selection',
+    necName:   'Essential (always active)',
+    necDesc:   'Stores your cookie preferences in this browser. Not shared with third parties.',
+    anaName:   'Analytics – Google Analytics (GA4)',
+    anaDesc:   'Anonymised analysis of site usage. Data is transferred to Google LLC (USA). <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google&nbsp;Privacy&nbsp;Policy</a>',
+    reopen:    'Cookie Settings',
+    otherLang: 'DE',
+  }
+};
+
+function cbRender() {
+  const t = CB[cbLang];
+  document.getElementById('cbTitle').textContent       = t.title;
+  document.getElementById('cbDesc').textContent        = t.desc;
+  document.getElementById('cbAcceptBtn').textContent   = t.accept;
+  document.getElementById('cbRejectBtn').textContent   = t.reject;
+  document.getElementById('cbSettingsBtn').textContent = t.settings;
+  document.getElementById('cbSaveBtn').textContent     = t.save;
+  document.getElementById('cbNameNec').textContent     = t.necName;
+  document.getElementById('cbDescNec').textContent     = t.necDesc;
+  document.getElementById('cbNameAna').textContent     = t.anaName;
+  document.getElementById('cbDescAna').innerHTML       = t.anaDesc;
+  document.getElementById('cbReopenLabel').textContent = t.reopen;
+  document.getElementById('cbLangBtn').textContent     = t.otherLang;
+}
+
+function cbToggleLang() {
+  cbLang = cbLang === 'de' ? 'en' : 'de';
+  cbRender();
+}
+
+function cbToggleSettings() {
+  const s = document.getElementById('cbSettings');
+  s.style.display = s.style.display === 'none' ? 'block' : 'none';
+}
+
+function cbSetConsent(analytics) {
+  if (typeof gtag === 'function') {
+    gtag('consent','update',{ analytics_storage: analytics ? 'granted' : 'denied' });
+  }
+}
+
+function cbHide() {
+  document.getElementById('cbOverlay').style.display  = 'none';
+  document.getElementById('cbReopenBtn').style.display = 'flex';
+}
+
+function cbAccept() {
+  localStorage.setItem(CB_KEY, JSON.stringify({ v:CB_VER, analytics:true,  ts:Date.now() }));
+  cbSetConsent(true);
+  cbHide();
+}
+
+function cbReject() {
+  localStorage.setItem(CB_KEY, JSON.stringify({ v:CB_VER, analytics:false, ts:Date.now() }));
+  cbSetConsent(false);
+  cbHide();
+}
+
+function cbSave() {
+  const analytics = document.getElementById('cbToggleAna').checked;
+  localStorage.setItem(CB_KEY, JSON.stringify({ v:CB_VER, analytics, ts:Date.now() }));
+  cbSetConsent(analytics);
+  cbHide();
+}
+
+function cbReopen() {
+  document.getElementById('cbReopenBtn').style.display = 'none';
+  document.getElementById('cbSettings').style.display  = 'block'; // immer mit Settings öffnen
+  document.getElementById('cbOverlay').style.display   = 'flex';
+}
+
+// ── Init ─────────────────────────────────────────────────────────────
+(function cbInit() {
+  cbRender();
+  try {
+    const saved = JSON.parse(localStorage.getItem(CB_KEY) || 'null');
+    if (saved && saved.v === CB_VER) {
+      document.getElementById('cbToggleAna').checked   = !!saved.analytics;
+      document.getElementById('cbReopenBtn').style.display = 'flex';
+      if (saved.analytics) cbSetConsent(true);
+      return; // Banner nicht zeigen
+    }
+  } catch(e) {}
+  // Noch kein gültiges Consent → Banner zeigen
+  document.getElementById('cbOverlay').style.display = 'flex';
+})();
 </script>
 </body>
 </html>
