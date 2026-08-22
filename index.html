@@ -482,6 +482,70 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 }
 .cb-reopen:hover { background: #0f172a; }
 
+/* ── Mobile bottom tab bar (hidden on desktop) ──────── */
+.mobile-tabbar {
+  display: none;
+  flex-shrink: 0;
+  background: #0f172a;
+  border-top: 1px solid #334155;
+  z-index: 45;
+}
+.mob-tab {
+  flex: 1; padding: 9px 8px 7px;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  border: none; border-top: 2.5px solid transparent;
+  background: transparent; color: #475569;
+  font-size: 10px; font-weight: 600; font-family: inherit;
+  cursor: pointer; text-transform: uppercase; letter-spacing: .4px;
+  transition: color .12s;
+}
+.mob-tab.active { color: #60a5fa; border-top-color: #2563eb; }
+.mob-tab-ico { font-size: 18px; line-height: 1.1; }
+
+/* ── Mobile layout ──────────────────────────────────── */
+@media (max-width: 768px) {
+  html, body { height: 100dvh; }
+
+  /* Compact topbar */
+  .topbar { padding: 0 10px; gap: 5px; height: 46px; }
+  .topbar-title { font-size: 12px; letter-spacing: -.2px; }
+  .btn-act { padding: 6px 9px; font-size: 11px; gap: 3px; }
+  .btn-lbl { display: none; } /* icon-only on mobile */
+
+  /* Stack panels, each fills the full remaining body */
+  .app-body { flex-direction: column; overflow: visible; }
+  .table-panel { flex: 1; min-height: 0; }
+
+  /* Config bar: full-width, hidden by default on mobile */
+  .config-bar {
+    width: 100%; border-left: none;
+    border-top: 2px solid var(--border);
+    display: none; flex: 1; min-height: 0;
+  }
+  .config-bar.mob-show { display: block; overflow-y: auto; }
+
+  /* Hide table panel when config tab is active */
+  .table-panel.mob-hide { display: none; }
+
+  /* Show mobile tab bar */
+  .mobile-tabbar { display: flex; }
+
+  /* Cookie pill sits above the tab bar */
+  .cb-reopen { bottom: 62px; }
+
+  /* Smaller table cells */
+  table { font-size: 11px; min-width: 540px; }
+  thead th { font-size: 9px; padding: 4px 3px; }
+  tbody td { font-size: 11px; padding: 3px 4px; }
+  tbody td:first-child { min-width: 120px; font-size: 10px; padding-left: 7px; }
+  td.td-g input { width: 56px; font-size: 10px; }
+  .lbl-hint { display: none; } /* save space on mobile */
+
+  /* Compact config sections */
+  .cfg-section { padding: 9px 11px; }
+  .panel-hdr { font-size: 9px; }
+}
+
 /* ── Print / PDF ────────────────────────────────── */
 @media print {
   @page { size: A4 landscape; margin: 5mm 7mm; }
@@ -501,7 +565,8 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 
   .config-bar { display: none !important; }
 
-  .table-panel { display: block; overflow: visible; height: auto; }
+  /* Show table panel even if mobile hid it */
+  .table-panel, .table-panel.mob-hide { display: block !important; overflow: visible; height: auto; }
   .panel-hdr { padding: 4px 10px; font-size: 8.5px; }
   .tbl-wrap { overflow: visible; height: auto; }
   .ov-hint { display: none; }
@@ -559,17 +624,17 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   <span class="topbar-title">Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</span>
   <div class="topbar-actions" style="display:flex;gap:8px;align-items:center;">
     <button class="btn-act btn-act--toggle no-print" id="collapseBtn" onclick="toggleCollapse()">
-      <span class="ico">⊟</span> Einklappen
+      <span class="ico">⊟</span><span class="btn-lbl"> Einklappen</span>
     </button>
     <button class="btn-act btn-act--save" onclick="saveData()">
-      <span class="ico">💾</span> Speichern
+      <span class="ico">💾</span><span class="btn-lbl"> Speichern</span>
     </button>
     <button class="btn-act btn-act--load" onclick="el('fileInput').click()">
-      <span class="ico">📂</span> Laden
+      <span class="ico">📂</span><span class="btn-lbl"> Laden</span>
     </button>
     <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadData(event)">
     <button class="btn-act btn-act--pdf" onclick="exportPDF()">
-      <span class="ico">🖨</span> PDF-Export
+      <span class="ico">🖨</span><span class="btn-lbl"> PDF-Export</span>
     </button>
   </div>
 </header>
@@ -642,6 +707,16 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   </aside>
 </div><!-- app-body -->
 
+<!-- ════════════ MOBILE TAB BAR ════════════ -->
+<nav class="mobile-tabbar no-print" id="mobileTabbar" aria-label="Ansicht wechseln">
+  <button class="mob-tab active" id="tabTable" onclick="mobTab('table')">
+    <span class="mob-tab-ico">📊</span>Übersicht
+  </button>
+  <button class="mob-tab" id="tabConfig" onclick="mobTab('config')">
+    <span class="mob-tab-ico">⚙️</span>Eingaben
+  </button>
+</nav>
+
 <script>
 // ── Constants ──────────────────────────────────────────────────────────
 const MONTHS   = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
@@ -680,8 +755,17 @@ function toggleCollapse() {
   collapsed = !collapsed;
   el('tblBody').classList.toggle('collapsed', collapsed);
   el('collapseBtn').innerHTML = collapsed
-    ? '<span class="ico">⊞</span> Ausklappen'
-    : '<span class="ico">⊟</span> Einklappen';
+    ? '<span class="ico">⊞</span><span class="btn-lbl"> Ausklappen</span>'
+    : '<span class="ico">⊟</span><span class="btn-lbl"> Einklappen</span>';
+}
+
+// ── Mobile tab switcher ────────────────────────────────────────────────
+function mobTab(tab) {
+  const isTable = tab === 'table';
+  document.querySelector('.table-panel').classList.toggle('mob-hide', !isTable);
+  document.querySelector('.config-bar').classList.toggle('mob-show', !isTable);
+  el('tabTable').classList.toggle('active', isTable);
+  el('tabConfig').classList.toggle('active', !isTable);
 }
 
 // ── Dynamic config rows ────────────────────────────────────────────────
