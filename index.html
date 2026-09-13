@@ -84,12 +84,14 @@ body {
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 56px;
+  height: 60px;
   padding: 0 20px;
-  background: var(--lw-navy);
+  background: linear-gradient(135deg, #0D1F2E 0%, var(--lw-navy) 60%, #1A3048 100%);
   color: #f1f5f9;
-  box-shadow: 0 2px 12px rgba(0,0,0,.30);
+  border-bottom: 3px solid var(--lw-yellow);
+  box-shadow: 0 4px 20px rgba(0,0,0,.40);
   z-index: 50;
+  position: relative;
 }
 
 /* Logo block */
@@ -216,14 +218,14 @@ body {
 
 .panel-hdr {
   flex-shrink: 0;
-  padding: 7px 16px;
-  background: var(--lw-navy);
-  color: rgba(255,255,255,.45);
+  padding: 6px 16px;
+  background: #E8E4D9;
+  color: var(--muted);
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: .6px;
-  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid #D0CBC0;
 }
 
 .tbl-wrap {
@@ -672,7 +674,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   html, body { height: 100dvh; }
 
   /* Compact topbar */
-  .topbar { padding: 0 10px; gap: 5px; height: 50px; }
+  .topbar { padding: 0 10px; gap: 5px; height: 54px; }
   .topbar-title { font-size: 11px; letter-spacing: -.2px; }
   .lw-logo-sub { display: none; }
   .lw-logo-name { font-size: 11px; }
@@ -727,7 +729,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
     background: #fff !important; font-size: 9px;
   }
 
-  .topbar { background: var(--lw-navy) !important; height: auto; padding: 5px 12px; }
+  .topbar { background: #132638 !important; border-bottom: 2px solid #F5C518 !important; height: auto; padding: 5px 12px; }
   .topbar-title { font-size: 12px; color: #f1f5f9 !important; }
   .topbar-actions, .no-print { display: none !important; }
 
