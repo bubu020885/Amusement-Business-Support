@@ -795,7 +795,23 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 <header class="topbar">
   <!-- Logo -->
   <a class="lw-logo no-print" href="https://leisureworkspace.com" target="_blank" rel="noopener" title="LeisureWorkspace">
-    <div class="lw-logo-icon">📋</div>
+    <div class="lw-logo-icon" style="background:none;padding:0;">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Rounded square background -->
+        <rect width="34" height="34" rx="8" fill="#1A7272"/>
+        <!-- Clipboard body -->
+        <rect x="9" y="10" width="16" height="18" rx="2" stroke="white" stroke-width="1.6" fill="none"/>
+        <!-- Clipboard clip at top -->
+        <rect x="13" y="8" width="8" height="4" rx="2" fill="#1A7272" stroke="white" stroke-width="1.5"/>
+        <!-- Lines on clipboard -->
+        <line x1="12" y1="16" x2="22" y2="16" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="12" y1="19.5" x2="22" y2="19.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="12" y1="23" x2="18" y2="23" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <!-- Yellow checkmark circle (bottom right) -->
+        <circle cx="24" cy="26" r="5" fill="#F5C518"/>
+        <polyline points="21.5,26 23.2,27.8 26.5,24.5" stroke="#132638" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
     <div class="lw-logo-text">
       <div class="lw-logo-name">Leisure<span>Workspace</span></div>
       <div class="lw-logo-sub">Amusement Business Support</div>
@@ -844,7 +860,18 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 <div id="infoOverlay" class="info-overlay" style="display:none" role="dialog" aria-modal="true" onclick="if(event.target===this)hideInfoModal()">
   <div class="info-modal">
     <div class="info-modal-hdr">
-      <div class="info-modal-icon">📊</div>
+      <div class="info-modal-icon" style="background:none;padding:0;width:40px;height:40px;">
+      <svg width="40" height="40" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="34" height="34" rx="8" fill="#1A7272"/>
+        <rect x="9" y="10" width="16" height="18" rx="2" stroke="white" stroke-width="1.6" fill="none"/>
+        <rect x="13" y="8" width="8" height="4" rx="2" fill="#1A7272" stroke="white" stroke-width="1.5"/>
+        <line x1="12" y1="16" x2="22" y2="16" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="12" y1="19.5" x2="22" y2="19.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="12" y1="23" x2="18" y2="23" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+        <circle cx="24" cy="26" r="5" fill="#F5C518"/>
+        <polyline points="21.5,26 23.2,27.8 26.5,24.5" stroke="#132638" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </svg>
+    </div>
       <div>
         <div class="info-modal-title" id="infoTitle">Annual Budget Calculator</div>
         <div class="info-modal-sub" id="infoSub">LeisureWorkspace · Amusement Business Support</div>
