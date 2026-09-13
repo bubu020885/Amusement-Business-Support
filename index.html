@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Business-Rechner – Jahr 1</title>
+<title>Annual Budget Calculator – LeisureWorkspace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- ═══ Google Tag (Consent Mode v2) ═══════════════════════════════════
      Ersetze G-XXXXXXXXXX durch deine echte GA4-Measurement-ID.
@@ -31,12 +34,18 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:      #f1f5f9;
+  --bg:      #EDEAE0;
   --card:    #ffffff;
-  --border:  #e2e8f0;
-  --text:    #1a1d23;
-  --muted:   #64748b;
-  --shadow:  0 1px 4px rgba(0,0,0,.08);
+  --border:  #D0CBC0;
+  --text:    #132638;
+  --muted:   #5A6A7A;
+  --shadow:  0 2px 8px rgba(19,38,56,.10);
+
+  --lw-navy:   #132638;
+  --lw-teal:   #1A7272;
+  --lw-yellow: #F5C518;
+  --lw-cream:  #EDEAE0;
+  --lw-mint:   #C8E6D8;
 
   --c-guests-bg:#dbeafe; --c-guests-h:#1e3a5f;
   --c-rev-bg:   #f0fdf4;
@@ -61,7 +70,7 @@
 /* ── App shell ──────────────────────────────────────── */
 html, body { height: 100%; overflow: hidden; }
 body {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-size: 13px;
   color: var(--text);
   background: var(--bg);
@@ -69,42 +78,106 @@ body {
   flex-direction: column;
 }
 
-/* ── Top bar ────────────────────────────────────────── */
+/* ── Top bar (LeisureWorkspace style) ───────────────── */
 .topbar {
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 8px;
-  height: 50px;
-  padding: 0 16px;
-  background: #1e293b;
+  gap: 10px;
+  height: 56px;
+  padding: 0 20px;
+  background: var(--lw-navy);
   color: #f1f5f9;
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  box-shadow: 0 2px 12px rgba(0,0,0,.30);
   z-index: 50;
 }
-.topbar-title {
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: -.3px;
-  margin-right: auto;
-  white-space: nowrap;
+
+/* Logo block */
+.lw-logo {
+  display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0; text-decoration: none;
 }
+.lw-logo-icon {
+  width: 34px; height: 34px; flex-shrink: 0;
+  background: var(--lw-teal); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+}
+.lw-logo-text { line-height: 1.1; }
+.lw-logo-name {
+  font-size: 13px; font-weight: 800; color: #fff;
+  letter-spacing: -.3px;
+}
+.lw-logo-name span { color: var(--lw-teal); font-weight: 400; }
+.lw-logo-sub {
+  font-size: 9.5px; color: rgba(255,255,255,.45);
+  font-weight: 400; letter-spacing: .1px;
+}
+
+.topbar-divider {
+  width: 1px; height: 28px; background: rgba(255,255,255,.15);
+  flex-shrink: 0;
+}
+
+.topbar-title {
+  font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,.85);
+  letter-spacing: -.2px;
+  margin-right: auto;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+/* Info button */
+.btn-info {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,.25); border-radius: 50%;
+  background: transparent; color: rgba(255,255,255,.7);
+  font-size: 13px; font-weight: 700; font-family: inherit;
+  cursor: pointer; transition: border-color .15s, color .15s;
+}
+.btn-info:hover { border-color: var(--lw-yellow); color: var(--lw-yellow); }
+
+/* Language toggle */
+.btn-lang {
+  display: inline-flex; align-items: center; gap: 0;
+  border: 1.5px solid rgba(255,255,255,.2); border-radius: 20px;
+  overflow: hidden; flex-shrink: 0;
+}
+.btn-lang-opt {
+  padding: 4px 9px; border: none; background: transparent;
+  color: rgba(255,255,255,.5); font-size: 11px; font-weight: 700;
+  font-family: inherit; cursor: pointer; transition: background .12s, color .12s;
+}
+.btn-lang-opt.active { background: var(--lw-teal); color: #fff; }
+
+/* Back to menu button */
+.btn-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border: none; border-radius: 22px;
+  background: var(--lw-yellow); color: var(--lw-navy);
+  font-size: 11.5px; font-weight: 700; font-family: inherit;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  text-decoration: none; transition: filter .12s, transform .08s;
+}
+.btn-back:hover  { filter: brightness(.92); }
+.btn-back:active { transform: scale(.95); }
 
 /* ── Action buttons ─────────────────────────────────── */
 .btn-act {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 7px 14px;
-  border: none; border-radius: 7px;
+  border: none; border-radius: 22px;
   font-size: 12px; font-weight: 600; font-family: inherit;
   cursor: pointer; white-space: nowrap;
   transition: filter .12s, transform .08s;
 }
 .btn-act:hover  { filter: brightness(.88); }
 .btn-act:active { transform: scale(.95); }
-.btn-act--save   { background: #2563eb; color: #fff; }
-.btn-act--load   { background: #059669; color: #fff; }
-.btn-act--pdf    { background: #7c3aed; color: #fff; }
-.btn-act--toggle { background: #475569; color: #fff; }
+.btn-act--save   { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
+.btn-act--load   { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
+.btn-act--pdf    { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
+.btn-act--toggle { background: rgba(255,255,255,.10); color: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.15); }
 .btn-act .ico    { font-size: 14px; }
 
 /* ── App body ───────────────────────────────────────── */
@@ -126,14 +199,14 @@ body {
 
 .panel-hdr {
   flex-shrink: 0;
-  padding: 7px 14px;
-  background: #1e293b;
-  color: #64748b;
+  padding: 7px 16px;
+  background: var(--lw-navy);
+  color: rgba(255,255,255,.45);
   font-size: 10px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: .5px;
-  border-bottom: 1px solid #334155;
+  letter-spacing: .6px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
 .tbl-wrap {
@@ -163,19 +236,19 @@ table {
 
 thead th {
   position: sticky; top: 0; z-index: 3;
-  background: #1e293b; color: #94a3b8;
+  background: var(--lw-navy); color: rgba(255,255,255,.55);
   font-size: 10px; font-weight: 600;
   padding: 6px 5px;
   text-align: right; white-space: nowrap;
-  border-right: 1px solid #334155;
+  border-right: 1px solid rgba(255,255,255,.08);
 }
 thead th:first-child {
   text-align: left;
   position: sticky; left: 0; z-index: 4;
   min-width: 160px;
-  background: #1e293b;
+  background: var(--lw-navy);
 }
-thead th.th-tot { background: #0f172a; color: #e2e8f0; }
+thead th.th-tot { background: #0A1E2E; color: #e2e8f0; }
 
 tbody td {
   padding: 4px 5px; text-align: right; white-space: nowrap;
@@ -237,7 +310,7 @@ tr.tr-opex   td { background: var(--c-opex-bg); }
 tr.tr-sktot  td { background: var(--c-sktot-bg); font-weight:700; }
 tr.tr-otot   td { background: var(--c-otot-bg); font-weight:700; font-size:12.5px; }
 tr.tr-ebitda td { background: var(--c-ebitda-bg); font-weight:700; font-size:13px; }
-tr.tr-sep    td { background: #1e293b; height:4px; padding:0; }
+tr.tr-sep    td { background: var(--lw-navy); height:4px; padding:0; }
 tr.tr-invest td { background: var(--c-invest-bg); color:var(--muted); }
 tr.tr-cumul  td { background: var(--c-cumul-bg); font-weight:600; }
 tr.tr-roi    td { background: var(--c-roi-bg); font-weight:600; }
@@ -303,23 +376,29 @@ tr.tr-roi    td.td-tot { background:#fde68a !important; }
 }
 .cfg-section:last-child { border-bottom: none; }
 
-/* Per-section background colours */
-.config-bar > .cfg-section:nth-child(1) { background: #eff6ff; } /* Spend per Cap – blau */
-.config-bar > .cfg-section:nth-child(2) { background: #fff7ed; } /* Wareneinsatz – orange */
-.config-bar > .cfg-section:nth-child(3) { background: #faf5ff; } /* Gehälter – violett */
-.config-bar > .cfg-section:nth-child(4) { background: #f0fdf4; } /* Variable Löhne – grün */
-.config-bar > .cfg-section:nth-child(5) { background: #eef2ff; } /* Sonstige Kosten – indigo */
-.config-bar > .cfg-section:nth-child(6) { background: #f8fafc; } /* Investition – grau */
+/* Per-section background colours – LeisureWorkspace palette */
+.config-bar > .cfg-section:nth-child(1) { background: #F5F3EE; } /* Spend per Cap – cream */
+.config-bar > .cfg-section:nth-child(2) { background: #EDF6F2; } /* Wareneinsatz – mint */
+.config-bar > .cfg-section:nth-child(3) { background: #EFF8F8; } /* Gehälter – teal-tint */
+.config-bar > .cfg-section:nth-child(4) { background: #F0F7EF; } /* Variable Löhne – soft green */
+.config-bar > .cfg-section:nth-child(5) { background: #F5F3EE; } /* Sonstige Kosten – cream */
+.config-bar > .cfg-section:nth-child(6) { background: #FDF9E8; } /* Investition – yellow-tint */
 
 .cfg-title {
-  font-size: 10.5px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .5px;
-  color: var(--muted);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .8px;
+  color: var(--lw-teal);
   margin-bottom: 8px;
+  display: flex; align-items: center; gap: 5px;
 }
-.cfg-title--cog  { color: var(--c-cog-h); }
-.cfg-title--opex { color: var(--c-opex-h); }
-.cfg-title--wage { color: #6d28d9; }
+.cfg-title::before {
+  content: ''; display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--lw-yellow); flex-shrink: 0;
+}
+.cfg-title--cog  { color: var(--lw-teal); }
+.cfg-title--opex { color: var(--lw-teal); }
+.cfg-title--wage { color: var(--lw-teal); }
 
 /* label + input pairs */
 .cfg-field {
@@ -370,15 +449,15 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 
 .btn-add {
   display: inline-flex; align-items: center; gap: 4px;
-  padding: 4px 10px; border: 1.5px dashed var(--border);
-  border-radius: 5px; font-size: 11px; font-weight: 500;
-  cursor: pointer; background: transparent; color: var(--muted);
-  transition: background .12s; margin-top: 3px;
+  padding: 5px 12px; border: 1.5px dashed var(--lw-teal);
+  border-radius: 20px; font-size: 11px; font-weight: 600;
+  cursor: pointer; background: transparent; color: var(--lw-teal);
+  transition: background .12s; margin-top: 4px;
 }
-.btn-add:hover { background: rgba(0,0,0,.04); }
-.btn-add--cog  { border-color: var(--c-cog-ac);  color: var(--c-cog-ac); }
-.btn-add--opex { border-color: var(--c-opex-ac); color: var(--c-opex-ac); }
-.btn-add--wage { border-color: #7c3aed; color: #7c3aed; }
+.btn-add:hover { background: rgba(26,114,114,.07); }
+.btn-add--cog  { border-color: var(--lw-teal); color: var(--lw-teal); }
+.btn-add--opex { border-color: var(--lw-teal); color: var(--lw-teal); }
+.btn-add--wage { border-color: var(--lw-teal); color: var(--lw-teal); }
 
 /* ── Toast ──────────────────────────────────────── */
 .toast {
@@ -394,6 +473,74 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 @keyframes tin  { from { opacity:0; transform:translateX(-50%) translateY(6px); } to { opacity:1; transform:translateX(-50%) translateY(0); } }
 @keyframes tout { from { opacity:1; } to { opacity:0; } }
 
+/* ── Info Modal ─────────────────────────────────── */
+.info-overlay {
+  position: fixed; inset: 0; z-index: 9100;
+  background: rgba(19,38,56,.55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.info-modal {
+  background: #fff; border-radius: 16px;
+  max-width: 520px; width: 100%;
+  box-shadow: 0 20px 60px rgba(19,38,56,.3);
+  overflow: hidden;
+  animation: modal-in .2s ease;
+}
+@keyframes modal-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.info-modal-hdr {
+  background: var(--lw-navy); color: #fff;
+  padding: 20px 24px 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.info-modal-icon {
+  width: 40px; height: 40px; flex-shrink: 0;
+  background: var(--lw-teal); border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+}
+.info-modal-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; margin-bottom: 2px; }
+.info-modal-sub   { font-size: 11px; color: rgba(255,255,255,.5); font-weight: 400; }
+.info-modal-close {
+  margin-left: auto; flex-shrink: 0;
+  background: rgba(255,255,255,.12); border: none; border-radius: 50%;
+  width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.7); font-size: 14px; cursor: pointer;
+  transition: background .12s;
+}
+.info-modal-close:hover { background: rgba(255,255,255,.22); }
+.info-modal-body { padding: 22px 24px 24px; }
+.info-label {
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: var(--lw-teal); margin-bottom: 5px;
+  display: flex; align-items: center; gap: 5px;
+}
+.info-label::before {
+  content: ''; display: inline-block;
+  width: 5px; height: 5px; border-radius: 50%; background: var(--lw-yellow);
+}
+.info-section { margin-bottom: 16px; }
+.info-section p { font-size: 13px; line-height: 1.6; color: var(--muted); }
+.info-section strong { color: var(--text); }
+.info-modal-footer {
+  border-top: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex; gap: 10px; align-items: center;
+}
+.info-footer-logo {
+  font-size: 11px; color: var(--muted); margin-right: auto;
+}
+.info-footer-logo strong { color: var(--lw-navy); }
+.btn-lw-primary {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border: none; border-radius: 22px;
+  background: var(--lw-yellow); color: var(--lw-navy);
+  font-size: 12px; font-weight: 700; font-family: inherit;
+  cursor: pointer; text-decoration: none;
+  transition: filter .12s;
+}
+.btn-lw-primary:hover { filter: brightness(.92); }
+
 /* ── Cookie Banner ──────────────────────────────── */
 .cb-overlay {
   position: fixed; inset: 0; z-index: 9000;
@@ -402,8 +549,8 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 }
 .cb-banner {
   width: 100%;
-  background: #1e293b; color: #f1f5f9;
-  border-top: 3px solid #2563eb;
+  background: var(--lw-navy); color: #f1f5f9;
+  border-top: 3px solid var(--lw-yellow);
   box-shadow: 0 -4px 28px rgba(0,0,0,.4);
   font-size: 13px;
   animation: cb-up .2s ease;
@@ -430,11 +577,11 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   cursor: pointer; white-space: nowrap; transition: filter .12s;
 }
 .cb-btn:hover { filter: brightness(.88); }
-.cb-btn--accept   { background: #2563eb; color: #fff; }
-.cb-btn--reject   { background: #334155; color: #cbd5e1; }
-.cb-btn--settings { background: transparent; color: #64748b; border: 1px solid #334155; }
-.cb-btn--save     { background: #059669; color: #fff; }
-.cb-btn--lang     { background: transparent; color: #475569; border: 1px solid #334155;
+.cb-btn--accept   { background: var(--lw-yellow); color: var(--lw-navy); }
+.cb-btn--reject   { background: rgba(255,255,255,.12); color: #cbd5e1; border: 1px solid rgba(255,255,255,.15); }
+.cb-btn--settings { background: transparent; color: rgba(255,255,255,.55); border: 1px solid rgba(255,255,255,.18); }
+.cb-btn--save     { background: var(--lw-teal); color: #fff; }
+.cb-btn--lang     { background: transparent; color: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.2);
                     font-size: 11px; padding: 5px 10px; border-radius: 5px; }
 
 .cb-settings {
@@ -444,7 +591,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 }
 .cb-cat {
   display: flex; align-items: flex-start; gap: 14px;
-  padding: 11px 0; border-bottom: 1px solid #243044;
+  padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,.08);
 }
 .cb-cat:last-child { border-bottom: none; }
 .cb-cat-info { flex: 1; }
@@ -467,39 +614,39 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   left:3px; top:3px; width:16px; height:16px;
   border-radius:50%; background:#fff; transition:transform .2s;
 }
-.cb-toggle input:checked  + .cb-slider               { background: #2563eb; }
+.cb-toggle input:checked  + .cb-slider               { background: var(--lw-teal); }
 .cb-toggle input:checked  + .cb-slider::before        { transform: translateX(16px); }
 .cb-toggle input:disabled + .cb-slider                { opacity: .55; cursor: not-allowed; }
 
 /* Reopen pill */
 .cb-reopen {
   position: fixed; bottom: 14px; left: 14px; z-index: 8999;
-  background: #1e293b; color: #94a3b8;
-  border: 1px solid #334155; border-radius: 8px;
+  background: var(--lw-navy); color: rgba(255,255,255,.6);
+  border: 1px solid rgba(255,255,255,.15); border-radius: 22px;
   padding: 6px 13px; font-size: 11px; font-weight: 600;
   cursor: pointer; display: flex; align-items: center; gap: 6px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.3); transition: background .12s;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3); transition: filter .12s;
 }
-.cb-reopen:hover { background: #0f172a; }
+.cb-reopen:hover { filter: brightness(1.2); }
 
 /* ── Mobile bottom tab bar (hidden on desktop) ──────── */
 .mobile-tabbar {
   display: none;
   flex-shrink: 0;
-  background: #0f172a;
-  border-top: 1px solid #334155;
+  background: var(--lw-navy);
+  border-top: 1px solid rgba(255,255,255,.08);
   z-index: 45;
 }
 .mob-tab {
   flex: 1; padding: 9px 8px 7px;
   display: flex; flex-direction: column; align-items: center; gap: 3px;
   border: none; border-top: 2.5px solid transparent;
-  background: transparent; color: #475569;
+  background: transparent; color: rgba(255,255,255,.4);
   font-size: 10px; font-weight: 600; font-family: inherit;
   cursor: pointer; text-transform: uppercase; letter-spacing: .4px;
   transition: color .12s;
 }
-.mob-tab.active { color: #60a5fa; border-top-color: #2563eb; }
+.mob-tab.active { color: var(--lw-yellow); border-top-color: var(--lw-yellow); }
 .mob-tab-ico { font-size: 18px; line-height: 1.1; }
 
 /* ── Mobile layout ──────────────────────────────────── */
@@ -507,8 +654,13 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   html, body { height: 100dvh; }
 
   /* Compact topbar */
-  .topbar { padding: 0 10px; gap: 5px; height: 46px; }
-  .topbar-title { font-size: 12px; letter-spacing: -.2px; }
+  .topbar { padding: 0 10px; gap: 5px; height: 50px; }
+  .topbar-title { font-size: 11px; letter-spacing: -.2px; }
+  .lw-logo-sub { display: none; }
+  .lw-logo-name { font-size: 11px; }
+  .lw-logo-icon { width: 28px; height: 28px; font-size: 15px; }
+  .topbar-divider { display: none; }
+  .btn-back { padding: 5px 10px; font-size: 10px; }
   .btn-act { padding: 6px 9px; font-size: 11px; gap: 3px; }
   .btn-lbl { display: none; } /* icon-only on mobile */
 
@@ -557,7 +709,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
     background: #fff !important; font-size: 9px;
   }
 
-  .topbar { background: #1e293b !important; height: auto; padding: 5px 12px; }
+  .topbar { background: var(--lw-navy) !important; height: auto; padding: 5px 12px; }
   .topbar-title { font-size: 12px; color: #f1f5f9 !important; }
   .topbar-actions, .no-print { display: none !important; }
 
@@ -576,7 +728,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
     font-size: 8.5px !important;
     break-inside: avoid; page-break-inside: avoid;
   }
-  thead th { position: static !important; padding: 3px 3px !important; font-size: 8px !important; background: #1e293b !important; color: #94a3b8 !important; }
+  thead th { position: static !important; padding: 3px 3px !important; font-size: 8px !important; background: #132638 !important; color: #94a3b8 !important; }
   tbody td { position: static !important; padding: 2px 3px !important; font-size: 8.5px !important; }
   tbody td:first-child { min-width: unset !important; max-width: 140px; font-size: 8px !important; }
   .lbl-hint { display: none !important; }
@@ -609,7 +761,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   tr.tr-sktot  td { background: #c7d2fe !important; }
   tr.tr-otot   td { background: #ddd6fe !important; }
   tr.tr-ebitda td { background: #d1fae5 !important; }
-  tr.tr-sep    td { background: #1e293b !important; }
+  tr.tr-sep    td { background: #132638 !important; }
   tr.tr-invest td { background: #f1f5f9 !important; }
   tr.tr-cumul  td { background: #e0f2fe !important; }
   tr.tr-roi    td { background: #fef9c3 !important; }
@@ -621,30 +773,85 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 
 <!-- ════════════ TOP BAR ════════════ -->
 <header class="topbar">
-  <span class="topbar-title">Business-Rechner &mdash; Jahr 1 &middot; Monatsbasis</span>
-  <div class="topbar-actions" style="display:flex;gap:8px;align-items:center;">
-    <button class="btn-act btn-act--toggle no-print" id="collapseBtn" onclick="toggleCollapse()">
-      <span class="ico">⊟</span><span class="btn-lbl"> Einklappen</span>
+  <!-- Logo -->
+  <a class="lw-logo no-print" href="https://leisureworkspace.com" target="_blank" rel="noopener" title="LeisureWorkspace">
+    <div class="lw-logo-icon">📋</div>
+    <div class="lw-logo-text">
+      <div class="lw-logo-name">Leisure<span>Workspace</span></div>
+      <div class="lw-logo-sub">Amusement Business Support</div>
+    </div>
+  </a>
+  <div class="topbar-divider no-print"></div>
+
+  <!-- Tool title -->
+  <span class="topbar-title" id="headerTitle">Annual Budget Calculator – Year 1</span>
+
+  <!-- Actions -->
+  <div class="topbar-actions no-print" style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+    <button class="btn-act btn-act--toggle" id="collapseBtn" onclick="toggleCollapse()">
+      <span class="ico">⊟</span><span class="btn-lbl" id="lblCollapse"> Einklappen</span>
     </button>
     <button class="btn-act btn-act--save" onclick="saveData()">
-      <span class="ico">💾</span><span class="btn-lbl"> Speichern</span>
+      <span class="ico">💾</span><span class="btn-lbl" id="lblSave"> Speichern</span>
     </button>
     <button class="btn-act btn-act--load" onclick="el('fileInput').click()">
-      <span class="ico">📂</span><span class="btn-lbl"> Laden</span>
+      <span class="ico">📂</span><span class="btn-lbl" id="lblLoad"> Laden</span>
     </button>
     <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadData(event)">
     <button class="btn-act btn-act--pdf" onclick="exportPDF()">
-      <span class="ico">🖨</span><span class="btn-lbl"> PDF-Export</span>
+      <span class="ico">🖨</span><span class="btn-lbl" id="lblPdf"> PDF</span>
     </button>
+
+    <!-- Info button -->
+    <button class="btn-info" onclick="showInfoModal()" id="infoBtn" title="Info">i</button>
+
+    <!-- Language toggle -->
+    <div class="btn-lang" role="group">
+      <button class="btn-lang-opt" id="langDE" onclick="setLang('de')">DE</button>
+      <button class="btn-lang-opt" id="langEN" onclick="setLang('en')">EN</button>
+    </div>
+
+    <!-- Back to menu -->
+    <a class="btn-back" href="https://leisureworkspace.com" target="_blank" rel="noopener" id="btnBack">
+      ↗ <span id="lblBack">Tools</span>
+    </a>
   </div>
 </header>
+
+<!-- ════════════ INFO MODAL ════════════ -->
+<div id="infoOverlay" class="info-overlay" style="display:none" role="dialog" aria-modal="true" onclick="if(event.target===this)hideInfoModal()">
+  <div class="info-modal">
+    <div class="info-modal-hdr">
+      <div class="info-modal-icon">📊</div>
+      <div>
+        <div class="info-modal-title" id="infoTitle">Annual Budget Calculator</div>
+        <div class="info-modal-sub" id="infoSub">LeisureWorkspace · Amusement Business Support</div>
+      </div>
+      <button class="info-modal-close" onclick="hideInfoModal()">✕</button>
+    </div>
+    <div class="info-modal-body">
+      <div class="info-section">
+        <div class="info-label" id="infoAboutLabel">About this tool</div>
+        <p id="infoAboutText">Plan your first year of operations month by month. Enter guest numbers, spend per cap, wages and costs — the calculator gives you revenue, gross profit, EBITDA and ROI at a glance. Click any cell to override a value manually.</p>
+      </div>
+      <div class="info-section">
+        <div class="info-label" id="infoMakerLabel">About the maker</div>
+        <p id="infoMakerText"><strong>Stefan Burian</strong> — 20+ years of leisure attraction experience across operations, people development and guest experience. LeisureWorkspace translates that practical knowledge into tools other attraction professionals can use.</p>
+      </div>
+    </div>
+    <div class="info-modal-footer">
+      <span class="info-footer-logo"><strong>Leisure</strong>Workspace · Amusement Business Support</span>
+      <a class="btn-lw-primary" href="https://leisureworkspace.com" target="_blank" rel="noopener" id="infoMoreBtn">All tools ↗</a>
+    </div>
+  </div>
+</div>
 
 <!-- ════════════ APP BODY ════════════ -->
 <div class="app-body">
 
   <!-- ── Table panel (left, scrollable) ── -->
   <main class="table-panel">
-    <div class="panel-hdr">Jahresübersicht &mdash; alle 12 Monate &nbsp;·&nbsp; <span class="no-print" style="opacity:.7">Zellen anklicken zum Überschreiben &middot; Esc = zurücksetzen</span></div>
+    <div class="panel-hdr"><span id="panelHdrTitle">Annual Overview — 12 Months</span> &nbsp;·&nbsp; <span class="no-print" id="panelHdrHint" style="opacity:.7">Click any cell to override · Esc = reset</span></div>
     <div class="tbl-wrap">
       <table>
         <thead id="tblHead"></thead>
@@ -659,67 +866,224 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 
     <!-- Spend per Cap -->
     <div class="cfg-section">
-      <div class="cfg-title">Spend per Cap</div>
-      <div class="cfg-field"><label>Ø Ticketpreis</label><input type="number" id="ticketPrice" value="15.00" min="0" step="0.5"></div>
-      <div class="cfg-field"><label>Retail / Gast</label><input type="number" id="retailPrice" value="3.00"  min="0" step="0.5"></div>
-      <div class="cfg-field"><label>Games / Gast</label> <input type="number" id="gamesPrice"  value="5.00"  min="0" step="0.5"></div>
-      <div class="cfg-field"><label>F&amp;B / Gast</label>   <input type="number" id="fbPrice"   value="4.00"  min="0" step="0.5"></div>
+      <div class="cfg-title" id="cfgTitleSpc">Spend per Cap</div>
+      <div class="cfg-field"><label id="lblTicket">Avg. Ticket Price</label><input type="number" id="ticketPrice" value="15.00" min="0" step="0.5"></div>
+      <div class="cfg-field"><label id="lblRetail">Retail / Guest</label><input type="number" id="retailPrice" value="3.00"  min="0" step="0.5"></div>
+      <div class="cfg-field"><label id="lblGames">Games / Guest</label> <input type="number" id="gamesPrice"  value="5.00"  min="0" step="0.5"></div>
+      <div class="cfg-field"><label id="lblFb">F&amp;B / Guest</label>   <input type="number" id="fbPrice"   value="4.00"  min="0" step="0.5"></div>
     </div>
 
     <!-- Wareneinsatz -->
     <div class="cfg-section">
-      <div class="cfg-title cfg-title--cog">Wareneinsatz</div>
-      <div class="col-hd col-hd--std"><span>Bezeichnung</span><span>Art</span><span>Wert</span><span></span></div>
+      <div class="cfg-title cfg-title--cog" id="cfgTitleCog">Cost of Goods</div>
+      <div class="col-hd col-hd--std" id="colHdCog"><span id="hdCogName">Name</span><span id="hdCogType">Type</span><span id="hdCogVal">Value</span><span></span></div>
       <div id="cogRows"></div>
-      <button class="btn-add btn-add--cog" onclick="addCogRow()">+ Zeile</button>
+      <button class="btn-add btn-add--cog" id="btnAddCog" onclick="addCogRow()">+ Row</button>
     </div>
 
     <!-- Gehälter (Fixkosten) -->
     <div class="cfg-section">
-      <div class="cfg-title cfg-title--wage">Gehälter (Fixkosten)</div>
-      <div class="col-hd col-hd--salary"><span>Bezeichnung</span><span>€/Monat</span><span>SV%</span><span>Puffer</span><span></span></div>
+      <div class="cfg-title cfg-title--wage" id="cfgTitleSalary">Salaries (Fixed)</div>
+      <div class="col-hd col-hd--salary" id="colHdSalary"><span id="hdSalName">Name</span><span id="hdSalWage">€/Month</span><span>SV%</span><span id="hdSalBuf">Buffer</span><span></span></div>
       <div id="salaryRows"></div>
-      <button class="btn-add btn-add--wage" onclick="addSalaryRow()">+ Gehalt</button>
+      <button class="btn-add btn-add--wage" id="btnAddSalary" onclick="addSalaryRow()">+ Salary</button>
     </div>
 
     <!-- Variable Löhne (Stundenlohn) -->
     <div class="cfg-section">
-      <div class="cfg-title cfg-title--wage">Variable Löhne (Stundenlohn)</div>
-      <div class="col-hd col-hd--hourly"><span>Bezeichnung</span><span>€/Std</span><span>Std/Mon</span><span>SV%</span><span>Puf.</span><span></span></div>
+      <div class="cfg-title cfg-title--wage" id="cfgTitleHourly">Hourly Wages (Variable)</div>
+      <div class="col-hd col-hd--hourly" id="colHdHourly"><span id="hdHrName">Name</span><span id="hdHrRate">€/h</span><span id="hdHrHours">h/mo</span><span>SV%</span><span id="hdHrBuf">Buf.</span><span></span></div>
       <div id="hourlyRows"></div>
-      <button class="btn-add btn-add--wage" onclick="addHourlyRow()">+ Stundenlöhner</button>
+      <button class="btn-add btn-add--wage" id="btnAddHourly" onclick="addHourlyRow()">+ Hourly</button>
     </div>
 
     <!-- Sonstige Kosten -->
     <div class="cfg-section">
-      <div class="cfg-title cfg-title--opex">Sonstige Kosten</div>
-      <div class="col-hd col-hd--std"><span>Bezeichnung</span><span>Art</span><span>Wert</span><span></span></div>
+      <div class="cfg-title cfg-title--opex" id="cfgTitleOpex">Other Costs</div>
+      <div class="col-hd col-hd--std" id="colHdOpex"><span id="hdOpexName">Name</span><span id="hdOpexType">Type</span><span id="hdOpexVal">Value</span><span></span></div>
       <div id="opexRows"></div>
-      <button class="btn-add btn-add--opex" onclick="addOpexRow()">+ Zeile</button>
+      <button class="btn-add btn-add--opex" id="btnAddOpex" onclick="addOpexRow()">+ Row</button>
     </div>
 
     <!-- Investition -->
     <div class="cfg-section">
-      <div class="cfg-title">Investition</div>
-      <div class="cfg-field"><label>Gesamtinvestition</label><input type="number" id="investTotal" value="0" min="0" step="1000"></div>
+      <div class="cfg-title" id="cfgTitleInvest">Investment</div>
+      <div class="cfg-field"><label id="lblInvestTotal">Total Investment</label><input type="number" id="investTotal" value="0" min="0" step="1000"></div>
     </div>
 
   </aside>
 </div><!-- app-body -->
 
 <!-- ════════════ MOBILE TAB BAR ════════════ -->
-<nav class="mobile-tabbar no-print" id="mobileTabbar" aria-label="Ansicht wechseln">
+<nav class="mobile-tabbar no-print" id="mobileTabbar" aria-label="Switch view">
   <button class="mob-tab active" id="tabTable" onclick="mobTab('table')">
-    <span class="mob-tab-ico">📊</span>Übersicht
+    <span class="mob-tab-ico">📊</span><span id="tabLblTable">Overview</span>
   </button>
   <button class="mob-tab" id="tabConfig" onclick="mobTab('config')">
-    <span class="mob-tab-ico">⚙️</span>Eingaben
+    <span class="mob-tab-ico">⚙️</span><span id="tabLblConfig">Inputs</span>
   </button>
 </nav>
 
 <script>
+// ── Language / i18n ────────────────────────────────────────────────────
+let appLang = (navigator.language||'').toLowerCase().startsWith('de') ? 'de' : 'en';
+
+const I18N = {
+  en: {
+    months: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    typeOpts: `<option value="pct">% Revenue</option><option value="perGuest">€/Guest</option><option value="fixed">€ fixed</option>`,
+    headerTitle: 'Annual Budget Calculator – Year 1',
+    lblCollapse: ' Collapse', lblExpand: ' Expand',
+    lblSave: ' Save', lblLoad: ' Load', lblPdf: ' PDF',
+    lblBack: 'All Tools',
+    panelHdrTitle: 'Annual Overview — 12 Months',
+    panelHdrHint: 'Click any cell to override · Esc = reset',
+    cfgTitleSpc: 'Spend per Cap', cfgTitleCog: 'Cost of Goods',
+    cfgTitleSalary: 'Salaries (Fixed)', cfgTitleHourly: 'Hourly Wages (Variable)',
+    cfgTitleOpex: 'Other Costs', cfgTitleInvest: 'Investment',
+    lblTicket: 'Avg. Ticket Price', lblRetail: 'Retail / Guest',
+    lblGames: 'Games / Guest', lblFb: 'F&B / Guest',
+    lblInvestTotal: 'Total Investment',
+    hdCogName: 'Name', hdCogType: 'Type', hdCogVal: 'Value',
+    hdSalName: 'Name', hdSalWage: '€/Month', hdSalBuf: 'Buffer',
+    hdHrName: 'Name', hdHrRate: '€/h', hdHrHours: 'h/mo', hdHrBuf: 'Buf.',
+    hdOpexName: 'Name', hdOpexType: 'Type', hdOpexVal: 'Value',
+    btnAddCog: '+ Row', btnAddSalary: '+ Salary', btnAddHourly: '+ Hourly', btnAddOpex: '+ Row',
+    tabLblTable: 'Overview', tabLblConfig: 'Inputs',
+    infoTitle: 'Annual Budget Calculator',
+    infoSub: 'LeisureWorkspace · Amusement Business Support',
+    infoAboutLabel: 'About this tool',
+    infoAboutText: 'Plan your first year of operations month by month. Enter guest numbers, spend per cap, wages and costs — the calculator gives you revenue, gross profit, EBITDA and ROI at a glance. Click any cell to override a value manually.',
+    infoMakerLabel: 'About the maker',
+    infoMakerText: '<strong>Stefan Burian</strong> — 20+ years of leisure attraction experience across operations, people development and guest experience. LeisureWorkspace translates that practical knowledge into tools other attraction professionals can use.',
+    infoMoreBtn: 'All tools ↗',
+    rowGuests: 'Guests / Month',
+    rowTicket: 'Ticket Revenue', rowRetail: 'Retail Revenue', rowGames: 'Games Revenue', rowFb: 'F&B Revenue',
+    rowRevTot: 'Total Revenue', rowCogTot: 'Total Cost of Goods', rowGP: 'Gross Profit',
+    rowGPMargin: 'Gross Margin', rowSalTot: 'Total Salaries', rowHrTot: 'Total Hourly Wages',
+    rowOpexTot: 'Total Other Costs', rowOpexAll: 'Total Operating Costs',
+    rowEbitda: 'EBITDA', rowEbitdaMargin: 'EBITDA Margin',
+    rowInvest: 'Total Investment', rowCumul: 'Cum. EBITDA', rowRoi: 'ROI (cumulated)',
+    rowKennzahl: 'Metric', rowYear: 'Year',
+    typeHintPct: '% of Revenue', typeHintGuest: '€ / Guest', typeHintFixed: '€ fixed',
+    hintsalary: 'Gross · SV', hintBuffer: '· Buffer',
+    hintHourly: '/h ×', hintHours: 'h · SV', hintBuf: '· Buffer',
+    toastSaved: '✓ File downloading', toastLoaded: '✓ File loaded',
+    toastSaveFail: 'Save failed', toastLoadFail: 'Load failed',
+    paybackReached: 'Break-even reached in', paybackMonth: 'Month',
+    paybackAnnRoi: '· Annual ROI',
+    paybackNot: 'Investment', paybackNot2: 'not recovered in Year 1 · Annual ROI',
+    overrideHint: 'cell', overrideHints: 'cells', overrideManual: 'manually overridden',
+    placeholderName: 'Name',
+    placeholderSalary: 'e.g. Manager',
+    placeholderHourly: 'e.g. Part-time',
+  },
+  de: {
+    months: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
+    typeOpts: `<option value="pct">% Umsatz</option><option value="perGuest">€/Gast</option><option value="fixed">€ fix</option>`,
+    headerTitle: 'Business-Rechner – Jahr 1',
+    lblCollapse: ' Einklappen', lblExpand: ' Ausklappen',
+    lblSave: ' Speichern', lblLoad: ' Laden', lblPdf: ' PDF',
+    lblBack: 'Alle Tools',
+    panelHdrTitle: 'Jahresübersicht — alle 12 Monate',
+    panelHdrHint: 'Zellen anklicken zum Überschreiben · Esc = zurücksetzen',
+    cfgTitleSpc: 'Spend per Cap', cfgTitleCog: 'Wareneinsatz',
+    cfgTitleSalary: 'Gehälter (Fixkosten)', cfgTitleHourly: 'Variable Löhne (Stundenlohn)',
+    cfgTitleOpex: 'Sonstige Kosten', cfgTitleInvest: 'Investition',
+    lblTicket: 'Ø Ticketpreis', lblRetail: 'Retail / Gast',
+    lblGames: 'Games / Gast', lblFb: 'F&B / Gast',
+    lblInvestTotal: 'Gesamtinvestition',
+    hdCogName: 'Bezeichnung', hdCogType: 'Art', hdCogVal: 'Wert',
+    hdSalName: 'Bezeichnung', hdSalWage: '€/Monat', hdSalBuf: 'Puffer',
+    hdHrName: 'Bezeichnung', hdHrRate: '€/Std', hdHrHours: 'Std/Mon', hdHrBuf: 'Puf.',
+    hdOpexName: 'Bezeichnung', hdOpexType: 'Art', hdOpexVal: 'Wert',
+    btnAddCog: '+ Zeile', btnAddSalary: '+ Gehalt', btnAddHourly: '+ Stundenlöhner', btnAddOpex: '+ Zeile',
+    tabLblTable: 'Übersicht', tabLblConfig: 'Eingaben',
+    infoTitle: 'Business-Rechner',
+    infoSub: 'LeisureWorkspace · Amusement Business Support',
+    infoAboutLabel: 'Über dieses Tool',
+    infoAboutText: 'Plane dein erstes Betriebsjahr Monat für Monat. Gib Gästezahlen, Spend per Cap, Löhne und Kosten ein – der Rechner zeigt dir Umsatz, Rohertrag, EBITDA und ROI auf einen Blick. Zellen anklicken, um Werte manuell zu überschreiben.',
+    infoMakerLabel: 'Über den Macher',
+    infoMakerText: '<strong>Stefan Burian</strong> — über 20 Jahre Erfahrung in der Freizeitbranche: Betrieb, Personalentwicklung und Guest Experience. LeisureWorkspace macht dieses Praxiswissen als digitale Tools für andere Fachleute zugänglich.',
+    infoMoreBtn: 'Alle Tools ↗',
+    rowGuests: 'Gäste / Monat',
+    rowTicket: 'Ticket-Umsatz', rowRetail: 'Retail-Umsatz', rowGames: 'Games-Umsatz', rowFb: 'F&B-Umsatz',
+    rowRevTot: 'Gesamt-Umsatz', rowCogTot: 'Gesamt Wareneinsatz', rowGP: 'Rohertrag',
+    rowGPMargin: 'Rohertrag-Marge', rowSalTot: 'Gehälter gesamt', rowHrTot: 'Variable Löhne gesamt',
+    rowOpexTot: 'Sonstige Kosten gesamt', rowOpexAll: 'Betr. Aufwand gesamt',
+    rowEbitda: 'EBITDA', rowEbitdaMargin: 'EBITDA-Marge',
+    rowInvest: 'Investition gesamt', rowCumul: 'Kum. EBITDA', rowRoi: 'ROI (kumuliert)',
+    rowKennzahl: 'Kennzahl', rowYear: 'Jahr',
+    typeHintPct: '% vom Umsatz', typeHintGuest: '€ / Gast', typeHintFixed: '€ fix',
+    hintsalary: 'Brutto · SV', hintBuffer: '· Puffer',
+    hintHourly: '/Std ×', hintHours: 'Std · SV', hintBuf: '· Puffer',
+    toastSaved: '✓ Datei wird heruntergeladen', toastLoaded: '✓ Datei geladen',
+    toastSaveFail: 'Speichern fehlgeschlagen', toastLoadFail: 'Laden fehlgeschlagen',
+    paybackReached: 'Amortisation erreicht im', paybackMonth: 'Monat',
+    paybackAnnRoi: '· Jahres-ROI',
+    paybackNot: 'Investition', paybackNot2: 'wird im Jahr 1 nicht amortisiert · Jahres-ROI',
+    overrideHint: 'Zelle', overrideHints: 'Zellen', overrideManual: 'manuell überschrieben',
+    placeholderName: 'Bezeichnung',
+    placeholderSalary: 'z.B. Managerin',
+    placeholderHourly: 'z.B. Aushilfe',
+  }
+};
+
+function t(key) { return I18N[appLang][key] || I18N.en[key] || key; }
+
+function applyLang() {
+  document.documentElement.lang = appLang;
+  // Header
+  const ids = ['headerTitle','lblCollapse','lblSave','lblLoad','lblPdf','lblBack',
+    'panelHdrTitle','panelHdrHint',
+    'cfgTitleSpc','cfgTitleCog','cfgTitleSalary','cfgTitleHourly','cfgTitleOpex','cfgTitleInvest',
+    'lblTicket','lblRetail','lblGames','lblFb','lblInvestTotal',
+    'hdCogName','hdCogType','hdCogVal',
+    'hdSalName','hdSalWage','hdSalBuf',
+    'hdHrName','hdHrRate','hdHrHours','hdHrBuf',
+    'hdOpexName','hdOpexType','hdOpexVal',
+    'btnAddCog','btnAddSalary','btnAddHourly','btnAddOpex',
+    'tabLblTable','tabLblConfig',
+    'infoTitle','infoSub','infoAboutLabel','infoAboutText','infoMakerLabel','infoMoreBtn'];
+  ids.forEach(id => {
+    const el2 = document.getElementById(id);
+    if (!el2) return;
+    const v = t(id);
+    if (id === 'infoMakerText') el2.innerHTML = v; else el2.textContent = v;
+  });
+  // infoMakerText uses innerHTML
+  const mt = document.getElementById('infoMakerText');
+  if (mt) mt.innerHTML = t('infoMakerText');
+  // Collapse button label
+  const cb = document.getElementById('collapseBtn');
+  if (cb) {
+    const lbl2 = cb.querySelector('.btn-lbl');
+    if (lbl2) lbl2.textContent = collapsed ? t('lblExpand') : t('lblCollapse');
+  }
+  // Lang toggle active state
+  document.getElementById('langDE').classList.toggle('active', appLang==='de');
+  document.getElementById('langEN').classList.toggle('active', appLang==='en');
+  // Update TYPE_OPTS select boxes in dynamic rows
+  document.querySelectorAll('.ct, .ot').forEach(sel => {
+    const cur = sel.value;
+    sel.innerHTML = t('typeOpts');
+    sel.value = cur;
+  });
+  // Re-render table (month names + row labels)
+  recalc();
+}
+
+function setLang(lang) {
+  appLang = lang;
+  localStorage.setItem('lw_lang', lang);
+  applyLang();
+}
+
+function showInfoModal() { document.getElementById('infoOverlay').style.display = 'flex'; }
+function hideInfoModal() { document.getElementById('infoOverlay').style.display = 'none'; }
+
 // ── Constants ──────────────────────────────────────────────────────────
-const MONTHS   = ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+let MONTHS   = I18N[appLang].months;
 const TYPE_OPTS = `<option value="pct">% Umsatz</option><option value="perGuest">€/Gast</option><option value="fixed">€ fix</option>`;
 
 // ── State ──────────────────────────────────────────────────────────────
@@ -750,13 +1114,19 @@ function calcDynAmt(type, val, rev, guests) {
   return val;
 }
 
+function typeHintT(type, val) {
+  if (type==='pct')      return `${fmtV(val)} ${t('typeHintPct')}`;
+  if (type==='perGuest') return `${fmtV(val)} ${t('typeHintGuest')}`;
+  return `${fmtE(val)} ${t('typeHintFixed')}`;
+}
+
 // ── Collapse / Expand ──────────────────────────────────────────────────
 function toggleCollapse() {
   collapsed = !collapsed;
   el('tblBody').classList.toggle('collapsed', collapsed);
   el('collapseBtn').innerHTML = collapsed
-    ? '<span class="ico">⊞</span><span class="btn-lbl"> Ausklappen</span>'
-    : '<span class="ico">⊟</span><span class="btn-lbl"> Einklappen</span>';
+    ? `<span class="ico">⊞</span><span class="btn-lbl">${t('lblExpand')}</span>`
+    : `<span class="ico">⊟</span><span class="btn-lbl">${t('lblCollapse')}</span>`;
 }
 
 // ── Mobile tab switcher ────────────────────────────────────────────────
@@ -774,8 +1144,8 @@ function addCogRow(desc='', type='fixed', val=0) {
   const d = document.createElement('div');
   d.className = 'drow drow--std'; d.dataset.id = ++cogId;
   d.innerHTML = `
-    <input type="text"   class="cd" placeholder="Bezeichnung" value="${esc(desc)}">
-    <select class="ct">${TYPE_OPTS}</select>
+    <input type="text"   class="cd" placeholder="${t('placeholderName')}" value="${esc(desc)}">
+    <select class="ct">${t('typeOpts')}</select>
     <input type="number" class="cv" value="${val}" min="0" step="0.01">
     <button class="btn-del" onclick="rmRow(this,'cog')">&#x2715;</button>`;
   d.querySelector('.ct').value = type;
@@ -788,7 +1158,7 @@ function addSalaryRow(desc='', wage=0, sv=20, puffer=5) {
   const d = document.createElement('div');
   d.className = 'drow drow--salary'; d.dataset.id = ++salaryId;
   d.innerHTML = `
-    <input type="text"   class="sd" placeholder="z.B. Managerin" value="${esc(desc)}">
+    <input type="text"   class="sd" placeholder="${t('placeholderSalary')}" value="${esc(desc)}">
     <input type="number" class="sb" value="${wage}"   min="0" step="100" placeholder="€/Mon">
     <input type="number" class="ss" value="${sv}"     min="0" step="0.5">
     <input type="number" class="sp" value="${puffer}" min="0" step="0.5">
@@ -802,9 +1172,9 @@ function addHourlyRow(desc='', rate=0, hours=160, sv=20, puffer=5) {
   const d = document.createElement('div');
   d.className = 'drow drow--hourly'; d.dataset.id = ++hourlyId;
   d.innerHTML = `
-    <input type="text"   class="hd" placeholder="z.B. Aushilfe" value="${esc(desc)}">
-    <input type="number" class="hr" value="${rate}"   min="0" step="0.5"  placeholder="€/Std">
-    <input type="number" class="hh" value="${hours}"  min="0" step="1"    placeholder="Std">
+    <input type="text"   class="hd" placeholder="${t('placeholderHourly')}" value="${esc(desc)}">
+    <input type="number" class="hr" value="${rate}"   min="0" step="0.5"  placeholder="€/h">
+    <input type="number" class="hh" value="${hours}"  min="0" step="1"    placeholder="h">
     <input type="number" class="hs" value="${sv}"     min="0" step="0.5">
     <input type="number" class="hp" value="${puffer}" min="0" step="0.5">
     <button class="btn-del" onclick="rmRow(this,'hourly')">&#x2715;</button>`;
@@ -817,8 +1187,8 @@ function addOpexRow(desc='', type='fixed', val=0) {
   const d = document.createElement('div');
   d.className = 'drow drow--std'; d.dataset.id = ++opexId;
   d.innerHTML = `
-    <input type="text"   class="od" placeholder="Bezeichnung" value="${esc(desc)}">
-    <select class="ot">${TYPE_OPTS}</select>
+    <input type="text"   class="od" placeholder="${t('placeholderName')}" value="${esc(desc)}">
+    <select class="ot">${t('typeOpts')}</select>
     <input type="number" class="ov2" value="${val}" min="0" step="0.01">
     <button class="btn-del" onclick="rmRow(this,'opex')">&#x2715;</button>`;
   d.querySelector('.ot').value = type;
@@ -899,8 +1269,8 @@ function saveData() {
     a.href = URL.createObjectURL(blob);
     a.download = `businessplan-${new Date().toISOString().slice(0,10)}.json`;
     a.click(); URL.revokeObjectURL(a.href);
-    toast('✓ Datei wird heruntergeladen');
-  } catch(e) { toast('Speichern fehlgeschlagen','err'); }
+    toast(t('toastSaved'));
+  } catch(e) { toast(t('toastSaveFail'),'err'); }
 }
 
 // ── Load = JSON file import ────────────────────────────────────────────
@@ -908,8 +1278,8 @@ function loadData(event) {
   const file = event.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = e => {
-    try { applyState(JSON.parse(e.target.result)); toast('✓ Datei geladen'); }
-    catch(err) { toast('Laden fehlgeschlagen: '+err.message,'err'); }
+    try { applyState(JSON.parse(e.target.result)); toast(t('toastLoaded')); }
+    catch(err) { toast(t('toastLoadFail')+': '+err.message,'err'); }
     event.target.value = '';
   };
   reader.readAsText(file);
@@ -920,10 +1290,11 @@ function exportPDF() { window.print(); }
 
 // ── Table header ───────────────────────────────────────────────────────
 function buildHead() {
+  const months = I18N[appLang].months;
   el('tblHead').innerHTML = `<tr>
-    <th>Kennzahl</th>
-    ${MONTHS.map(m=>`<th>${m}</th>`).join('')}
-    <th class="th-tot">Jahr</th>
+    <th>${t('rowKennzahl')}</th>
+    ${months.map(m=>`<th>${m}</th>`).join('')}
+    <th class="th-tot">${t('rowYear')}</th>
   </tr>`;
 }
 
@@ -942,11 +1313,6 @@ function tdO(rk, mi, calcVal, cls='') {
 }
 function tdDash(cls='') { return `<td class="${cls}" style="color:#cbd5e1;text-align:center">—</td>`; }
 
-function typeHint(type, val) {
-  if (type==='pct')      return `${fmtV(val)} % vom Umsatz`;
-  if (type==='perGuest') return `${fmtV(val)} € / Gast`;
-  return `${fmtE(val)} € fix`;
-}
 function lbl(text, hint='') {
   return hint ? `${esc(text)}<span class="lbl-hint">${hint}</span>` : esc(text);
 }
@@ -999,105 +1365,106 @@ function recalc() {
 
   // ── Build rows ──────────────────────────────────────────────────────
   let rows='';
+  const mns = I18N[appLang].months;
 
   // Guests
-  rows+=`<tr class="tr-guests"><td>Gäste / Monat</td>`;
+  rows+=`<tr class="tr-guests"><td>${t('rowGuests')}</td>`;
   months.forEach((m,i)=>rows+=`<td class="td-g"><input class="g-inp" type="number" value="${m.guests}" min="0" step="100" data-idx="${i}"></td>`);
   rows+=`<td class="td-tot">${fmtE(guestValues.reduce((a,b)=>a+b,0))}</td></tr>`;
 
   // Revenue
-  const revLabels=['Ticket-Umsatz','Retail-Umsatz','Games-Umsatz','F&B-Umsatz'];
+  const revLabels=[t('rowTicket'),t('rowRetail'),t('rowGames'),t('rowFb')];
   const revKeys  =['rev-0','rev-1','rev-2','rev-3'];
   const revProp  =['ticketRev','retailRev','gamesRev','fbRev'];
   const revPrices=[tp,rp,gp2,fb];
   revKeys.forEach((rk,li)=>{
-    rows+=`<tr class="tr-rev"><td>${lbl(revLabels[li],`${fmtV(revPrices[li])} € / Gast`)}</td>`;
+    rows+=`<tr class="tr-rev"><td>${lbl(revLabels[li],`${fmtV(revPrices[li])} € / ${appLang==='de'?'Gast':'Guest'}`)}</td>`;
     months.forEach((m,mi)=>rows+=tdO(rk,mi,m[revProp[li]]));
     rows+=td(S(revProp[li]),'td-tot')+'</tr>';
   });
 
-  rows+=`<tr class="tr-rtot"><td>Gesamt-Umsatz</td>`;
+  rows+=`<tr class="tr-rtot"><td>${t('rowRevTot')}</td>`;
   months.forEach(m=>rows+=td(m.totalRev));
   rows+=td(annRev,'td-tot')+'</tr>';
 
   // COG
   cogCfg.forEach(c=>{
-    rows+=`<tr class="tr-cog"><td>${lbl(c.label,typeHint(c.type,c.val))}</td>`;
+    rows+=`<tr class="tr-cog"><td>${lbl(c.label,typeHintT(c.type,c.val))}</td>`;
     months.forEach((m,mi)=>rows+=tdO(`cog-${c.i}`,mi,m.cogAmts[c.i]));
     rows+=td(SA('cogAmts',c.i),'td-tot')+'</tr>';
   });
-  rows+=`<tr class="tr-ctot"><td>Gesamt Wareneinsatz</td>`;
+  rows+=`<tr class="tr-ctot"><td>${t('rowCogTot')}</td>`;
   months.forEach(m=>rows+=td(m.totalCog));
   rows+=td(S('totalCog'),'td-tot')+'</tr>';
 
   // Gross profit
-  rows+=`<tr class="tr-gp"><td>Rohertrag</td>`;
+  rows+=`<tr class="tr-gp"><td>${t('rowGP')}</td>`;
   months.forEach(m=>rows+=td(m.grossProfit,'',true));
   rows+=td(annGP,'td-tot '+(annGP<0?'neg':'pos'))+'</tr>';
-  rows+=`<tr class="tr-margin"><td>Rohertrag-Marge</td>`;
+  rows+=`<tr class="tr-margin"><td>${t('rowGPMargin')}</td>`;
   months.forEach(m=>rows+=tdP(m.totalRev>0?m.grossProfit/m.totalRev*100:0));
   rows+=tdP(annRev>0?annGP/annRev*100:0,'td-tot')+'</tr>';
 
   // Fixed salaries
   salaryCfg.forEach(s=>{
-    rows+=`<tr class="tr-wage"><td>${lbl(s.label,`${fmtE(s.wage)} € Brutto · SV ${s.sv}% · Puffer ${s.puffer}%`)}</td>`;
+    rows+=`<tr class="tr-wage"><td>${lbl(s.label,`${fmtE(s.wage)} € ${t('hintsalary')} ${s.sv}% ${t('hintBuffer')} ${s.puffer}%`)}</td>`;
     months.forEach((m,mi)=>rows+=tdO(`salary-${s.i}`,mi,m.salaryAmts[s.i]));
     rows+=td(SA('salaryAmts',s.i),'td-tot')+'</tr>';
   });
   if (salaryCfg.length > 0) {
-    rows+=`<tr class="tr-stot"><td>Gehälter gesamt</td>`;
+    rows+=`<tr class="tr-stot"><td>${t('rowSalTot')}</td>`;
     months.forEach(m=>rows+=td(m.totalSalary));
     rows+=td(S('totalSalary'),'td-tot')+'</tr>';
   }
 
   // Hourly wages
   hourlyCfg.forEach(h=>{
-    rows+=`<tr class="tr-hourly"><td>${lbl(h.label,`${fmtV(h.rate)} €/Std × ${h.hours} Std · SV ${h.sv}% · Puffer ${h.puffer}%`)}</td>`;
+    rows+=`<tr class="tr-hourly"><td>${lbl(h.label,`${fmtV(h.rate)} €${t('hintHourly')} ${h.hours} ${t('hintHours')} ${h.sv}% ${t('hintBuf')} ${h.puffer}%`)}</td>`;
     months.forEach((m,mi)=>rows+=tdO(`hourly-${h.i}`,mi,m.hourlyAmts[h.i]));
     rows+=td(SA('hourlyAmts',h.i),'td-tot')+'</tr>';
   });
   if (hourlyCfg.length > 0) {
-    rows+=`<tr class="tr-htot"><td>Variable Löhne gesamt</td>`;
+    rows+=`<tr class="tr-htot"><td>${t('rowHrTot')}</td>`;
     months.forEach(m=>rows+=td(m.totalHourly));
     rows+=td(S('totalHourly'),'td-tot')+'</tr>';
   }
 
   // OpEx
   opexCfg.forEach(o=>{
-    rows+=`<tr class="tr-opex"><td>${lbl(o.label,typeHint(o.type,o.val))}</td>`;
+    rows+=`<tr class="tr-opex"><td>${lbl(o.label,typeHintT(o.type,o.val))}</td>`;
     months.forEach((m,mi)=>rows+=tdO(`opex-${o.i}`,mi,m.opexAmts[o.i]));
     rows+=td(SA('opexAmts',o.i),'td-tot')+'</tr>';
   });
   if (opexCfg.length > 0) {
-    rows+=`<tr class="tr-sktot"><td>Sonstige Kosten gesamt</td>`;
+    rows+=`<tr class="tr-sktot"><td>${t('rowOpexTot')}</td>`;
     months.forEach(m=>rows+=td(m.totalOpexOnly));
     rows+=td(S('totalOpexOnly'),'td-tot')+'</tr>';
   }
 
-  rows+=`<tr class="tr-otot"><td>Betr. Aufwand gesamt</td>`;
+  rows+=`<tr class="tr-otot"><td>${t('rowOpexAll')}</td>`;
   months.forEach(m=>rows+=td(m.totalOpex));
   rows+=td(annOpex,'td-tot')+'</tr>';
 
   // EBITDA
-  rows+=`<tr class="tr-ebitda"><td>EBITDA</td>`;
+  rows+=`<tr class="tr-ebitda"><td>${t('rowEbitda')}</td>`;
   months.forEach(m=>rows+=td(m.ebitda,'',true));
   rows+=td(annEbitda,'td-tot '+(annEbitda<0?'neg':'pos'))+'</tr>';
-  rows+=`<tr class="tr-margin"><td>EBITDA-Marge</td>`;
+  rows+=`<tr class="tr-margin"><td>${t('rowEbitdaMargin')}</td>`;
   months.forEach(m=>rows+=tdP(m.totalRev>0?m.ebitda/m.totalRev*100:0));
   rows+=tdP(annRev>0?annEbitda/annRev*100:0,'td-tot')+'</tr>';
 
   // Investment / ROI
   rows+=`<tr class="tr-sep"><td colspan="14"></td></tr>`;
-  rows+=`<tr class="tr-invest"><td>Investition gesamt</td>`;
+  rows+=`<tr class="tr-invest"><td>${t('rowInvest')}</td>`;
   months.forEach(()=>rows+=tdDash());
   rows+=`<td class="td-tot neg" style="font-weight:700">${investTotal>0?`&minus; ${fmtE(investTotal)} €`:'—'}</td></tr>`;
 
-  rows+=`<tr class="tr-cumul"><td>Kum. EBITDA</td>`;
+  rows+=`<tr class="tr-cumul"><td>${t('rowCumul')}</td>`;
   months.forEach((m,mi)=>rows+=`<td class="${cumulArr[mi]<0?'neg':'pos'}">${fmtE(cumulArr[mi])}</td>`);
   rows+=td(annEbitda,'td-tot '+(annEbitda<0?'neg':'pos'))+'</tr>';
 
   if (investTotal>0) {
-    rows+=`<tr class="tr-roi"><td>ROI (kumuliert)</td>`;
+    rows+=`<tr class="tr-roi"><td>${t('rowRoi')}</td>`;
     months.forEach((m,mi)=>{
       const roi=cumulArr[mi]/investTotal*100, isPB=mi===paybackMonth;
       rows+=`<td class="${isPB?'payback':''}">${fmtPsigned(roi)}</td>`;
@@ -1106,11 +1473,11 @@ function recalc() {
     rows+=`<td class="td-tot">${fmtPsigned(annRoi)}</td></tr>`;
 
     el('ovHint').textContent = paybackMonth>=0
-      ? `Amortisation erreicht im ${MONTHS[paybackMonth]} (Monat ${paybackMonth+1}) · Jahres-ROI: ${fmtPsigned(annRoi)}`
-      : `Investition (${fmtE(investTotal)} €) wird im Jahr 1 nicht amortisiert · Jahres-ROI: ${fmtPsigned(annRoi)}`;
+      ? `${t('paybackReached')} ${mns[paybackMonth]} (${t('paybackMonth')} ${paybackMonth+1}) ${t('paybackAnnRoi')}: ${fmtPsigned(annRoi)}`
+      : `${t('paybackNot')} (${fmtE(investTotal)} €) ${t('paybackNot2')}: ${fmtPsigned(annRoi)}`;
   } else {
     const ovCount = Object.keys(overrides).length;
-    el('ovHint').textContent = ovCount>0 ? `${ovCount} Zelle${ovCount>1?'n':''} manuell überschrieben` : '';
+    el('ovHint').textContent = ovCount>0 ? `${ovCount} ${ovCount>1?t('overrideHints'):t('overrideHint')} ${t('overrideManual')}` : '';
   }
 
   el('tblBody').innerHTML = rows;
@@ -1154,21 +1521,37 @@ function handleCellEdit(e) {
   .forEach(id => el(id)?.addEventListener('input', recalc));
 
 // ── Init ───────────────────────────────────────────────────────────────
+// Restore saved language preference
+try { const sl = localStorage.getItem('lw_lang'); if (sl==='de'||sl==='en') appLang = sl; } catch(e){}
+
 buildHead();
 
-addCogRow('Wareneinsatz Tickets','pct',      30);
-addCogRow('Wareneinsatz F&B',    'pct',      25);
-addCogRow('Wareneinsatz Retail', 'perGuest',  1);
+if (appLang === 'en') {
+  addCogRow('Ticket COGS',   'pct',      30);
+  addCogRow('F&B COGS',      'pct',      25);
+  addCogRow('Retail COGS',   'perGuest',  1);
+  addSalaryRow('Full-time Staff', 3200, 20, 5);
+  addSalaryRow('Part-time Staff', 1200, 20, 5);
+  addHourlyRow('Casual Staff', 13.50, 80, 20, 5);
+  addOpexRow('Rent',          'fixed', 5000);
+  addOpexRow('Marketing',     'pct',      3);
+  addOpexRow('Energy',        'fixed', 1500);
+  addOpexRow('Insurance',     'fixed',  800);
+} else {
+  addCogRow('Wareneinsatz Tickets','pct',      30);
+  addCogRow('Wareneinsatz F&B',    'pct',      25);
+  addCogRow('Wareneinsatz Retail', 'perGuest',  1);
+  addSalaryRow('Vollzeit MA', 3200, 20, 5);
+  addSalaryRow('Teilzeit MA', 1200, 20, 5);
+  addHourlyRow('Aushilfen', 13.50, 80, 20, 5);
+  addOpexRow('Miete',         'fixed', 5000);
+  addOpexRow('Marketing',     'pct',      3);
+  addOpexRow('Energie',       'fixed', 1500);
+  addOpexRow('Versicherungen','fixed',  800);
+}
 
-addSalaryRow('Vollzeit MA', 3200, 20, 5);
-addSalaryRow('Teilzeit MA', 1200, 20, 5);
-
-addHourlyRow('Aushilfen', 13.50, 80, 20, 5);
-
-addOpexRow('Miete',         'fixed', 5000);
-addOpexRow('Marketing',     'pct',      3);
-addOpexRow('Energie',       'fixed', 1500);
-addOpexRow('Versicherungen','fixed',  800);
+// Apply language to all UI labels
+applyLang();
 </script>
 
 <!-- ════════════ COOKIE BANNER ════════════ -->
