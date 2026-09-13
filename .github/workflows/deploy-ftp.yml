@@ -13,6 +13,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare deploy folder (index.html only)
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+
       - name: Deploy via FTP to leisureworkspace.com/business-planner/
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -20,12 +25,6 @@ jobs:
           username: v032817
           password: ${{ secrets.KAS_FTP_PASSWORD }}
           port: 21
+          security: loose
           server-dir: /leisureworkspace.com/business-planner/
-          local-dir: ./
-          include: |
-            index.html
-          exclude: |
-            .git*
-            .github*
-            *.json
-            *.md
+          local-dir: ./deploy/
