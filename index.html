@@ -164,21 +164,38 @@ body {
 .btn-back:active { transform: scale(.95); }
 
 /* ── Action buttons ─────────────────────────────────── */
-.btn-act {
-  display: inline-flex; align-items: center; gap: 6px;
-  padding: 7px 14px;
-  border: none; border-radius: 22px;
-  font-size: 12px; font-weight: 600; font-family: inherit;
-  cursor: pointer; white-space: nowrap;
-  transition: filter .12s, transform .08s;
+.topbar-actions {
+  display: flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+  background: rgba(0,0,0,.25);
+  border-radius: 28px;
+  padding: 5px 8px;
+  border: 1px solid rgba(255,255,255,.08);
 }
-.btn-act:hover  { filter: brightness(.88); }
+.btn-act {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 12px;
+  border: none; border-radius: 20px;
+  font-size: 11.5px; font-weight: 600; font-family: inherit;
+  cursor: pointer; white-space: nowrap;
+  transition: background .15s, color .15s, transform .08s;
+}
 .btn-act:active { transform: scale(.95); }
-.btn-act--save   { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
-.btn-act--load   { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
-.btn-act--pdf    { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.25); }
-.btn-act--toggle { background: rgba(255,255,255,.10); color: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.15); }
-.btn-act .ico    { font-size: 14px; }
+.btn-act--save   { background: var(--lw-teal); color: #fff; }
+.btn-act--save:hover { background: #158080; }
+.btn-act--load   { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+.btn-act--load:hover { background: rgba(255,255,255,.22); }
+.btn-act--pdf    { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+.btn-act--pdf:hover  { background: rgba(255,255,255,.22); }
+.btn-act--toggle { background: transparent; color: rgba(255,255,255,.55); }
+.btn-act--toggle:hover { color: rgba(255,255,255,.9); }
+
+/* Thin separator between tool buttons and lang/back controls */
+.topbar-sep {
+  width: 1px; height: 20px; background: rgba(255,255,255,.15);
+  flex-shrink: 0; margin: 0 2px;
+}
+.btn-act .ico    { font-size: 13px; }
 
 /* ── App body ───────────────────────────────────────── */
 .app-body {
@@ -788,7 +805,7 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   <span class="topbar-title" id="headerTitle">Annual Budget Calculator – Year 1</span>
 
   <!-- Actions -->
-  <div class="topbar-actions no-print" style="display:flex;gap:6px;align-items:center;flex-shrink:0;">
+  <div class="topbar-actions no-print">
     <button class="btn-act btn-act--toggle" id="collapseBtn" onclick="toggleCollapse()">
       <span class="ico">⊟</span><span class="btn-lbl" id="lblCollapse"> Einklappen</span>
     </button>
@@ -802,6 +819,8 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
     <button class="btn-act btn-act--pdf" onclick="exportPDF()">
       <span class="ico">🖨</span><span class="btn-lbl" id="lblPdf"> PDF</span>
     </button>
+
+    <div class="topbar-sep"></div>
 
     <!-- Info button -->
     <button class="btn-info" onclick="showInfoModal()" id="infoBtn" title="Info">i</button>
