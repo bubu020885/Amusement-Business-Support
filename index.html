@@ -718,6 +718,204 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   .panel-hdr { font-size: 9px; }
 }
 
+/* ── Tooltips ───────────────────────────────────── */
+[data-tip] { position: relative; }
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%; transform: translateX(-50%);
+  background: #0D1F2E;
+  color: #f1f5f9;
+  font-size: 11px; font-weight: 500;
+  white-space: nowrap;
+  padding: 5px 10px; border-radius: 6px;
+  pointer-events: none; opacity: 0;
+  transition: opacity .15s;
+  z-index: 200;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+[data-tip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%; transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #0D1F2E;
+  pointer-events: none; opacity: 0;
+  transition: opacity .15s; z-index: 200;
+}
+[data-tip]:hover::after,
+[data-tip]:hover::before { opacity: 1; }
+
+/* ── Presentation mode overlay ──────────────────── */
+#presOverlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 1000;
+  background: #0A1A28;
+  flex-direction: column;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+#presOverlay.pres-open { display: flex; }
+.pres-topbar {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #0D1F2E, #132638);
+  border-bottom: 3px solid #F5C518;
+  flex-shrink: 0;
+}
+.pres-title { color: #fff; font-size: 15px; font-weight: 700; flex: 1; }
+.pres-subtitle { color: rgba(255,255,255,.45); font-size: 11px; }
+.pres-close {
+  background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.7); border-radius: 8px;
+  padding: 6px 14px; font-size: 12px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: background .15s;
+}
+.pres-close:hover { background: rgba(255,255,255,.2); }
+
+.pres-body {
+  flex: 1; overflow-y: auto; padding: 24px;
+  display: flex; flex-direction: column; gap: 20px;
+}
+
+/* KPI tiles */
+.pres-kpis {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.pres-kpi {
+  flex: 1; min-width: 140px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 16px 20px;
+}
+.pres-kpi-label {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .08em;
+  color: rgba(255,255,255,.4); margin-bottom: 6px;
+}
+.pres-kpi-val {
+  font-size: 22px; font-weight: 800; color: #fff;
+  line-height: 1.1;
+}
+.pres-kpi-val.pos { color: #34d399; }
+.pres-kpi-val.neg { color: #f87171; }
+.pres-kpi-val.yel { color: #F5C518; }
+.pres-kpi-sub {
+  font-size: 10px; color: rgba(255,255,255,.3);
+  margin-top: 3px;
+}
+
+/* Chart row */
+.pres-charts {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 700px) { .pres-charts { grid-template-columns: 1fr; } }
+.pres-chart-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px; padding: 16px;
+}
+.pres-chart-title {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .07em;
+  color: rgba(255,255,255,.4); margin-bottom: 12px;
+}
+.pres-chart-card canvas {
+  width: 100% !important; display: block;
+}
+
+/* print: presentation mode */
+@media print {
+  body.print-pres .topbar,
+  body.print-pres .app-body,
+  body.print-pres .mobile-tabbar,
+  body.print-pres .cb-reopen,
+  body.print-pres #cbOverlay { display: none !important; }
+  body.print-pres #presOverlay {
+    display: flex !important; position: static !important;
+    background: #fff !important;
+    break-inside: avoid;
+  }
+  body.print-pres .pres-topbar {
+    background: #132638 !important;
+    border-bottom: 2px solid #F5C518 !important;
+  }
+  body.print-pres .pres-close { display: none !important; }
+  body.print-pres .pres-body { padding: 10px; gap: 10px; }
+  body.print-pres .pres-kpi-val { font-size: 16px !important; }
+  body.print-pres .pres-chart-card canvas { height: 140px !important; }
+  body.print-pres .pres-kpi { background: #f0f7f7 !important; border-color: #1A7272 !important; }
+  body.print-pres .pres-kpi-label { color: #5A6A7A !important; }
+  body.print-pres .pres-kpi-val { color: #132638 !important; }
+  body.print-pres .pres-kpi-val.pos { color: #059669 !important; }
+  body.print-pres .pres-kpi-val.yel { color: #92700e !important; }
+  body.print-pres .pres-chart-card { background: #f8fafc !important; border-color: #D0CBC0 !important; }
+  body.print-pres .pres-chart-title { color: #5A6A7A !important; }
+  body.print-pres .pres-body { background: #fff; }
+  body.print-pres #presOverlay { background: #fff !important; }
+  body.print-pres .pres-kpi-sub { color: #888 !important; }
+}
+
+/* ── PDF export modal ───────────────────────────── */
+#pdfModal {
+  display: none; position: fixed; inset: 0; z-index: 2000;
+  background: rgba(13,31,46,.75); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center;
+}
+#pdfModal.pdf-open { display: flex; }
+.pdf-modal-box {
+  background: #fff; border-radius: 16px;
+  padding: 28px; width: 340px; max-width: 94vw;
+  box-shadow: 0 20px 60px rgba(0,0,0,.35);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.pdf-modal-title {
+  font-size: 16px; font-weight: 800; color: #132638;
+  margin-bottom: 6px;
+}
+.pdf-modal-sub {
+  font-size: 12px; color: #5A6A7A; margin-bottom: 20px;
+}
+.pdf-check-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px; border-radius: 10px;
+  border: 1.5px solid #D0CBC0;
+  margin-bottom: 10px; cursor: pointer;
+  transition: border-color .12s, background .12s;
+}
+.pdf-check-row:hover { border-color: #1A7272; background: #EDF6F2; }
+.pdf-check-row input[type=checkbox] {
+  width: 16px; height: 16px; margin-top: 1px; flex-shrink: 0;
+  accent-color: #1A7272; cursor: pointer;
+}
+.pdf-check-label { font-size: 13px; font-weight: 600; color: #132638; }
+.pdf-check-desc  { font-size: 11px; color: #5A6A7A; margin-top: 2px; }
+.pdf-modal-btns {
+  display: flex; gap: 8px; margin-top: 20px;
+}
+.pdf-btn-cancel {
+  flex: 1; padding: 10px; border-radius: 10px;
+  border: 1.5px solid #D0CBC0; background: #fff;
+  color: #5A6A7A; font-size: 13px; font-weight: 600;
+  cursor: pointer; font-family: inherit; transition: background .12s;
+}
+.pdf-btn-cancel:hover { background: #f5f3ee; }
+.pdf-btn-export {
+  flex: 2; padding: 10px; border-radius: 10px;
+  border: none; background: #1A7272; color: #fff;
+  font-size: 13px; font-weight: 700;
+  cursor: pointer; font-family: inherit; transition: background .12s;
+}
+.pdf-btn-export:hover { background: #155e5e; }
+
+/* ── Presentation button ─────────────────────────── */
+.btn-act--pres { background: rgba(245,197,24,.15); color: #F5C518; }
+.btn-act--pres:hover { background: rgba(245,197,24,.28); }
+
 /* ── Print / PDF ────────────────────────────────── */
 @media print {
   @page { size: A4 landscape; margin: 5mm 7mm; }
@@ -824,24 +1022,33 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
 
   <!-- Actions -->
   <div class="topbar-actions no-print">
-    <button class="btn-act btn-act--toggle" id="collapseBtn" onclick="toggleCollapse()">
+    <button class="btn-act btn-act--toggle" id="collapseBtn" onclick="toggleCollapse()"
+      data-tip="Detailzeilen ein-/ausblenden">
       <span class="ico">⊟</span><span class="btn-lbl" id="lblCollapse"> Einklappen</span>
     </button>
-    <button class="btn-act btn-act--save" onclick="saveData()">
+    <button class="btn-act btn-act--save" onclick="saveData()"
+      data-tip="Planung als JSON-Datei speichern">
       <span class="ico">💾</span><span class="btn-lbl" id="lblSave"> Speichern</span>
     </button>
-    <button class="btn-act btn-act--load" onclick="el('fileInput').click()">
+    <button class="btn-act btn-act--load" onclick="el('fileInput').click()"
+      data-tip="Gespeicherte JSON-Datei laden">
       <span class="ico">📂</span><span class="btn-lbl" id="lblLoad"> Laden</span>
     </button>
     <input type="file" id="fileInput" accept=".json" style="display:none" onchange="loadData(event)">
-    <button class="btn-act btn-act--pdf" onclick="exportPDF()">
+    <button class="btn-act btn-act--pres" onclick="openPresMode()"
+      data-tip="Präsentationsmodus mit Diagrammen öffnen" id="presBtn">
+      <span class="ico">📊</span><span class="btn-lbl" id="lblPres"> Präsentation</span>
+    </button>
+    <button class="btn-act btn-act--pdf" onclick="showPDFModal()"
+      data-tip="PDF-Export: Tabelle und/oder Präsentation">
       <span class="ico">🖨</span><span class="btn-lbl" id="lblPdf"> PDF</span>
     </button>
 
     <div class="topbar-sep"></div>
 
     <!-- Info button -->
-    <button class="btn-info" onclick="showInfoModal()" id="infoBtn" title="Info">i</button>
+    <button class="btn-info" onclick="showInfoModal()" id="infoBtn"
+      data-tip="Info zum Tool und Macher">i</button>
 
     <!-- Language toggle -->
     <div class="btn-lang" role="group">
@@ -850,7 +1057,8 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
     </div>
 
     <!-- Back to menu -->
-    <a class="btn-back" href="https://leisureworkspace.com" target="_blank" rel="noopener" id="btnBack">
+    <a class="btn-back" href="https://leisureworkspace.com" target="_blank" rel="noopener" id="btnBack"
+      data-tip="Zurück zur Tool-Übersicht">
       ↗ <span id="lblBack">Tools</span>
     </a>
   </div>
@@ -963,6 +1171,94 @@ input:focus, select:focus { outline: none; border-color: #94a3b8; }
   </aside>
 </div><!-- app-body -->
 
+<!-- ════════════ PRESENTATION OVERLAY ════════════ -->
+<div id="presOverlay" role="dialog" aria-modal="true" aria-label="Präsentationsmodus">
+  <div class="pres-topbar">
+    <svg width="28" height="28" viewBox="0 0 34 34"><rect width="34" height="34" rx="8" fill="#1A7272"/><rect x="9" y="10" width="16" height="18" rx="2" stroke="white" stroke-width="1.6" fill="none"/><rect x="13" y="8" width="8" height="4" rx="2" fill="#1A7272" stroke="white" stroke-width="1.5"/><line x1="12" y1="16" x2="22" y2="16" stroke="white" stroke-width="1.4" stroke-linecap="round"/><circle cx="24" cy="26" r="5" fill="#F5C518"/><polyline points="21.5,26 23.2,27.8 26.5,24.5" stroke="#132638" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    <div>
+      <div class="pres-title" id="presMainTitle">Geschäftsplan – Jahresübersicht</div>
+      <div class="pres-subtitle">LeisureWorkspace · Amusement Business Support</div>
+    </div>
+    <button class="pres-close" id="presCloseBtn" onclick="closePresMode()">✕ Schließen</button>
+  </div>
+  <div class="pres-body">
+    <!-- KPI tiles -->
+    <div class="pres-kpis">
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblGuests">Gäste gesamt</div>
+        <div class="pres-kpi-val" id="presKpiGuests">–</div>
+        <div class="pres-kpi-sub">Jahr 1</div>
+      </div>
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblRev">Jahresumsatz</div>
+        <div class="pres-kpi-val" id="presKpiRev">–</div>
+        <div class="pres-kpi-sub">Brutto</div>
+      </div>
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblCosts">Gesamtkosten</div>
+        <div class="pres-kpi-val" id="presKpiCosts">–</div>
+        <div class="pres-kpi-sub">Warenkosten + Betrieb</div>
+      </div>
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblEbitda">EBITDA</div>
+        <div class="pres-kpi-val pos" id="presKpiEbitda">–</div>
+        <div class="pres-kpi-sub">Jahresergebnis</div>
+      </div>
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblRoi">ROI</div>
+        <div class="pres-kpi-val yel" id="presKpiRoi">–</div>
+        <div class="pres-kpi-sub">auf Investition</div>
+      </div>
+      <div class="pres-kpi">
+        <div class="pres-kpi-label" id="presLblPayback">Amortisation</div>
+        <div class="pres-kpi-val" id="presKpiPayback">–</div>
+        <div class="pres-kpi-sub">Break-even</div>
+      </div>
+    </div>
+    <!-- Charts -->
+    <div class="pres-charts">
+      <div class="pres-chart-card">
+        <div class="pres-chart-title" id="presChartRevTitle">Umsatz vs. Kosten (monatlich)</div>
+        <canvas id="canvasRev" height="200"></canvas>
+      </div>
+      <div class="pres-chart-card">
+        <div class="pres-chart-title" id="presChartGuestTitle">Gästeverteilung</div>
+        <canvas id="canvasGuests" height="200"></canvas>
+      </div>
+      <div class="pres-chart-card">
+        <div class="pres-chart-title" id="presChartRoiTitle">Kumulativer Cashflow / ROI</div>
+        <canvas id="canvasRoi" height="200"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ PDF EXPORT MODAL ════════════ -->
+<div id="pdfModal" onclick="if(event.target===this)hidePDFModal()">
+  <div class="pdf-modal-box">
+    <div class="pdf-modal-title" id="pdfModalTitle">PDF Export</div>
+    <div class="pdf-modal-sub" id="pdfModalSub">Wähle, was als PDF exportiert werden soll</div>
+    <label class="pdf-check-row">
+      <input type="checkbox" id="pdfChkTable" checked>
+      <div>
+        <div class="pdf-check-label" id="pdfLblTable">Datentabelle</div>
+        <div class="pdf-check-desc" id="pdfDescTable">Vollständige 12-Monats-Tabelle mit allen Zeilen</div>
+      </div>
+    </label>
+    <label class="pdf-check-row">
+      <input type="checkbox" id="pdfChkPres">
+      <div>
+        <div class="pdf-check-label" id="pdfLblPres">Präsentation</div>
+        <div class="pdf-check-desc" id="pdfDescPres">Dashboard mit KPIs und Diagrammen</div>
+      </div>
+    </label>
+    <div class="pdf-modal-btns">
+      <button class="pdf-btn-cancel" id="pdfBtnCancel" onclick="hidePDFModal()">Abbrechen</button>
+      <button class="pdf-btn-export" id="pdfBtnExport" onclick="doExportPDF()">PDF exportieren</button>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════ MOBILE TAB BAR ════════════ -->
 <nav class="mobile-tabbar no-print" id="mobileTabbar" aria-label="Switch view">
   <button class="mob-tab active" id="tabTable" onclick="mobTab('table')">
@@ -1026,6 +1322,17 @@ const I18N = {
     placeholderName: 'Name',
     placeholderSalary: 'e.g. Manager',
     placeholderHourly: 'e.g. Part-time',
+    lblPres: ' Presentation',
+    presTitle: 'Business Plan Overview – Year 1',
+    presClose: '✕ Close',
+    presKpiGuests: 'Total Guests', presKpiRev: 'Total Revenue',
+    presKpiCosts: 'Total Costs', presKpiEbitda: 'EBITDA',
+    presKpiRoi: 'ROI', presKpiPayback: 'Break-even',
+    pdfTitle: 'PDF Export', pdfSub: 'Choose what to export as PDF',
+    pdfChkTable: 'Data Table', pdfChkTableDesc: 'Full 12-month table with all rows',
+    pdfChkPres: 'Presentation', pdfChkPresDesc: 'Dashboard with KPIs and charts',
+    pdfBtnExport: 'Export PDF', pdfBtnCancel: 'Cancel',
+    pdfSelectOne: 'Please select at least one export option.',
   },
   de: {
     months: ['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],
@@ -1075,6 +1382,17 @@ const I18N = {
     placeholderName: 'Bezeichnung',
     placeholderSalary: 'z.B. Managerin',
     placeholderHourly: 'z.B. Aushilfe',
+    lblPres: ' Präsentation',
+    presTitle: 'Geschäftsplan – Jahresübersicht',
+    presClose: '✕ Schließen',
+    presKpiGuests: 'Gäste gesamt', presKpiRev: 'Jahresumsatz',
+    presKpiCosts: 'Gesamtkosten', presKpiEbitda: 'EBITDA',
+    presKpiRoi: 'ROI', presKpiPayback: 'Amortisation',
+    pdfTitle: 'PDF Export', pdfSub: 'Wähle, was als PDF exportiert werden soll',
+    pdfChkTable: 'Datentabelle', pdfChkTableDesc: 'Vollständige 12-Monats-Tabelle mit allen Zeilen',
+    pdfChkPres: 'Präsentation', pdfChkPresDesc: 'Dashboard mit KPIs und Diagrammen',
+    pdfBtnExport: 'PDF exportieren', pdfBtnCancel: 'Abbrechen',
+    pdfSelectOne: 'Bitte mindestens eine Exportoption auswählen.',
   }
 };
 
@@ -1083,7 +1401,7 @@ function t(key) { return I18N[appLang][key] || I18N.en[key] || key; }
 function applyLang() {
   document.documentElement.lang = appLang;
   // Header
-  const ids = ['headerTitle','lblCollapse','lblSave','lblLoad','lblPdf','lblBack',
+  const ids = ['headerTitle','lblCollapse','lblSave','lblLoad','lblPdf','lblPres','lblBack',
     'panelHdrTitle','panelHdrHint',
     'cfgTitleSpc','cfgTitleCog','cfgTitleSalary','cfgTitleHourly','cfgTitleOpex','cfgTitleInvest',
     'lblTicket','lblRetail','lblGames','lblFb','lblInvestTotal',
@@ -1121,6 +1439,36 @@ function applyLang() {
   // Re-render table header (month names) AND body (row labels)
   buildHead();
   recalc();
+  // Presentation overlay labels
+  const presIds = {
+    presMainTitle:'presTitle', presCloseBtn:'presClose',
+    presLblGuests:'presKpiGuests', presLblRev:'presKpiRev',
+    presLblCosts:'presKpiCosts', presLblEbitda:'presKpiEbitda',
+    presLblRoi:'presKpiRoi', presLblPayback:'presKpiPayback',
+  };
+  Object.entries(presIds).forEach(([id,key]) => {
+    const e2 = document.getElementById(id); if (e2) e2.textContent = t(key);
+  });
+  // PDF modal labels
+  const pdfIds = {
+    pdfModalTitle:'pdfTitle', pdfModalSub:'pdfSub',
+    pdfLblTable:'pdfChkTable', pdfDescTable:'pdfChkTableDesc',
+    pdfLblPres:'pdfChkPres', pdfDescPres:'pdfChkPresDesc',
+    pdfBtnExport:'pdfBtnExport', pdfBtnCancel:'pdfBtnCancel',
+  };
+  Object.entries(pdfIds).forEach(([id,key]) => {
+    const e2 = document.getElementById(id); if (e2) e2.textContent = t(key);
+  });
+  // Tooltips on header buttons
+  const tips = {
+    collapseBtn: appLang==='de' ? 'Detailzeilen ein-/ausblenden' : 'Toggle detail rows',
+    presBtn:     appLang==='de' ? 'Präsentationsmodus öffnen' : 'Open presentation mode',
+    infoBtn:     appLang==='de' ? 'Info zum Tool und Macher' : 'About this tool',
+    btnBack:     appLang==='de' ? 'Zurück zur Tool-Übersicht' : 'Back to all tools',
+  };
+  Object.entries(tips).forEach(([id,tip]) => {
+    const e2 = document.getElementById(id); if (e2) e2.setAttribute('data-tip', tip);
+  });
 }
 
 function setLang(lang) {
@@ -1335,8 +1683,243 @@ function loadData(event) {
   reader.readAsText(file);
 }
 
-// ── PDF = print ────────────────────────────────────────────────────────
-function exportPDF() { window.print(); }
+// ── PDF modal ──────────────────────────────────────────────────────────
+function showPDFModal() {
+  el('pdfModal').classList.add('pdf-open');
+}
+function hidePDFModal() {
+  el('pdfModal').classList.remove('pdf-open');
+}
+function doExportPDF() {
+  const tbl  = el('pdfChkTable').checked;
+  const pres = el('pdfChkPres').checked;
+  if (!tbl && !pres) { alert(t('pdfSelectOne')); return; }
+  hidePDFModal();
+  if (pres && tbl) {
+    // Print table first, then presentation
+    window.print();
+    setTimeout(() => {
+      openPresMode(true);
+      setTimeout(() => { window.print(); closePresMode(); }, 400);
+    }, 800);
+  } else if (pres) {
+    openPresMode(true);
+    setTimeout(() => { window.print(); closePresMode(); }, 400);
+  } else {
+    window.print();
+  }
+}
+function exportPDF() { showPDFModal(); }
+
+// ── Presentation mode ──────────────────────────────────────────────────
+function openPresMode(forPrint) {
+  renderPresSlide();
+  el('presOverlay').classList.add('pres-open');
+  if (forPrint) document.body.classList.add('print-pres');
+}
+function closePresMode() {
+  el('presOverlay').classList.remove('pres-open');
+  document.body.classList.remove('print-pres');
+}
+
+function renderPresSlide() {
+  const d = window._lwData;
+  if (!d) return;
+  const lang = appLang;
+  const fE   = v => new Intl.NumberFormat('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:0,maximumFractionDigits:0}).format(v);
+  const fN   = v => new Intl.NumberFormat('de-DE',{maximumFractionDigits:0}).format(v);
+
+  // KPIs
+  const roiPct = d.investTotal > 0 ? ((d.annEbitda / d.investTotal)*100).toFixed(1) : '–';
+  const payTxt  = d.paybackMonth >= 0
+    ? (lang==='de' ? `Monat ${d.paybackMonth+1}` : `Month ${d.paybackMonth+1}`)
+    : (lang==='de' ? 'Kein Payback im Jahr 1' : 'No payback in Year 1');
+
+  el('presKpiGuests').textContent  = fN(d.annGuests);
+  el('presKpiRev').textContent     = fE(d.annRev);
+  el('presKpiCosts').textContent   = fE(d.annOpex + d.annCog);
+  el('presKpiEbitda').textContent  = fE(d.annEbitda);
+  el('presKpiEbitda').className    = 'pres-kpi-val ' + (d.annEbitda >= 0 ? 'pos' : 'neg');
+  el('presKpiRoi').textContent     = roiPct !== '–' ? roiPct + ' %' : '–';
+  el('presKpiPayback').textContent = payTxt;
+
+  // titles
+  el('presChartRevTitle').textContent    = lang==='de' ? 'Umsatz vs. Kosten (monatlich)' : 'Revenue vs. Costs (monthly)';
+  el('presChartGuestTitle').textContent  = lang==='de' ? 'Gästeverteilung' : 'Guest Distribution';
+  el('presChartRoiTitle').textContent    = lang==='de' ? 'Kumulativer Cashflow / ROI' : 'Cumulative Cash Flow / ROI';
+
+  const months = I18N[appLang].months;
+
+  // Draw charts after DOM paint
+  requestAnimationFrame(() => {
+    drawBarChart('canvasRev', months, [
+      { label: lang==='de'?'Umsatz':'Revenue', values: d.months.map(m=>m.totalRev), color:'#1A7272' },
+      { label: lang==='de'?'Kosten':'Costs',   values: d.months.map(m=>m.totalOpex+m.totalCog), color:'#F5C518' }
+    ]);
+    drawBarChart('canvasGuests', months, [
+      { label: lang==='de'?'Gäste':'Guests', values: d.months.map(m=>m.guests), color:'#3B82F6' }
+    ]);
+    drawLineChart('canvasRoi', months, d.cumulArr, d.investTotal);
+  });
+}
+
+function drawBarChart(canvasId, labels, datasets, opts={}) {
+  const cv = el(canvasId);
+  if (!cv) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W   = cv.offsetWidth || 400;
+  const H   = cv.offsetHeight || 200;
+  cv.width  = W * dpr;
+  cv.height = H * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad   = { t:16, r:12, b:28, l:52 };
+  const cw    = W - pad.l - pad.r;
+  const ch    = H - pad.t - pad.b;
+  const n     = labels.length;
+  const ds    = datasets.length;
+  const grpW  = cw / n;
+  const barW  = (grpW * 0.75) / ds;
+  const barGap= (grpW * 0.25) / (ds + 1);
+
+  const allVals = datasets.flatMap(d=>d.values);
+  const maxV = Math.max(...allVals, 1);
+
+  // Grid lines
+  ctx.strokeStyle = 'rgba(255,255,255,.08)';
+  ctx.lineWidth   = 1;
+  for (let i=0;i<=4;i++) {
+    const y = pad.t + ch - (ch/4)*i;
+    ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(pad.l+cw, y); ctx.stroke();
+    ctx.fillStyle   = 'rgba(255,255,255,.3)';
+    ctx.font        = '9px Inter,sans-serif';
+    ctx.textAlign   = 'right';
+    ctx.fillText(fmtShort(maxV/4*i), pad.l-4, y+3);
+  }
+
+  // Bars
+  datasets.forEach((ds2, di) => {
+    ds2.values.forEach((v, i) => {
+      const bh  = (v / maxV) * ch;
+      const x   = pad.l + i * grpW + barGap * (di+1) + barW * di;
+      const y   = pad.t + ch - bh;
+      ctx.fillStyle = ds2.color;
+      ctx.beginPath();
+      ctx.roundRect(x, y, barW, bh, [3,3,0,0]);
+      ctx.fill();
+    });
+  });
+
+  // Month labels
+  ctx.fillStyle  = 'rgba(255,255,255,.4)';
+  ctx.font       = '9px Inter,sans-serif';
+  ctx.textAlign  = 'center';
+  labels.forEach((lbl, i) => {
+    const x = pad.l + i * grpW + grpW/2;
+    ctx.fillText(lbl, x, pad.t + ch + 16);
+  });
+}
+
+function drawLineChart(canvasId, labels, cumulArr, invest) {
+  const cv = el(canvasId);
+  if (!cv) return;
+  const dpr = window.devicePixelRatio || 1;
+  const W   = cv.offsetWidth || 300;
+  const H   = cv.offsetHeight || 200;
+  cv.width  = W * dpr;
+  cv.height = H * dpr;
+  const ctx = cv.getContext('2d');
+  ctx.scale(dpr, dpr);
+
+  const pad  = { t:16, r:12, b:28, l:54 };
+  const cw   = W - pad.l - pad.r;
+  const ch   = H - pad.t - pad.b;
+  const n    = cumulArr.length;
+
+  const minV = Math.min(...cumulArr, invest > 0 ? -invest*0.1 : 0, 0);
+  const maxV = Math.max(...cumulArr, invest > 0 ? invest*1.1 : 1);
+  const range = maxV - minV || 1;
+
+  const toY = v => pad.t + ch - ((v - minV) / range) * ch;
+  const toX = i => pad.l + (i / (n-1)) * cw;
+
+  // Grid
+  ctx.strokeStyle = 'rgba(255,255,255,.08)';
+  ctx.lineWidth   = 1;
+  for (let i=0;i<=4;i++) {
+    const val = minV + (range/4)*i;
+    const y   = toY(val);
+    ctx.beginPath(); ctx.moveTo(pad.l,y); ctx.lineTo(pad.l+cw,y); ctx.stroke();
+    ctx.fillStyle = 'rgba(255,255,255,.3)';
+    ctx.font = '9px Inter,sans-serif';
+    ctx.textAlign = 'right';
+    ctx.fillText(fmtShort(val), pad.l-4, y+3);
+  }
+
+  // Zero line
+  if (minV < 0 && maxV > 0) {
+    const y0 = toY(0);
+    ctx.strokeStyle = 'rgba(255,255,255,.25)';
+    ctx.setLineDash([3,3]); ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(pad.l,y0); ctx.lineTo(pad.l+cw,y0); ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Invest threshold line
+  if (invest > 0) {
+    const yi = toY(invest);
+    ctx.strokeStyle = '#F5C518';
+    ctx.setLineDash([4,4]); ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(pad.l,yi); ctx.lineTo(pad.l+cw,yi); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = '#F5C518';
+    ctx.font = '9px Inter,sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('ROI', pad.l+3, yi-3);
+  }
+
+  // Area fill
+  const grad = ctx.createLinearGradient(0, pad.t, 0, pad.t+ch);
+  grad.addColorStop(0, 'rgba(52,211,153,.35)');
+  grad.addColorStop(1, 'rgba(52,211,153,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(toX(0), toY(0));
+  cumulArr.forEach((v,i) => ctx.lineTo(toX(i), toY(v)));
+  ctx.lineTo(toX(n-1), toY(0));
+  ctx.closePath(); ctx.fill();
+
+  // Line
+  ctx.strokeStyle = '#34d399';
+  ctx.lineWidth   = 2.5;
+  ctx.lineJoin    = 'round';
+  ctx.beginPath();
+  cumulArr.forEach((v,i) => i===0 ? ctx.moveTo(toX(i),toY(v)) : ctx.lineTo(toX(i),toY(v)));
+  ctx.stroke();
+
+  // Dots at breakeven
+  cumulArr.forEach((v,i) => {
+    if (invest>0 && v>=invest && (i===0 || cumulArr[i-1]<invest)) {
+      ctx.beginPath();
+      ctx.arc(toX(i), toY(v), 5, 0, Math.PI*2);
+      ctx.fillStyle = '#F5C518'; ctx.fill();
+    }
+  });
+
+  // Month labels
+  ctx.fillStyle = 'rgba(255,255,255,.4)';
+  ctx.font = '9px Inter,sans-serif';
+  ctx.textAlign = 'center';
+  labels.forEach((lbl,i) => ctx.fillText(lbl, toX(i), pad.t+ch+16));
+}
+
+function fmtShort(v) {
+  const abs = Math.abs(v);
+  if (abs >= 1e6) return (v/1e6).toFixed(1) + 'M';
+  if (abs >= 1e3) return (v/1e3).toFixed(0) + 'k';
+  return v.toFixed(0);
+}
 
 // ── Table header ───────────────────────────────────────────────────────
 function buildHead() {
@@ -1412,6 +1995,14 @@ function recalc() {
   let cumul=0;
   const cumulArr    = months.map(m=>{ cumul+=m.ebitda; return cumul; });
   const paybackMonth = investTotal>0 ? cumulArr.findIndex(c=>c>=investTotal) : -1;
+
+  // Store for presentation mode
+  window._lwData = {
+    months, cumulArr, investTotal, paybackMonth,
+    annGuests: guestValues.reduce((a,b)=>a+b,0),
+    annRev: annRev, annEbitda: annEbitda,
+    annOpex: annOpex, annCog: S('totalCog'), annGP: annGP
+  };
 
   // ── Build rows ──────────────────────────────────────────────────────
   let rows='';
