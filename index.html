@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MH4B6GJ4E5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MH4B6GJ4E5');
+</script>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Stefan Burian — Amusement Business Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:opsz,wght@9..40,300;400;500&display=swap" rel="stylesheet">
+<style>
+
+    :root {
+      --dark:       #0D0D0D;
+      --dark-2:     #151515;
+      --dark-3:     #1E1E1E;
+      --accent:     #ffca19;
+      --accent-lt:  #ffd84d;
+      --off-white:  #F2EDE4;
+      --white:      #FFFFFF;
+      --muted:      #7A7A74;
+      --border:     rgba(255,202,25,0.18);
+      --border-dim: rgba(255,255,255,0.06);
+    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', -apple-system, sans-serif;
+      background: var(--dark);
+      color: var(--off-white);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .display {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 28px 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(13,13,13,0.93);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-dim);
+      padding: 20px 64px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px; font-weight: 500;
+      color: var(--off-white); text-decoration: none; letter-spacing: 0.03em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--off-white); }
+    .nav-links .nav-cta {
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 9px 22px; border-radius: 2px; transition: all 0.25s;
+    }
+    .nav-links .nav-cta:hover { background: var(--accent); color: var(--dark); }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex; align-items: center; gap: 2px;
+      border: 1px solid var(--border-dim);
+      border-radius: 2px; overflow: hidden;
+    }
+    .lang-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
+      padding: 7px 12px; color: var(--muted);
+      text-transform: uppercase; transition: all 0.2s;
+    }
+    .lang-btn.active { background: var(--accent); color: var(--dark); }
+    .lang-btn:not(.active):hover { color: var(--off-white); }
+    .lang-sep { width: 1px; height: 28px; background: var(--border-dim); flex-shrink: 0; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; padding: 0;
+      position: relative; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .hero-content {
+      padding: 180px 64px 120px;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative;
+    }
+    .hero-image-col { position: relative; }
+    .hero-bg-line {
+      position: absolute; top: 0; width: 1px; height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 36px; display: flex; align-items: center; gap: 18px;
+    }
+    .hero-eyebrow::before { content: ''; width: 44px; height: 1px; background: var(--accent); }
+    .hero-headline {
+      font-size: clamp(48px, 5.5vw, 88px);
+      max-width: 820px; margin-bottom: 44px; color: var(--white);
+    }
+    .hero-headline em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 17px; font-weight: 300; line-height: 1.78;
+      color: var(--muted); max-width: 500px; margin-bottom: 64px;
+    }
+    .hero-sub strong { color: var(--off-white); font-weight: 400; }
+    .hero-actions { display: flex; align-items: center; gap: 20px; }
+    .hero-bottom {
+      position: absolute; bottom: 44px; left: 64px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .hero-scroll-label { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+    .scroll-anim { width: 1px; height: 56px; background: var(--border-dim); position: relative; overflow: hidden; }
+    .scroll-anim::after {
+      content: ''; position: absolute; top: -56px; left: 0;
+      width: 1px; height: 56px; background: var(--accent);
+      animation: scrollDown 2s ease-in-out infinite;
+    }
+    @keyframes scrollDown { 0% { top: -56px; } 100% { top: 56px; } }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--accent); color: var(--dark); text-decoration: none;
+      padding: 17px 34px; font-size: 13px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; border-radius: 2px;
+      transition: all 0.3s; border: none; cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--accent-lt); transform: translateY(-2px); }
+    .btn-primary svg { transition: transform 0.3s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 12px;
+      color: var(--muted); text-decoration: none;
+      padding: 17px 34px; font-size: 13px; font-weight: 400;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid rgba(122,122,116,0.35); border-radius: 2px; transition: all 0.3s;
+    }
+    .btn-ghost:hover { color: var(--off-white); border-color: rgba(122,122,116,0.7); }
+
+    /* ── STATS ── */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4,1fr);
+      border-top: 1px solid var(--border-dim); border-bottom: 1px solid var(--border-dim);
+    }
+    .stat-item { padding: 48px 52px; border-right: 1px solid var(--border-dim); }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 54px; font-weight: 500; color: var(--white); line-height: 1; margin-bottom: 10px;
+    }
+    .stat-number sup { font-size: 28px; color: var(--accent); vertical-align: super; }
+    .stat-label { font-size: 13px; color: var(--muted); }
+
+    /* ── SECTIONS ── */
+    section { padding: 112px 64px; }
+    .section-label {
+      font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 22px;
+    }
+    .section-title {
+      font-size: clamp(36px, 4vw, 56px); max-width: 660px; margin-bottom: 22px; color: var(--white);
+    }
+    .section-intro {
+      font-size: 17px; font-weight: 300; color: var(--muted);
+      max-width: 540px; line-height: 1.78; margin-bottom: 72px;
+    }
+    .rule { width: 48px; height: 1px; background: var(--border); margin: 20px 0 28px; }
+
+    /* ── FORMULA ── */
+    .formula-section { background: var(--dark-2); }
+    .formula {
+      display: grid; grid-template-columns: 1fr auto 1fr auto 1fr;
+      border: 1px solid var(--border-dim); border-radius: 4px; overflow: hidden;
+    }
+    .formula-item { padding: 48px 44px; background: var(--dark-3); transition: background 0.3s; }
+    .formula-item:hover { background: #222; }
+    .formula-item.result { background: rgba(255,202,25,0.05); border-left: 2px solid var(--accent); }
+    .formula-icon {
+      width: 44px; height: 44px; background: rgba(255,202,25,0.1);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 24px;
+    }
+    .formula-item h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 27px; font-weight: 500; color: var(--white); margin-bottom: 12px;
+    }
+    .formula-item p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .formula-op {
+      background: var(--dark-2); display: flex; align-items: center; justify-content: center;
+      padding: 0 24px;
+      font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 300; color: var(--accent);
+      border-left: 1px solid var(--border-dim); border-right: 1px solid var(--border-dim);
+    }
+
+    /* ── TRAINING SPOTLIGHT ── */
+    .training-section { padding: 0 64px 112px; background: var(--dark-2); }
+    .training-card {
+      border: 1px solid rgba(255,202,25,0.35); border-radius: 4px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .training-content { padding: 64px 56px; display: flex; flex-direction: column; justify-content: center; }
+    .training-badge {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: rgba(255,202,25,0.1); border: 1px solid rgba(255,202,25,0.3);
+      border-radius: 2px; padding: 7px 14px; margin-bottom: 32px; width: fit-content;
+    }
+    .training-badge span {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .training-headline {
+      font-size: clamp(30px, 3.2vw, 48px); color: var(--white); margin-bottom: 20px; line-height: 1.1;
+    }
+    .training-headline em { font-style: italic; color: var(--accent); }
+    .training-rule { width: 44px; height: 1px; background: rgba(255,202,25,0.4); margin: 4px 0 24px; }
+    .training-p { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.8; margin-bottom: 16px; }
+    .training-p strong { color: var(--off-white); font-weight: 400; }
+    .training-list { list-style: none; display: flex; flex-direction: column; gap: 11px; margin: 8px 0 40px; }
+    .training-list li {
+      display: flex; gap: 14px; align-items: center;
+      font-size: 14px; color: var(--off-white);
+    }
+    .training-list li::before {
+      content: ''; width: 18px; height: 1px;
+      background: var(--accent); flex-shrink: 0;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 2px; background: var(--border-dim);
+      border: 1px solid var(--border-dim); border-radius: 4px; overflow: hidden;
+    }
+    .service-card {
+      background: var(--dark); padding: 52px 48px;
+      position: relative; overflow: hidden; transition: background 0.35s;
+    }
+    .service-card:hover { background: var(--dark-2); }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%; background: var(--accent);
+      transform: scaleY(0); transform-origin: top; transition: transform 0.35s;
+    }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-bg-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 96px; font-weight: 400;
+      color: rgba(255,202,25,0.07); position: absolute; top: 8px; right: 28px;
+      line-height: 1; pointer-events: none;
+    }
+    .service-tag {
+      font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 18px;
+    }
+    .service-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px; font-weight: 500; color: var(--white); margin-bottom: 14px; line-height: 1.2;
+    }
+    .service-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; margin-bottom: 28px; }
+    .service-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .service-list li {
+      font-size: 13px; color: var(--off-white);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .service-list li::before { content: ''; width: 18px; height: 1px; background: var(--accent); flex-shrink: 0; }
+
+    /* ── PROOF STRIP ── */
+    .proof-strip {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      border-top: 1px solid var(--border-dim); border-bottom: 1px solid var(--border-dim);
+      margin: 0 0 0 0;
+    }
+    .proof-cell {
+      height: 280px; background: var(--dark-2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; position: relative; overflow: hidden;
+      border-right: 1px solid var(--border-dim);
+    }
+    .proof-cell:last-child { border-right: none; }
+    .proof-cell::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,202,25,0.02) 20px, rgba(255,202,25,0.02) 21px);
+    }
+    .img-ph-icon {
+      width: 44px; height: 44px; background: rgba(255,202,25,0.1);
+      border: 1px solid var(--border); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; position: relative; z-index: 1;
+    }
+    .img-ph-label {
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--accent); font-weight: 500; position: relative; z-index: 1;
+    }
+    .img-ph-hint {
+      font-size: 12px; color: var(--muted); text-align: center;
+      max-width: 180px; line-height: 1.5; position: relative; z-index: 1;
+    }
+
+    /* ── ABOUT ── */
+    .about-section { background: var(--dark-2); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+    .about-text p { font-size: 16px; font-weight: 300; color: var(--muted); line-height: 1.85; margin-bottom: 22px; }
+    .about-text p strong { color: var(--off-white); font-weight: 400; }
+    .highlights { display: flex; flex-direction: column; gap: 0; }
+    .portrait-ph {
+      height: 260px; background: var(--dark-3);
+      border: 1px dashed rgba(255,202,25,0.35); border-radius: 4px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 12px; margin-bottom: 32px; position: relative; overflow: hidden;
+    }
+    .portrait-ph::before {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,202,25,0.02) 20px, rgba(255,202,25,0.02) 21px);
+    }
+    .highlight {
+      display: flex; gap: 22px; align-items: flex-start;
+      padding: 28px 0; border-bottom: 1px solid var(--border-dim);
+    }
+    .highlight:first-of-type { border-top: 1px solid var(--border-dim); }
+    .hl-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(255,202,25,0.08); border: 1px solid var(--border);
+      border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .highlight h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 500; color: var(--white); margin-bottom: 5px;
+    }
+    .highlight p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── CLIENTS ── */
+    .clients-grid {
+      display: grid; grid-template-columns: repeat(5,1fr);
+      gap: 1px; background: var(--border-dim);
+      border: 1px solid var(--border-dim); border-radius: 4px; overflow: hidden;
+    }
+    .client-cell {
+      background: var(--dark); padding: 14px 12px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 96px; transition: background 0.2s;
+    }
+    .client-cell:hover { background: var(--dark-2); }
+    .client-cell {
+      min-height: 110px;
+      padding: 14px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .client-cell img {
+      max-width: 85%; max-height: 80px; object-fit: contain;
+      filter: grayscale(100%) contrast(30%) brightness(180%);
+      transition: filter .35s ease;
+      display: block;
+      margin: auto;
+    }
+    .client-cell:hover { background: rgba(255,255,255,0.05) !important; }
+    .client-cell:hover img { filter: none; }
+
+    /* ── PODCAST ── */
+    .podcast-section { background: var(--dark-2); }
+    .podcast-card {
+      border: 1px solid var(--border-dim); border-radius: 4px;
+      background: var(--dark-3); padding: 64px 72px;
+      display: flex; align-items: center; gap: 72px;
+    }
+    .podcast-badge {
+      width: 108px; height: 108px; flex-shrink: 0;
+      background: rgba(255,202,25,0.08); border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .podcast-body h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 38px; font-weight: 500; color: var(--white); margin-bottom: 14px;
+    }
+    .podcast-body p {
+      font-size: 15px; font-weight: 300; color: var(--muted);
+      line-height: 1.75; max-width: 520px; margin-bottom: 32px;
+    }
+    .podcast-links { display: flex; gap: 32px; }
+    .podcast-link {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent); text-decoration: none;
+      display: flex; align-items: center; gap: 8px; transition: gap 0.25s, color 0.2s;
+    }
+    .podcast-link:hover { gap: 14px; color: var(--accent-lt); }
+
+    /* ── CTA ── */
+    .cta-section { text-align: center; padding: 144px 64px; position: relative; overflow: hidden; }
+    .cta-section::before {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%); width: 600px; height: 600px;
+      background: radial-gradient(ellipse, rgba(255,202,25,0.05) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section .section-title { font-size: clamp(44px, 5vw, 74px); max-width: 680px; margin: 0 auto 28px; }
+    .cta-section .section-intro { max-width: 440px; margin: 0 auto 56px; }
+    .cta-actions { display: flex; align-items: center; justify-content: center; gap: 32px; }
+    .contact-link {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 300; color: var(--muted);
+      text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .contact-link:hover { color: var(--off-white); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border-dim); padding: 40px 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; color: var(--muted); text-decoration: none;
+    }
+    .footer-links { display: flex; gap: 28px; list-style: none; }
+    .footer-links a {
+      font-size: 12px; letter-spacing: 0.06em;
+      color: var(--muted); text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--off-white); }
+    .footer-copy { font-size: 11px; color: rgba(122,122,116,0.45); }
+
+    /* ── LANG TRANSITION ── */
+    [data-key] { transition: opacity 0.18s ease; }
+    body.lang-switching [data-key] { opacity: 0; }
+  
+/* ═══════════════════════════════════════
+   HAMBURGER + MOBILE MENU
+═══════════════════════════════════════ */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;z-index:300;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--off-white);transition:all .3s;}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+.mobile-menu{display:none;position:fixed;inset:0;background:rgba(13,13,13,.98);z-index:250;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:40px 24px;}
+.mobile-menu.open{display:flex;}
+.mobile-menu nav-sep{width:40px;height:1px;background:var(--border);margin:12px 0;}
+.m-nav-link{font-family:'Cormorant Garamond',serif;font-size:44px;font-weight:500;color:var(--off-white);text-decoration:none;letter-spacing:-.02em;line-height:1.2;transition:color .2s;text-align:center;}
+.m-nav-link:hover,.m-nav-link.m-active{color:var(--accent);}
+.m-nav-cta{margin-top:8px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:12px 28px;border-radius:2px;text-decoration:none;transition:all .25s;}
+.m-nav-cta:hover{background:var(--accent);color:var(--dark);}
+.m-lang{display:flex;align-items:center;gap:0;border:1px solid var(--border-dim);border-radius:2px;overflow:hidden;margin-top:24px;}
+.m-lang-btn{background:none;border:none;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;color:var(--muted);cursor:pointer;transition:all .2s;}
+.m-lang-btn.active{background:var(--accent);color:var(--dark);}
+.m-lang-sep{width:1px;height:32px;background:var(--border-dim);}
+.m-contact{font-size:13px;font-weight:300;color:var(--muted);text-align:center;margin-top:20px;line-height:1.8;}
+.m-contact a{color:var(--muted);text-decoration:none;}
+
+/* ═══════════════════════════════════════
+   TABLET  ≤ 960px
+═══════════════════════════════════════ */
+@media(max-width:960px){
+  nav{padding:18px 32px!important;}
+  nav.scrolled{padding:16px 32px!important;}
+  .nav-links li:not(:last-child){display:none;}
+  section{padding:80px 40px!important;}
+  .page-header{padding:120px 40px 56px!important;}
+  .stats-bar{grid-template-columns:1fr 1fr!important;}
+  .stat-item:nth-child(2){border-right:none!important;}
+  .stat-item:nth-child(3){border-bottom:none!important;}
+  .stat-item:nth-child(4){border-right:none!important;border-bottom:none!important;}
+  .clients-grid{grid-template-columns:repeat(4,1fr)!important;}
+}
+
+/* ═══════════════════════════════════════
+   MOBILE  ≤ 680px
+═══════════════════════════════════════ */
+@media(max-width:680px){
+  /* Nav */
+  nav{padding:16px 20px!important;}
+  nav.scrolled{padding:14px 20px!important;}
+  .nav-links{display:none!important;}
+  .lang-toggle{display:none!important;}
+  .hamburger{display:flex!important;}
+
+  /* Hero */
+  .hero{grid-template-columns:1fr!important;min-height:auto!important;}
+  .hero-content{padding:108px 20px 80px!important;}
+  .hero-image-col{display:none!important;}
+  .hero-bg-line{display:none!important;}
+  .hero-headline{font-size:clamp(36px,11vw,56px)!important;margin-bottom:28px!important;}
+  .hero-sub{font-size:15px!important;margin-bottom:40px!important;max-width:100%!important;}
+  .hero-actions{flex-direction:column!important;align-items:stretch!important;gap:10px!important;}
+  .hero-actions .btn-primary,.hero-actions .btn-ghost{width:100%!important;justify-content:center!important;}
+  .hero-bottom{display:none!important;}
+
+  /* Stats */
+  .stats-bar{grid-template-columns:1fr 1fr!important;}
+  .stat-item{padding:24px 20px!important;border-right:1px solid var(--border-dim)!important;border-bottom:1px solid var(--border-dim)!important;}
+  .stat-item:nth-child(2){border-right:none!important;}
+  .stat-item:nth-child(3){border-bottom:none!important;}
+  .stat-item:nth-child(4){border-right:none!important;border-bottom:none!important;}
+  .stat-number{font-size:36px!important;}
+
+  /* Sections */
+  section{padding:56px 20px!important;}
+  .section-label{margin-bottom:14px!important;}
+  .section-title{font-size:clamp(26px,9vw,40px)!important;max-width:100%!important;}
+  .section-intro{font-size:15px!important;margin-bottom:40px!important;max-width:100%!important;}
+  .rule{margin:14px 0 20px!important;}
+
+  /* Formula */
+  .formula{grid-template-columns:1fr!important;}
+  .formula-op{padding:14px 32px!important;font-size:32px!important;border:none!important;border-top:1px solid var(--border-dim)!important;border-bottom:1px solid var(--border-dim)!important;justify-content:flex-start!important;}
+  .formula-item{padding:32px 28px!important;}
+
+  /* Training spotlight */
+  .training-section{padding:0 20px 56px!important;}
+  .training-card{grid-template-columns:1fr!important;}
+  .training-card>div:last-child{display:none!important;}
+  .training-content{padding:40px 28px!important;}
+  .training-headline{font-size:clamp(26px,8vw,38px)!important;}
+
+  /* Services */
+  .services-grid{grid-template-columns:1fr!important;}
+  .service-card{padding:36px 28px!important;}
+  .service-bg-num{font-size:64px!important;}
+
+  /* Proof strip */
+  .proof-strip{grid-template-columns:1fr!important;}
+  .proof-cell{height:160px!important;border-right:none!important;border-bottom:1px solid var(--border-dim)!important;}
+
+  /* About */
+  .about-grid{grid-template-columns:1fr!important;gap:40px!important;}
+  .portrait-ph{height:200px!important;}
+  .about-section{padding:56px 20px!important;}
+
+  /* Clients */
+  .clients-grid{grid-template-columns:repeat(3,1fr)!important;}
+  .client-cell{padding:12px 10px!important;min-height:72px!important;}
+
+  /* Podcast */
+  .podcast-card{flex-direction:column!important;gap:28px!important;padding:36px 24px!important;}
+  .podcast-badge{width:72px!important;height:72px!important;}
+  .podcast-body h3{font-size:26px!important;}
+  .podcast-links{flex-direction:column!important;gap:14px!important;}
+
+  /* CTA */
+  .cta-section{padding:72px 20px!important;}
+  .cta-section .section-title{font-size:clamp(32px,9vw,52px)!important;}
+  .cta-actions{flex-direction:column!important;gap:12px!important;align-items:stretch!important;}
+  .cta-actions .btn-primary{justify-content:center!important;}
+  .contact-link{justify-content:center!important;}
+
+  /* Footer */
+  footer{flex-direction:column!important;gap:20px!important;text-align:center!important;padding:36px 20px!important;}
+  .footer-links{flex-wrap:wrap!important;justify-content:center!important;gap:14px!important;}
+
+  /* Page header */
+  .page-header{padding:96px 20px 44px!important;}
+  .page-title{font-size:clamp(28px,9vw,44px)!important;}
+  .page-subtitle{font-size:15px!important;}
+
+  /* INLINE GRID OVERRIDES — subpages */
+  [style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns: 1fr 1fr"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:repeat(3,1fr)"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:repeat(3, 1fr)"]{grid-template-columns:1fr!important;}
+  [style*="grid-template-columns:repeat(6,1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
+  [style*="grid-template-columns:repeat(6, 1fr)"]{grid-template-columns:repeat(3,1fr)!important;}
+
+  /* Gap reductions for inline-styled containers */
+  [style*="gap:100px"]{gap:40px!important;}
+  [style*="gap: 100px"]{gap:40px!important;}
+  [style*="gap:80px"]{gap:36px!important;}
+  [style*="gap: 80px"]{gap:36px!important;}
+  [style*="gap:72px"]{gap:32px!important;}
+  [style*="gap: 72px"]{gap:32px!important;}
+
+  /* Padding reductions for inline-styled sections */
+  [style*="padding:80px 64px"]{padding:48px 20px!important;}
+  [style*="padding: 80px 64px"]{padding:48px 20px!important;}
+  [style*="padding:60px 52px"]{padding:36px 24px!important;}
+  [style*="padding: 60px 52px"]{padding:36px 24px!important;}
+  [style*="padding:64px 72px"]{padding:36px 24px!important;}
+  [style*="padding: 64px 72px"]{padding:36px 24px!important;}
+  [style*="padding:80px 64px 0"]{padding:48px 20px 0!important;}
+  [style*="padding:80px 64px 112px"]{padding:48px 20px 64px!important;}
+  [style*="padding:80px 64px 120px"]{padding:48px 20px 72px!important;}
+  [style*="padding:72px 64px 120px"]{padding:48px 20px 72px!important;}
+
+  /* Contact form grid */
+  [style*="grid-template-columns:1fr 1fr"][style*="gap:20px"]{grid-template-columns:1fr!important;}
+
+  /* Buttons full-width on mobile for subpage CTAs */
+  [style*="width:fit-content"] .btn-primary{width:fit-content!important;}
+  .cta-section .btn-primary{width:100%!important;justify-content:center!important;}
+
+  /* Min-height overrides for tall containers */
+  [style*="min-height:480px"]{min-height:240px!important;}
+  [style*="min-height:560px"]{min-height:240px!important;}
+}
+
+/* ═══════════════════════════════════════
+   SMALL MOBILE  ≤ 400px
+═══════════════════════════════════════ */
+@media(max-width:400px){
+  .clients-grid{grid-template-columns:repeat(2,1fr)!important;}
+  .stat-item{padding:20px 16px!important;}
+  .stat-number{font-size:32px!important;}
+}
+
+
+
+
+/* Nav WhatsApp */
+.nav-wa{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:2px;border:1px solid rgba(37,211,102,.35);color:#25D366;transition:all .2s;}
+.nav-wa:hover{background:rgba(37,211,102,.1);border-color:#25D366;}
+.nav-wa svg{flex-shrink:0;}
+
+/* Mobile WhatsApp button */
+.m-wa-btn{display:flex;align-items:center;gap:10px;margin-top:4px;
+  font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;
+  color:#25D366;text-decoration:none;border:1px solid rgba(37,211,102,.3);
+  padding:12px 28px;border-radius:2px;transition:all .25s;}
+.m-wa-btn:hover{background:rgba(37,211,102,.08);}
+
+
+/* Referenzen dynamic grid */
+.ref-loading { display:flex; align-items:center; justify-content:center;
+  padding:48px; grid-column:1/-1; }
+.ref-loading-dot { width:6px; height:6px; border-radius:50%;
+  background:var(--accent); opacity:.3; animation:refDot .9s ease-in-out infinite; }
+.ref-loading-dot:nth-child(2){ animation-delay:.15s; }
+.ref-loading-dot:nth-child(3){ animation-delay:.3s; }
+@keyframes refDot { 0%,100%{opacity:.3;transform:scale(1)}
+                    50%{opacity:1;transform:scale(1.4)} }
+.ref-empty { font-size:13px; color:var(--muted); padding:48px;
+  grid-column:1/-1; text-align:center; line-height:1.7; }
+.ref-empty code { color:var(--accent); font-family:monospace; font-size:12px; }
+
+/* WhatsApp button */
+.btn-whatsapp{
+  display:inline-flex;align-items:center;gap:10px;
+  background:#25D366;color:#fff;text-decoration:none;
+  padding:17px 28px;font-size:13px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;border-radius:2px;
+  transition:all .3s;
+}
+.btn-whatsapp:hover{background:#20c45a;transform:translateY(-2px);}
+.btn-whatsapp svg{transition:transform .3s;}
+.btn-whatsapp:hover svg{transform:translateX(3px);}
+
+.btn-email{
+  display:inline-flex;align-items:center;gap:10px;
+  background:var(--accent);color:var(--dark);text-decoration:none;
+  padding:17px 28px;font-size:13px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;border-radius:2px;
+  transition:all .3s;
+}
+.btn-email:hover{background:var(--accent-lt);transform:translateY(-2px);}
+
+/* Proof strip inner flex fix */
+.proof-cell{position:relative;}
+
+  /* ── Client logos responsive ── */
+  @media(max-width:960px){
+    .clients-grid{ grid-template-columns:repeat(4,1fr)!important; }
+    .client-cell{ min-height:100px!important; padding:12px 10px!important; }
+    .client-cell img{ max-height:64px!important; }
+  }
+  @media(max-width:680px){
+    .clients-grid{ grid-template-columns:repeat(3,1fr)!important; }
+    .client-cell{ min-height:88px!important; padding:10px 8px!important; }
+    .client-cell img{ max-height:52px!important; max-width:70%!important; }
+  }
+  @media(max-width:400px){
+    .clients-grid{ grid-template-columns:repeat(2,1fr)!important; }
+    .client-cell{ min-height:80px!important; padding:8px 6px!important; }
+    .client-cell img{ max-height:44px!important; }
+  }
+
+/* WhatsApp */
+.btn-whatsapp{display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;text-decoration:none;padding:17px 28px;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:all .3s;}
+.btn-whatsapp:hover{background:#20c45a;transform:translateY(-2px);}
+.btn-email{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--dark);text-decoration:none;padding:17px 28px;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;border-radius:2px;transition:all .3s;}
+.btn-email:hover{background:var(--accent-lt);transform:translateY(-2px);}
+.nav-wa{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:2px;border:1px solid rgba(37,211,102,.35);color:#25D366;transition:all .2s;}
+.nav-wa:hover{background:rgba(37,211,102,.1);border-color:#25D366;}
+.m-wa-btn{display:flex;align-items:center;gap:10px;margin-top:4px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:400;color:#25D366;text-decoration:none;border:1px solid rgba(37,211,102,.3);padding:12px 28px;border-radius:2px;transition:all .25s;}
+.m-wa-btn:hover{background:rgba(37,211,102,.08);}
+.proof-cell{position:relative;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Stefan <span>Burian</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="#services" data-en="Services" data-de="Leistungen">Services</a></li>
+      <li><a href="#about" data-en="About" data-de="Über mich">About</a></li>
+      <li><a href="#podcast" data-en="Podcast" data-de="Podcast">Podcast</a></li>
+      <li><a href="#contact" class="nav-cta" data-en="Get in touch" data-de="Kontakt aufnehmen">Get in touch</a></li>
+    </ul>
+    <a href="https://wa.me/4917661562513" target="_blank" class="nav-wa" title="WhatsApp" aria-label="WhatsApp"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btn-en" onclick="setLang('en')">EN</button>
+      <div class="lang-sep"></div>
+      <button class="lang-btn" id="btn-de" onclick="setLang('de')">DE</button>
+    </div>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILES MENÜ -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" class="m-nav-link" onclick="closeMenu()" data-en="Home" data-de="Startseite">Home</a>
+  <a href="#services" class="m-nav-link" onclick="closeMenu()" data-en="Services" data-de="Leistungen">Services</a>
+  <a href="#about" class="m-nav-link" onclick="closeMenu()" data-en="About" data-de="Über mich">About</a>
+  <a href="#podcast" class="m-nav-link" onclick="closeMenu()" data-en="Podcast" data-de="Podcast">Podcast</a>
+  <a href="#contact" class="m-nav-cta" onclick="closeMenu()" data-en="Get in touch" data-de="Kontakt aufnehmen">Get in touch</a>
+  <a href="https://wa.me/4917661562513" target="_blank" class="m-wa-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg> <span data-en="Chat on WhatsApp" data-de="Auf WhatsApp schreiben">Chat on WhatsApp</span></a>
+  <div class="m-lang">
+    <button class="m-lang-btn active" id="mbtn-en" onclick="setLang('en')">EN</button>
+    <div class="m-lang-sep"></div>
+    <button class="m-lang-btn" id="mbtn-de" onclick="setLang('de')">DE</button>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: HERO                        ║
+     ╚══════════════════════════════════════╝ -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <div class="hero-bg-line" style="left:33%;"></div>
+    <div class="hero-eyebrow" data-en="Amusement Business Support — Since 2019" data-de="Amusement Business Support — Seit 2019">Amusement Business Support — Since 2019</div>
+    <h1 class="hero-headline display" data-en="Your attraction&lt;br&gt;deserves &lt;em&gt;exceptional&lt;/em&gt;&lt;br&gt;operations." data-de="Deine Attraktion&lt;br&gt;verdient &lt;em&gt;exzellente&lt;/em&gt;&lt;br&gt;Betriebsführung.">Your attraction<br>deserves <em>exceptional</em><br>operations.</h1>
+    <p class="hero-sub" data-en="I help &lt;strong&gt;leisure attraction operators&lt;/strong&gt; build the operational foundation that turns good parks into &lt;strong&gt;unforgettable guest experiences&lt;/strong&gt; — through better processes, stronger teams, and documentation that actually gets used." data-de="Ich helfe &lt;strong&gt;Freizeitpark- und Attraktionsbetreibern&lt;/strong&gt;, das operative Fundament zu schaffen, das gute Parks in &lt;strong&gt;unvergessliche Gästeerlebnisse&lt;/strong&gt; verwandelt — durch bessere Prozesse, stärkere Teams und Dokumentationen, die wirklich genutzt werden.">I help <strong>leisure attraction operators</strong> build the operational foundation that turns good parks into <strong>unforgettable guest experiences</strong> — through better processes, stronger teams, and documentation that actually gets used.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><span data-en="Let&#x27;s work together" data-de="Zusammenarbeiten">Let's work together</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      <a href="#services" class="btn-ghost" data-en="Explore services" data-de="Leistungen entdecken">Explore services</a>
+    </div>
+    <div class="hero-bottom">
+      <div class="scroll-anim"></div>
+      <span class="hero-scroll-label" data-en="Scroll to explore" data-de="Nach unten scrollen">Scroll to explore</span>
+    </div>
+  </div>
+  <div class="hero-image-col" id="hero-photo-wrap">
+    <div style="height:100%;min-height:100vh;background:var(--dark-3);border-left:1px dashed rgba(255,202,25,.25);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+      <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;">Foto → fotos/hero/</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;max-width:180px;line-height:1.5;position:relative;z-index:1;">Beliebige Bilddatei in diesen Ordner legen</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-number">20<sup>+</sup></div><div class="stat-label" data-en="Years in the industry" data-de="Jahre in der Branche">Years in the industry</div></div>
+  <div class="stat-item"><div class="stat-number">20<sup>+</sup></div><div class="stat-label" data-en="Parks &amp;amp; attractions supported" data-de="Parks &amp;amp; Attraktionen betreut">Parks &amp; attractions supported</div></div>
+  <div class="stat-item"><div class="stat-number">6</div><div class="stat-label" data-en="Core service areas" data-de="Kernleistungsbereiche">Core service areas</div></div>
+  <div class="stat-item"><div class="stat-number">1</div><div class="stat-label" data-en="Mission: better experiences for guests and staff" data-de="Mission: bessere Erlebnisse für Gäste und Personal">Mission: better guest experiences</div></div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: FORMEL / ANSATZ             ║
+     ╚══════════════════════════════════════╝ -->
+<section class="formula-section" id="approach">
+  <div class="section-label" data-en="The approach" data-de="Der Ansatz">The approach</div>
+  <h2 class="section-title display" data-en="Success has a very simple formula." data-de="Erfolg hat eine sehr einfache Formel.">Success has a very simple formula.</h2>
+  <p class="section-intro" data-en="The best guest experiences don&#x27;t happen by accident. They&#x27;re built on two pillars — and I help you strengthen both." data-de="Die besten Gästeerlebnisse entstehen nicht zufällig. Sie basieren auf zwei Säulen — und ich helfe dir, beide zu stärken.">The best guest experiences don't happen by accident. They're built on two pillars — and I help you strengthen both.</p>
+  <div class="formula">
+    <div class="formula-item">
+      <div class="formula-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg></div>
+      <h3 data-en="Operations" data-de="Betrieb">Operations</h3><p data-en="Streamlined processes, clear SOPs, and interconnected departments that run smoothly — every shift, every season." data-de="Optimierte Prozesse, klare SOPs und vernetzte Abteilungen, die reibungslos funktionieren — an jedem Schichttag, in jeder Saison.">Streamlined processes, clear SOPs, and interconnected departments that run smoothly — every shift, every season.</p>
+    </div>
+    <div class="formula-op">+</div>
+    <div class="formula-item">
+      <div class="formula-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+      <h3 data-en="Human Resources" data-de="Personal">Human Resources</h3><p data-en="Well-trained, motivated staff who understand your vision and deliver it consistently — from frontline teams to managers." data-de="Gut ausgebildete, motivierte Mitarbeitende, die deine Vision verstehen und konsequent umsetzen.">Well-trained, motivated staff who understand your vision and deliver it consistently — from frontline teams to managers.</p>
+    </div>
+    <div class="formula-op">=</div>
+    <div class="formula-item result">
+      <div class="formula-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+      <h3 data-en="Guest Experience" data-de="Gästeerlebnis">Guest Experience</h3><p data-en="The result: memorable moments guests talk about, return for, and recommend. The true measure of a great attraction." data-de="Das Ergebnis: unvergessliche Momente, über die Gäste reden, für die sie wiederkommen und die sie weiterempfehlen.">The result: memorable moments guests talk about, return for, and recommend. The true measure of a great attraction.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: TRAINING SPOTLIGHT          ║
+     ╚══════════════════════════════════════╝ -->
+<div class="training-section">
+  <div class="training-card">
+    <div class="training-content">
+      <div class="training-badge">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="2.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span data-en="Current focus" data-de="Aktueller Schwerpunkt">Current focus</span>
+      </div>
+      <h2 class="training-headline display" data-en="Guests notice when your team isn&#x27;t&lt;br&gt;&lt;em&gt;fully present.&lt;/em&gt;" data-de="Gäste spüren, wenn dein Team&lt;br&gt;&lt;em&gt;nicht präsent ist.&lt;/em&gt;">Guests notice when your team isn't<br><em>fully present.</em></h2>
+      <div class="training-rule"></div>
+      <p class="training-p" data-en="Staff with guest contact are your strongest communication channel — and your biggest risk. A single unresolved problem, a dismissive reaction, or a missing smile can tip the entire experience." data-de="Mitarbeitende mit Gästekontakt sind deine stärkste Kommunikationsebene — und dein größtes Risiko. Ein einzelnes ungelöstes Problem oder eine abweisende Reaktion kann das gesamte Erlebnis kippen.">Staff with guest contact are your strongest communication channel — and your biggest risk. A single unresolved problem, a dismissive reaction, or a missing smile can tip the entire experience.</p>
+      <p class="training-p" data-en="My training for &lt;strong&gt;empathy and solution orientation&lt;/strong&gt; helps your frontline teams see guest problems not as a disruption — but as an opportunity to save someone&#x27;s day." data-de="In meinem Training für &lt;strong&gt;Empathie und Lösungsorientierung&lt;/strong&gt; lernen deine Frontline-Teams, Gästeprobleme nicht als Störung zu sehen — sondern als Chance, den Tag zu retten.">My training for <strong>empathy and solution orientation</strong> helps your frontline teams see guest problems not as a disruption — but as an opportunity to save someone's day.</p>
+      <ul class="training-list">
+        <li data-en="Perspective shift: understanding guest problems from the visitor&#x27;s point of view" data-de="Perspektivwechsel: Gästeprobleme aus Besuchersicht verstehen">Perspective shift: understanding guest problems from the visitor's point of view</li>
+        <li data-en="Conversation skills for difficult situations" data-de="Gesprächsführung in schwierigen Situationen">Conversation skills for difficult situations</li>
+        <li data-en="Solution strategies that can be applied immediately" data-de="Lösungsstrategien, die sofort anwendbar sind">Solution strategies that can be applied immediately</li>
+        <li data-en="Format: half-day, full-day, or workshop series" data-de="Format: Halbtag, Ganztag oder Workshopserie">Format: half-day, full-day, or workshop series</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="width:fit-content;"><span data-en="Enquire about training" data-de="Training anfragen">Enquire about training</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    </div>
+    <div id="training-photo-wrap" style="background:var(--dark-3);border-left:1px dashed rgba(255,202,25,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;position:relative;overflow:hidden;min-height:480px;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+      <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;" data-en="Photo — Training in action" data-de="Foto — Training in Aktion">Photo — Training in action</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;max-width:180px;line-height:1.5;position:relative;z-index:1;" data-en="Workshop, role play or group discussion" data-de="Workshop-Situation oder Gruppenarbeit">Workshop, role play or group discussion</div>
+    </div>
+  </div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: SERVICES (6 Karten)         ║
+     ║  Titel, Tag, Beschreibung, Items    ║
+     ╚══════════════════════════════════════╝ -->
+<section id="services">
+  <div class="section-label" data-en="What I offer" data-de="Meine Leistungen">What I offer</div>
+  <h2 class="section-title display" data-en="Services built for the leisure industry." data-de="Leistungen für die Freizeitbranche.">Services built for the leisure industry.</h2>
+  <p class="section-intro" data-en="Every engagement is tailored to your park&#x27;s specific challenges — no generic frameworks, only practical solutions." data-de="Jedes Projekt wird auf die spezifischen Herausforderungen deines Parks zugeschnitten — keine generischen Konzepte, nur praxisnahe Lösungen.">Every engagement is tailored to your park's specific challenges — no generic frameworks, only practical solutions.</p>
+  <div class="services-grid" style="grid-template-columns:repeat(3,1fr);">
+    
+    <!-- Service 1: Operational Consultation -->
+    <div class="service-card">
+      <div class="service-bg-num">01</div>
+      <div class="service-tag" data-en="Operations" data-de="Betrieb">Operations</div>
+      <h3 class="service-title" data-en="Operational Consultation" data-de="Betriebsberatung">Operational Consultation</h3>
+      <p class="service-desc" data-en="Clarity, structure and scalable processes for your daily park operations." data-de="Klarheit, Struktur und skalierbare Prozesse für deinen täglichen Parkbetrieb.">Clarity, structure and scalable processes for your daily park operations.</p>
+      <ul class="service-list"><li data-en="Operational concepts &amp;amp; frameworks" data-de="Betriebskonzepte &amp;amp; Frameworks">Operational concepts &amp; frameworks</li><li data-en="Masterplan review &amp;amp; gap analysis" data-de="Masterplan-Review &amp;amp; Lückenanalyse">Masterplan review &amp; gap analysis</li><li data-en="Process management &amp;amp; optimisation" data-de="Prozessmanagement &amp;amp; Optimierung">Process management &amp; optimisation</li><li data-en="Interim management" data-de="Interims-Management">Interim management</li></ul>
+    </div>
+    <!-- Service 2: Operational Documentation -->
+    <div class="service-card">
+      <div class="service-bg-num">02</div>
+      <div class="service-tag" data-en="Documentation" data-de="Dokumentation">Documentation</div>
+      <h3 class="service-title" data-en="Operational Documentation" data-de="Betriebsdokumentation">Operational Documentation</h3>
+      <p class="service-desc" data-en="The manuals and handbooks your team will actually use — season after season." data-de="Die Handbücher und Dokumentationen, die dein Team wirklich nutzt — Saison für Saison.">The manuals and handbooks your team will actually use — season after season.</p>
+      <ul class="service-list"><li data-en="Operations Manuals" data-de="Operations Manuals">Operations Manuals</li><li data-en="Ride documentation &amp;amp; SOPs" data-de="Fahrdokumentation &amp;amp; SOPs">Ride documentation &amp; SOPs</li><li data-en="Training handbooks" data-de="Trainingshandbücher">Training handbooks</li></ul>
+    </div>
+    <!-- Service 3: Guest Experience Training -->
+    <div class="service-card">
+      <div class="service-bg-num">03</div>
+      <div class="service-tag" data-en="Staff Training" data-de="Mitarbeiterschulung">Staff Training</div>
+      <h3 class="service-title" data-en="Guest Experience Training" data-de="Guest Experience Training">Guest Experience Training</h3>
+      <p class="service-desc" data-en="Practical training for frontline staff on empathy, communication and problem-solving." data-de="Praxistraining für Frontline-Teams zu Empathie, Kommunikation und Problemlösung.">Practical training for frontline staff on empathy, communication and problem-solving.</p>
+      <ul class="service-list"><li data-en="Perspective shift &amp;amp; empathy" data-de="Perspektivwechsel &amp;amp; Empathie">Perspective shift &amp; empathy</li><li data-en="Conversation skills for difficult situations" data-de="Gesprächsführung in schwierigen Situationen">Conversation skills for difficult situations</li><li data-en="Solution strategies — immediately applicable" data-de="Lösungsstrategien — sofort anwendbar">Solution strategies — immediately applicable</li><li data-en="Half-day, full-day or series" data-de="Halbtag, Ganztag oder Serie">Half-day, full-day or series</li></ul>
+    </div>
+    <!-- Service 4: Interim Management -->
+    <div class="service-card">
+      <div class="service-bg-num">04</div>
+      <div class="service-tag" data-en="Interim Management" data-de="Interims-Management">Interim Management</div>
+      <h3 class="service-title" data-en="Interim Management" data-de="Interims-Management">Interim Management</h3>
+      <p class="service-desc" data-en="Experienced operational leadership during transitions, new openings, or staffing gaps." data-de="Erfahrene operative Führung bei Übergängen, Neueröffnungen oder Personalengpässen.">Experienced operational leadership during transitions, new openings, or staffing gaps.</p>
+      <ul class="service-list"><li data-en="New opening support" data-de="Unterstützung bei Neueröffnungen">New opening support</li><li data-en="Transition management" data-de="Transition Management">Transition management</li><li data-en="Temporary operations lead" data-de="Temporäre Betriebsleitung">Temporary operations lead</li><li data-en="Team stabilisation" data-de="Team-Stabilisierung">Team stabilisation</li></ul>
+    </div>
+    <!-- Service 5: Human Resources -->
+    <div class="service-card">
+      <div class="service-bg-num">05</div>
+      <div class="service-tag" data-en="People &amp;amp; Culture" data-de="Personal &amp;amp; Kultur">People &amp; Culture</div>
+      <h3 class="service-title" data-en="Human Resources" data-de="Human Resources">Human Resources</h3>
+      <p class="service-desc" data-en="People strategy and systems that attract, develop and retain your best staff." data-de="Personalstrategie und Systeme, die deine besten Mitarbeitenden gewinnen und halten.">People strategy and systems that attract, develop and retain your best staff.</p>
+      <ul class="service-list"><li data-en="Onboarding &amp;amp; induction programmes" data-de="Onboarding &amp;amp; Einführungsprogramme">Onboarding &amp; induction programmes</li><li data-en="Staff management systems" data-de="Personalmanagement-Systeme">Staff management systems</li><li data-en="Staff handbooks &amp;amp; employer branding" data-de="Personalhandbücher &amp;amp; Employer Branding">Staff handbooks &amp; employer branding</li></ul>
+    </div>
+    <!-- Service 6: Mystery Visits -->
+    <div class="service-card">
+      <div class="service-bg-num">06</div>
+      <div class="service-tag" data-en="Guest Research" data-de="Gästeforschung">Guest Research</div>
+      <h3 class="service-title" data-en="Mystery Visits" data-de="Mystery Visits">Mystery Visits</h3>
+      <p class="service-desc" data-en="Independent eyes on your guest experience — honest, actionable findings." data-de="Unabhängiger Blick auf dein Gästeerlebnis — ehrliche, umsetzbare Erkenntnisse.">Independent eyes on your guest experience — honest, actionable findings.</p>
+      <ul class="service-list"><li data-en="Regular mystery guest programmes" data-de="Regelmäßige Mystery-Guest-Programme">Regular mystery guest programmes</li><li data-en="Full customer journey analysis" data-de="Vollständige Customer Journey Analyse">Full customer journey analysis</li><li data-en="Digital touchpoint review" data-de="Überprüfung digitaler Touchpoints">Digital touchpoint review</li><li data-en="Benchmarking &amp;amp; recommendations" data-de="Benchmarking &amp;amp; Empfehlungen">Benchmarking &amp; recommendations</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF STRIP (Fotos → fotos/proof/1.jpg, 2.jpg, 3.jpg) -->
+<div class="proof-strip">
+  <div class="proof-cell" id="proof-cell-1">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+      <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;" data-en="Photo — Operations" data-de="Foto — Betrieb">Photo — Operations</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;max-width:180px;line-height:1.5;position:relative;z-index:1;" data-en="Briefing, docs or team meeting" data-de="Briefing, Dokumentation oder Teammeeting">Briefing, docs or team meeting</div>
+    </div>
+  <div class="proof-cell" id="proof-cell-2">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+      <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;" data-en="Photo — Training" data-de="Foto — Training">Photo — Training</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;max-width:180px;line-height:1.5;position:relative;z-index:1;" data-en="Workshop with staff — energy, engagement" data-de="Workshop mit Mitarbeitenden">Workshop with staff — energy, engagement</div>
+    </div>
+  <div class="proof-cell" id="proof-cell-3">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+      <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+      <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;" data-en="Photo — Guest Experience" data-de="Foto — Gästeerlebnis">Photo — Guest Experience</div>
+      <div style="font-size:12px;color:var(--muted);text-align:center;max-width:180px;line-height:1.5;position:relative;z-index:1;" data-en="Real guests: joy, wonder, laughter" data-de="Echte Besucher: Freude, Staunen, Lachen">Real guests: joy, wonder, laughter</div>
+    </div>
+</div>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: ÜBER STEFAN BURIAN          ║
+     ║  aboutP1, aboutP2, aboutP3          ║
+     ║  Highlights: hl1–hl4               ║
+     ╚══════════════════════════════════════╝ -->
+<section class="about-section" id="about">
+  <div class="section-label" data-en="About Stefan Burian" data-de="Über Stefan Burian">About Stefan Burian</div>
+  <div class="about-grid">
+    <div class="about-text">
+      <h2 class="section-title display" data-en="Operations expertise, built in the field." data-de="Operative Expertise, gewachsen in der Praxis.">Operations expertise, built in the field.</h2>
+      <div class="rule"></div>
+      <p data-en="With years of hands-on experience across operations, guest experience and HR in the leisure industry, I&#x27;ve seen first-hand that the best attractions succeed not just because of their rides or theming — but because of &lt;strong&gt;how well they&#x27;re run&lt;/strong&gt;." data-de="Mit jahrelanger Erfahrung in Betrieb, Gästeerlebnis und HR in der Freizeitbranche weiß ich: Die besten Attraktionen sind nicht deshalb erfolgreich, weil sie die aufregendsten Fahrgeschäfte haben — sondern weil sie &lt;strong&gt;so gut geführt werden&lt;/strong&gt;.">With years of hands-on experience across operations, guest experience and HR in the leisure industry, I've seen first-hand that the best attractions succeed not just because of their rides or theming — but because of <strong>how well they're run</strong>.</p>
+      <p data-en="Since founding &lt;strong&gt;Amusement Business Support in 2019&lt;/strong&gt;, I&#x27;ve worked with parks and attractions of all sizes — from boutique family experiences to large-scale operators across Europe." data-de="Seit der Gründung von &lt;strong&gt;Amusement Business Support 2019&lt;/strong&gt; habe ich mit Parks und Attraktionen jeder Größe gearbeitet — von kleinen Familienerlebnissen bis zu großen Betreibern in ganz Europa.">Since founding <strong>Amusement Business Support in 2019</strong>, I've worked with parks and attractions of all sizes — from boutique family experiences to large-scale operators across Europe.</p>
+      <p data-en="My goal is simple: to give you the systems, documentation and people strategy that turn a good attraction into a great one. &lt;strong&gt;No buzzwords. No generic reports.&lt;/strong&gt; Just clear recommendations your team can implement." data-de="Mein Ziel: dir die Systeme, Dokumentationen und Personalstrategie zu geben, die aus einer guten Attraktion eine großartige machen. &lt;strong&gt;Kein Fachjargon. Keine generischen Berichte.&lt;/strong&gt; Nur klare Empfehlungen, die dein Team direkt umsetzen kann.">My goal is simple: to give you the systems, documentation and people strategy that turn a good attraction into a great one. <strong>No buzzwords. No generic reports.</strong> Just clear recommendations your team can implement.</p>
+      <div style="margin-top:44px;">
+        <a href="#contact" class="btn-primary"><span data-en="Let&#x27;s talk" data-de="Lass uns reden">Let's talk</span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+    <div class="highlights">
+      <!-- Portrait → fotos/portrait/ -->
+      <div class="portrait-ph" id="portrait-photo-wrap">
+        <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 20px,rgba(255,202,25,.02) 20px,rgba(255,202,25,.02) 21px);"></div>
+        <div style="width:44px;height:44px;background:rgba(255,202,25,.1);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.6"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg></div>
+        <div style="font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:500;position:relative;z-index:1;" data-en="Photo — Stefan Portrait" data-de="Foto — Stefan Portrait">Photo — Stefan Portrait</div>
+        <div style="font-size:12px;color:var(--muted);text-align:center;max-width:200px;line-height:1.5;position:relative;z-index:1;" data-en="Professional portrait or candid shot." data-de="Professionelles Porträt oder Candid-Shot.">Professional portrait or candid shot.</div>
+      </div>
+      <div class="highlight" style="border-top:1px solid var(--border-dim);border-bottom:1px solid var(--border-dim);">
+        <div class="hl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+        <div><h4 data-en="Since 2019" data-de="Seit 2019">Since 2019</h4><p data-en="Dedicated to the leisure industry — not a generalist, a specialist." data-de="Selbstständig für die Freizeitbranche tätig — kein Generalist, sondern Spezialist.">Dedicated to the leisure industry — not a generalist, a specialist.</p></div>
+      </div>
+      <div class="highlight" style="border-bottom:1px solid var(--border-dim);">
+        <div class="hl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <div><h4 data-en="European reach" data-de="Europaweit aktiv">European reach</h4><p data-en="Working with operators in Germany and across Europe." data-de="Mit Betreibern in Deutschland und ganz Europa.">Working with operators in Germany and across Europe.</p></div>
+      </div>
+      <div class="highlight" style="border-bottom:1px solid var(--border-dim);">
+        <div class="hl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.8"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div><h4 data-en="Practical deliverables" data-de="Praxisnahe Ergebnisse">Practical deliverables</h4><p data-en="Documents your team will actually pick up, not shelf-ware." data-de="Dokumente, die dein Team wirklich in die Hand nimmt.">Documents your team will actually pick up, not shelf-ware.</p></div>
+      </div>
+      <div class="highlight" style="border-bottom:1px solid var(--border-dim);">
+        <div class="hl-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffca19" stroke-width="1.8"><path d="M3 18v-6a9 9 0 0118 0v6"/><path d="M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z"/></svg></div>
+        <div><h4 data-en="Industry voice" data-de="Branchenstimme">Industry voice</h4><p data-en="Host of &quot;How to Freizeitpark&quot; — the German-language podcast for leisure professionals." data-de="Moderator von &quot;How to Freizeitpark&quot; — dem deutschen Podcast für Freizeitbranchenprofis.">Host of "How to Freizeitpark" — the German-language podcast for leisure professionals.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KUNDEN (dynamisch via fotos/referenzen/) -->
+<section id="clients">
+  <div class="section-label" data-en="Clients &amp;amp; Partners" data-de="Kunden &amp;amp; Partner">Clients &amp; Partners</div>
+  <h2 class="section-title display" data-en="Trusted by parks across Europe." data-de="Vertraut von Parks in ganz Europa.">Trusted by parks across Europe.</h2>
+  <p class="section-intro" style="margin-bottom:48px;" data-en="From regional family parks to major operators — working with a diverse range of leisure businesses." data-de="Von regionalen Familienparks bis zu großen Betreibern — Zusammenarbeit mit einer Vielzahl von Freizeitunternehmen.">From regional family parks to major operators — working with a diverse range of leisure businesses.</p>
+  <div class="clients-grid" id="referenzen-grid">
+    <div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2022/01/Bold-Move.png" alt="Bold Move" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2023/05/Logo-Portfolio-Attraktion.png" alt="Attraktion" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2024/09/Logo-Eloria-320x159.png" alt="Eloria" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2023/07/Logo-Portfolio-alex-korting-320x159.png" alt="Alex Korting" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2023/05/Logo-Portfolio-Jaderpark.png" alt="Jaderpark" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2022/07/Logo-Portfolio.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2022/07/Logo-Portfolio-1.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2020/12/3-1.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2020/12/5-1.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2020/12/8-1.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2020/12/4-1.png" alt="Partner" loading="lazy"></div><div class="client-cell"><img src="https://stefanburian.com/wp-content/uploads/2020/12/2-1.png" alt="Partner" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: PODCAST + GÄSTE-KACHELN     ║
+     ║  Gäste: data-en/data-de am Element  ║
+     ║  direkt bearbeiten (6 Kacheln)      ║
+     ╚══════════════════════════════════════╝ -->
+<section class="podcast-section" id="podcast">
+  <div class="section-label" data-en="Podcast" data-de="Podcast">Podcast</div>
+  <div class="podcast-card">
+    <div class="podcast-badge" id="podcast-cover-wrap">
+      <img src="fotos/podcast/htf-cover.jpg" alt="How to Freizeitpark"
+           style="width:108px;height:108px;object-fit:cover;border-radius:8px;display:block;">
+    </div>
+    <div class="podcast-body">
+      <h3 class="display" data-en="How to Freizeitpark" data-de="How to Freizeitpark">How to Freizeitpark</h3>
+      <p data-en="The bi-weekly podcast for leisure industry professionals. Deep dives into operations, HR and guest experience — with experts sharing practical knowledge you can apply immediately." data-de="Der zweiwöchige Podcast für Freizeitbranchenprofis. Tiefgehende Gespräche über Betrieb, HR und Gästeerlebnis — mit Branchenexperten, die praxisnahes Wissen teilen.">The bi-weekly podcast for leisure industry professionals. Deep dives into operations, HR and guest experience — with experts sharing practical knowledge you can apply immediately.</p>
+      <div class="podcast-links">
+        <a href="https://open.spotify.com/show/24EDeFnnDGZSMvzXuuIS91" class="podcast-link" target="_blank">
+          <span data-en="Listen on Spotify" data-de="Auf Spotify hören">Listen on Spotify</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.howtofreizeitpark.de" class="podcast-link" target="_blank">
+          <span data-en="Visit website" data-de="Website besuchen">Visit website</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:48px;">
+    <div class="section-label" data-en="Highlight guests" data-de="Highlight-Gäste">Highlight guests</div>
+    <h2 class="section-title display" data-en="Voices from the industry." data-de="Stimmen aus der Branche.">Voices from the industry.</h2>
+    <p class="section-intro" data-en="Every guest brings a unique perspective — from park operators and ride designers to HR leaders and guest experience pioneers." data-de="Jeder Gast bringt eine eigene Perspektive mit — von Parkbetreibern und Ride-Designern bis zu HR-Leadern und Guest Experience Pionieren.">Every guest brings a unique perspective — from park operators and ride designers to HR leaders and guest experience pioneers.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border-dim);border:1px solid var(--border-dim);border-radius:4px;overflow:hidden;">
+      
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 1 — Karls              ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/1.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-1" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Robert Dahl" data-de="Robert Dahl">Robert Dahl</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="Owner · Karls" data-de="Inhaber · Karls">Inhaber · Karls</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 163 — Failing was never the end" data-de="Episode 163 — Scheitern war bis jetzt nie das Ende">Episode 00 — Topic or highlight quote.</p>
+      <a href="https://open.spotify.com/episode/6eA4SpMKWeHAhSAtkRv5Kq?si=cb4b857ef4a74ed6" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 2 — Zamperla           ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/2.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-2" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Antonio Zamperla" data-de="Antonia Zamperla">Guest Name</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="Owner · Zamperla Group" data-de="Inhaber · Zamperla Group">Inhaber · Park / Company</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 157 — Tradition and innovation made in Italy" data-de="Episode 157 — Tradition und innovation - made in Italy">Episode 157 — Tradition and innovation made in Italy</p>
+      <a href="https://open.spotify.com/episode/3jEgUSMar4c3hepw0WCufj?si=23ad67e6ba3843ec" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 3 — Massi      ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/3.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-3" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Massimiliano Freddi" data-de="Massimiliano Freddi">Guest Name</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="Owner · Wonderwood / IAAPA Chair" data-de="Inhaber · Wonderwood / IAAPA Chair">Role · Park / Company</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 160 — The human side of theme parks" data-de="Episode 160 — Die menschliche Seite von Freizeitparks">Episode 00 — Topic or highlight quote.</p>
+      <a href="https://open.spotify.com/episode/7fCNpGm9xkIqe0qI8OQAJd?si=iGW6IcYXRzmXpNbH5TUpOQ" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 4 — Chris Lange        ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/4.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-4" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Chris Lange" data-de="Chris Lange">Guest Name</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="Owner · Creative Studio Berlin" data-de="Inhaber · Creative Studio Berlin"">Role · Park / Company</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 146 — What does a dream cost?" data-de="Episode 146 — Was kostet ein Traum?">Episode 00 — Topic or highlight quote.</p>
+      <a href="https://open.spotify.com/episode/5hCDOoVBvaCwabmW2v55OI?si=o9mwGquBSUW529RzFho-Bg" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 5 — Laura     ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/5.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-5" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Laura Marakowits" data-de="Laura Marakowits">Guest Name</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="Show Producer · Nextgen" data-de="Show Producer · Nextgen">Role · Park / Company</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 105 — Training the next generation" data-de="Episode 105 — Die nächste Generation trainieren">Episode 00 — Topic or highlight quote.</p>
+      <a href="https://open.spotify.com/episode/3rvVLrepjUxCvVAEiDyQZK?si=Ia84ABbiRyuvKI121vD0JA" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <!-- ╔══════════════════════════════╗
+         ║  GAST 6 — Andreas     ║
+         ╚══════════════════════════════╝
+         Foto: fotos/gaeste/6.jpg    -->
+    <div style="background:var(--dark);padding:36px 28px;text-align:center;transition:background .3s;display:flex;flex-direction:column;align-items:center;"
+         onmouseenter="this.style.background='var(--dark-2)'"
+         onmouseleave="this.style.background='var(--dark)'">
+      <div id="gast-foto-6" style="width:88px;height:88px;border-radius:50%;overflow:hidden;margin:0 auto 18px;border:2px solid var(--border);background:var(--dark-3);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(255,202,25,.4)" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z"/></svg>
+      </div>
+      <h4 style="font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:4px;"
+          data-en="Andreas Veilstrup Andersen" data-de="Andreas Veilstrup Andersen">Guest Name</h4>
+      <p style="font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;"
+         data-en="CEO · Liseberg" data-de="CEO · Liseberg">Role · Park / Company</p>
+      <p style="font-size:13px;font-weight:300;color:var(--muted);line-height:1.6;margin-bottom:20px;flex:1;"
+         data-en="Episode 103 — Balancing passion, brand and health" data-de="Episode 103 — Balance zwischen Leidenschaft, Marke und Gesundheit">Episode 00 — Topic or highlight quote.</p>
+      <a href="https://open.spotify.com/episode/4YqOtbEX2YapbgkpBRdIBh?si=tWcbSE3ARyma9-XFY9Z5OA" target="_blank"
+         style="display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:2px;transition:all .2s;margin-top:auto;"
+         onmouseenter="this.style.background='rgba(255,202,25,.08)'"
+         onmouseleave="this.style.background='transparent'">
+        <span data-en="Listen to episode" data-de="Zur Folge">Listen to episode</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔══════════════════════════════════════╗
+     ║  TEXTE: KONTAKT / CTA               ║
+     ╚══════════════════════════════════════╝ -->
+<section class="cta-section" id="contact">
+  <div class="section-label" data-en="Let&#x27;s talk" data-de="Lass uns reden">Let's talk</div>
+  <h2 class="section-title display" data-en="Ready to elevate your attraction?" data-de="Bereit, deine Attraktion zu verbessern?">Ready to elevate your attraction?</h2>
+  <p class="section-intro" data-en="Whether you need operational clarity, better documentation, or a stronger team — reach out directly." data-de="Egal ob du operative Klarheit, bessere Dokumentationen oder ein stärkeres Team brauchst — melde dich direkt.">Whether you need operational clarity, better documentation, or a stronger team — reach out directly.</p>
+  <div class="cta-actions">
+    <a href="mailto:contact@stefanburian.com" class="btn-email">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span data-en="Send an email" data-de="E-Mail schreiben">Send an email</span>
+    </a>
+    <a href="https://wa.me/4917661562513" target="_blank" class="btn-whatsapp">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg><span data-en="Chat on WhatsApp" data-de="Auf WhatsApp chatten">Chat on WhatsApp</span>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-brand">Stefan Burian — Amusement Business Support</a>
+  <ul class="footer-links">
+    <li><a href="impressum.html" data-en="Legal notice" data-de="Impressum">Legal notice</a></li>
+    <li><a href="datenschutz.html" data-en="Privacy policy" data-de="Datenschutz">Privacy policy</a></li>
+    <li><a href="https://www.linkedin.com/in/experience-stefanburian/" target="_blank">LinkedIn</a></li>
+    <li><a href="https://www.instagram.com/howtofreizeitpark/" target="_blank">Instagram</a></li>
+  </ul>
+  <span class="footer-copy" data-en="© 2025 Stefan Burian" data-de="© 2025 Stefan Burian">© 2025 Stefan Burian</span>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+// SPRACHSTEUERUNG
+// Texte stehen als data-en / data-de direkt am jeweiligen Element.
+// Kein zentrales Objekt — einfach im HTML suchen und bearbeiten.
+// ═══════════════════════════════════════════════════════════════════
+
+function detectLang() {
+  const saved = localStorage.getItem('lang');
+  if (saved === 'en' || saved === 'de') return saved;
+  const bl = (navigator.language || 'en').slice(0,2).toLowerCase();
+  return bl === 'de' ? 'de' : 'en';
+}
+let currentLang = detectLang();
+
+function applyLang(lang) {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const val = el.getAttribute('data-' + lang);
+    if (val !== null) el.innerHTML = val;
+  });
+  document.documentElement.lang = lang;
+  ['btn-en','btn-de'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id === 'btn-' + lang);
+  });
+  syncMobileLang();
+}
+
+function setLang(lang) {
+  if (lang === currentLang) return;
+  document.body.classList.add('lang-switching');
+  setTimeout(() => {
+    currentLang = lang;
+    applyLang(lang);
+    localStorage.setItem('lang', lang);
+    document.body.classList.remove('lang-switching');
+  }, 150);
+}
+
+function syncMobileLang() {
+  ['en','de'].forEach(l => {
+    const el = document.getElementById('mbtn-' + l);
+    if (el) el.classList.toggle('active', currentLang === l);
+  });
+}
+
+// ── Menü & Nav ───────────────────────────────────────────────────
+function toggleMenu() {
+  const m=document.getElementById('mobileMenu'), b=document.getElementById('hamburger');
+  const open=m.classList.toggle('open');
+  b.classList.toggle('open',open);
+  document.body.style.overflow=open?'hidden':'';
+}
+function closeMenu() {
+  document.getElementById('mobileMenu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow='';
+}
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// ═══════════════════════════════════════════════════════════════════
+// FOTO-LOADER — lädt Bilder via fotos.php aus Unterordnern
+// Ordner: hero/ portrait/ training/ podcast/ proof/ gaeste/ referenzen/
+// Dateiname beliebig; Reihenfolge: 01_foto.jpg, 02_foto.jpg, ...
+// ═══════════════════════════════════════════════════════════════════
+
+async function ladeOrdner(ordner) {
+  try {
+    const res=await fetch('fotos.php?folder='+ordner);
+    if (!res.ok) throw new Error('HTTP '+res.status);
+    return await res.json();
+  } catch(e) {
+    console.warn('[Fotos] '+ordner+': '+e.message);
+    return [];
+  }
+}
+function bildUrl(ordner,datei){ return 'fotos/'+ordner+'/'+datei; }
+
+async function ladeHero() {
+  const f=await ladeOrdner('hero'); if(!f.length)return;
+  const el=document.getElementById('hero-photo-wrap'); if(!el)return;
+  el.innerHTML='<img src="'+bildUrl('hero',f[0])+'" alt="Amusement Business Support" style="width:100%;height:100%;min-height:100vh;object-fit:cover;display:block;">';
+}
+async function ladePortrait() {
+  const f=await ladeOrdner('portrait'); if(!f.length)return;
+  const el=document.getElementById('portrait-photo-wrap'); if(!el)return;
+  el.style.cssText+=';padding:0;overflow:hidden;border-style:solid;';
+  el.innerHTML='<img src="'+bildUrl('portrait',f[0])+'" alt="Stefan Burian" style="width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:4px;">';
+}
+async function ladeTraining() {
+  const f=await ladeOrdner('training'); if(!f.length)return;
+  const el=document.getElementById('training-photo-wrap'); if(!el)return;
+  el.innerHTML='<img src="'+bildUrl('training',f[0])+'" alt="Training" style="width:100%;height:100%;min-height:480px;object-fit:cover;display:block;">';
+}
+async function ladePodcastCover() {
+  const f=await ladeOrdner('podcast'); if(!f.length)return;
+  const el=document.getElementById('podcast-cover-wrap'); if(!el)return;
+  el.innerHTML='<img src="'+bildUrl('podcast',f[0])+'" alt="How to Freizeitpark" style="width:108px;height:108px;object-fit:cover;border-radius:8px;display:block;">';
+}
+async function ladeProof() {
+  const f=await ladeOrdner('proof'); if(!f.length)return;
+  f.slice(0,3).forEach(function(file,i){
+    const el=document.getElementById('proof-cell-'+(i+1)); if(!el)return;
+    el.style.padding='0'; el.style.overflow='hidden';
+    el.innerHTML='<img src="'+bildUrl('proof',file)+'" alt="" style="width:100%;height:100%;object-fit:contain;background:var(--dark-2);display:block;">';
+  });
+}
+async function ladeGaeste() {
+  const f=await ladeOrdner('gaeste'); if(!f.length)return;
+  f.slice(0,6).forEach(function(file,i){
+    const el=document.getElementById('gast-foto-'+(i+1)); if(!el)return;
+    el.innerHTML='<img src="'+bildUrl('gaeste',file)+'" alt="" style="width:100%;height:100%;object-fit:cover;display:block;">';
+  });
+}
+async function ladeReferenzen() {
+  const grid=document.getElementById('referenzen-grid'); if(!grid)return;
+  const f=await ladeOrdner('referenzen'); if(!f.length)return;
+  const cols=f.length<=3?f.length:f.length<=5?3:f.length<=10?5:5;
+  grid.style.gridTemplateColumns='repeat('+cols+',1fr)';
+  grid.innerHTML=f.map(function(file){
+    const name=file.replace(/\.[^.]+$/,'').replace(/^\d+[_\-]?/,'');
+    return '<div class="client-cell"><img src="'+bildUrl('referenzen',file)+'" alt="'+name+'" loading="lazy"></div>';
+  }).join('');
+}
+
+document.addEventListener('DOMContentLoaded',function(){
+  applyLang(currentLang);
+  localStorage.setItem('lang',currentLang);
+  ladeHero();
+  ladePortrait();
+  ladeTraining();
+  ladePodcastCover();
+  ladeProof();
+  ladeGaeste();
+  ladeReferenzen();
+});
+</script>
+</body>
+</html>
